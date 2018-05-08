@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <html>
         <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="<%=basePath%>ext/easyui/themes/default/easyui.css">
+        <link rel="stylesheet" type="text/css" href="<%=basePath%>ext/easyui/themes/green/easyui.css">
         <link rel="stylesheet" type="text/css" href="<%=basePath%>ext/easyui/themes/icon.css">
         <link rel="stylesheet" type="text/css" href="<%=basePath%>ext/easyui/themes/color.css">
         <script type="text/javascript" src="<%=basePath%>ext/easyui/jquery.min.js"></script>
@@ -24,23 +24,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <title>欢迎首页</title>
         <style>
         body{
-        margin: 0px;
-        background-image:url(images/welcome.png);
-        background-size:100% 100%;
-        background-repeat:no-repeat;
-        background-color: transparent;
-        border:none;
-        width:100%;
-        height:100%;
+	        margin: 0px;
+	        background-image:url(images/welcome.png);
+	        background-size:100% 100%;
+	        background-repeat:no-repeat;
+	        background-color: transparent;
+	        border:none;
+	        width:100%;
+	        height:100%;
         }
         #grid{
-        backgound-color:green;
+        	backgound-color:green;
+        }
+        table tbody tr>td:nth-child(3){
+        	padding-left:120px;
         }
         </style>
         </head>
         <body>
         <div id="controlBox">
-        <span>种子名称:</span>
+        <span style="color:white;">种子名称:</span>
         <input id="genderSearch" class="easyui-combobox" panelHeight="auto"
         data-options=" editable:false,
         valueField:'code',
@@ -79,7 +82,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					<input name='ID' type="text"/>
    		 				</td>
    		 				<td>
-   		 					<label>种子ID:<input name='cId' type="text"/></label>
+   		 					种子ID:
    		 				</td>
    		 				<td>
    		 					<input name='cId' type="text"/>
@@ -93,47 +96,80 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					<input name='caption' type="text"/>
    		 				</td>
    		 				<td>
-   		 					<label>'X季作物:<input name='harvestNum' type="text"/></label>
+   		 					X季作物:
+   		 				</td>
+   		 				<td>
+   		 					<input name='harvestNum' type="text"/>
    		 				</td>
    		 			</tr>
    		 			<tr>
    		 				<td>
-   		 					<label>种子等级:<input name='cropLevel' type="text"/></label>
+   		 					种子等级:
    		 				</td>
    		 				<td>
-   		 					<label>种子类型:<input name='type' type="text"/></label>
-   		 				</td>
-   		 			</tr>
-   		 			<tr>
-   		 				<td>
-   		 					<label>可获经验:<input name='exp' type="text"/></label>
+   		 					<input name='cropLevel' type="text"/>
    		 				</td>
    		 				<td>
-   		 					<label>每季成熟所需时间:<input name='matureTime' type="text"/></label>
+   		 					种子类型:
+   		 				</td>
+   		 				<td>
+   		 					<input name='type' type="text"/>
    		 				</td>
    		 			</tr>
    		 			<tr>
    		 				<td>
-   		 					<label>每季成熟可获收:<input name='output' type="text"/></label>
+   		 					可获经验:
    		 				</td>
    		 				<td>
-   		 					<label>种子采购价:<input name='price' type="text"/></label>
-   		 				</td>
-   		 			</tr>
-   		 			<tr>
-   		 				<td>
-   		 					<label>每个收获的果实:<input name='price4UnitSale' type="text"/></label>
+   		 					<input name='exp' type="text"/>
    		 				</td>
    		 				<td>
-   		 					<label>土地需求:<input name='landRequirement' type="text"/></label>
+   		 					每季成熟所需时间:
+   		 				</td>
+   		 				<td>
+   		 					<input name='matureTime' type="text"/>
    		 				</td>
    		 			</tr>
    		 			<tr>
    		 				<td>
-   		 					<label>每季成熟可获积分:<input name='score' type="text"/></label>
+   		 					每季成熟可获收:
    		 				</td>
    		 				<td>
-   		 					<label>提示信息:<input name='tip' type="text"/></label>
+   		 					<input name='output' type="text"/>
+   		 				</td>
+   		 				<td>
+   		 					种子采购价:
+   		 				</td>
+   		 				<td>
+   		 					<input name='price' type="text"/>
+   		 				</td>
+   		 			</tr>
+   		 			<tr>
+   		 				<td>
+   		 					每个收获的果实:
+   		 				</td>
+   		 				<td>
+   		 					<input name='price4UnitSale' type="text"/>
+   		 				</td>
+   		 				<td>
+   		 					土地需求:
+   		 				</td>
+   		 				<td>
+   		 					<input name='landRequirement' type="text"/>
+   		 				</td>
+   		 			</tr>
+   		 			<tr>
+   		 				<td>
+   		 					每季成熟可获积分:
+   		 				</td>
+   		 				<td>
+   		 					<input name='score' type="text"/>
+   		 				</td>
+   		 				<td>
+   		 					提示信息:
+   		 				</td>
+   		 				<td>
+   		 					<input name='tip' type="text"/>
    		 				</td>
    		 			</tr>
    		 		</table>
@@ -141,7 +177,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	</div>
     	<div id="positionDialogButtons">
     		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="gainPostion()">确定</a>
-    		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#positionDialog').dialog('close')">取消</a>
+    		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#formContainer').dialog('close')">取消</a>
     	</div> 
         <table id="grid"></table>
         <div id="msgBox"></div>
@@ -168,41 +204,36 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         autoSave:true,
         idField: "ID",
         columns: [[
-        {field: 'ID',title: 'ID' , width: 20, sortable: true},
-        {title: '种子ID', field: 'cId', width: 50, sortable: true},
-        {title: '种子名称', field: 'caption', width: 50, sortable: true,editor:{
-        type:'validatebox',
-        options: {
-        required:true
-        }
-        }},
+        {field: 'ID',title: 'ID' , width: 20, sortable: true,align:'center'},
+        {title: '种子ID', field: 'cId', width: 30, sortable: true,align:'center'},
+        {field: 'caption',title: '种子名称' , width: 30, sortable: true,align:'center'},
 
-        {title: 'X季作物', field: 'harvestNum', width: 50, sortable: true,editor:{
+        {title: 'X季作物', field: 'harvestNum', width: 50, sortable: true,align:'center',editor:{
         type:'validatebox',
         options: {
         required:true
         }
         }},
-        {title: '种子等级', field: 'cropLevel', width: 50, sortable: true,editor:{
+        {title: '种子等级', field: 'cropLevel', width: 50, sortable: true,align:'center',editor:{
 	        type:'validatebox',
 	        options: {
 	        required:true
 	        }
         }},
-        {title: '种子类型', field: 'type', width: 50, sortable: true,editor:{
+        {title: '种子类型', field: 'type', width: 50, sortable: true,align:'center',editor:{
         type:'validatebox',
         options: {
         required:true
         }
         }},
 
-        {title: '可获经验', field: 'exp', width: 50, sortable: true,editor:{
+        {title: '可获经验', field: 'exp', width: 50, sortable: true,align:'center',editor:{
         type:'validatebox',
         options: {
         required:true
         }
         }},
-        {title: '每季成熟所需时间', field: 'matureTime', width: 50, sortable: true,editor:{
+        {title: '每季成熟所需时间', field: 'matureTime', width: 50, sortable: true,align:'center',editor:{
         type:'validatebox',
         options: {
         required:true
@@ -212,14 +243,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         if(value==undefined)return "";
         return value+'秒';
         }},
-        {title: '每季成熟可获收', field: 'output', width: 50, sortable: true,editor:{
+        {title: '每季成熟可获收', field: 'output', width: 50, sortable: true,align:'center',editor:{
         type:'validatebox',
         options: {
         required:true
         }
         }},
 
-        {title: '种子采购价', field: 'price', width: 50, sortable: true,editor:{
+        {title: '种子采购价', field: 'price', width: 50, sortable: true,align:'center',editor:{
         type:'validatebox',
         options: {
         required:true
@@ -229,33 +260,33 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         if(value==undefined)return "";
         return value+'金币';
         }},
-        {title: '每个收获的果实', field: 'price4UnitSale', width: 50, sortable: true,editor:{
+        {title: '每个收获的果实', field: 'price4UnitSale', width: 50, sortable: true,align:'center',editor:{
         type:'validatebox',
         options: {
         required:true
         }
         }},
-        {title: '土地需求', field: 'landRequirement', width: 50, sortable: true,editor:{
+        {title: '土地需求', field: 'landRequirement', width: 50, sortable: true,align:'center',editor:{
         type:'validatebox',
         options: {
         required:true
         }
         }},
 
-        {title: '每季成熟可获积分', field: 'score', width: 50, sortable: true,
+        {title: '每季成熟可获积分', field: 'score', width: 50, sortable: true,align:'center',
         editor:{
         type:'validatebox',
         options: {
         required:true
         }
         }},
-        {title: '提示信息', field: 'tip', width: 50, sortable: true,editor:{
+        {title: '提示信息', field: 'tip', width: 50, sortable: true,align:'center',editor:{
         type:'validatebox',
         options: {
         required:true
         }
         }},
-        {title: '操作', field: 'ID', width: 50, sortable: true,editor:{
+        {title: '操作', field: 'ID', width: 50, sortable: true,align:'center',editor:{
         type:'validatebox',
         options: {
         required:true

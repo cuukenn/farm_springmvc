@@ -44,12 +44,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <body>
         <div id="controlBox">
         <span style="color:white;">种子名称:</span>
-        <input id="genderSearch" class="easyui-combobox" panelHeight="auto"
-        data-options=" editable:false,
-        valueField:'code',
-        textField:'caption',
-        url:'<%=basePath%>/codeGender/data'"
-        >
+        <input id="genderSearch" class="easyui-textbox">
 
         <a href="#" class="easyui-linkbutton c1" iconCls="icon-search"
 
@@ -71,7 +66,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
         onclick="javascript:grid.edatagrid('destroyRow')">删除</a>
         </div>
-         <div id="formContainer" class="easyui-dialog" style="width:800px;height:420px;padding:10px 10px" closed="true" buttons="#positionDialogButtons">
+         <div id="formContainer" class="easyui-dialog" style="width:800px;height:420px;padding:10px 10px" closed="true" buttons="#formContainerButtons">
    		 	<form id="formEditor">
    		 		<table>
    		 			<tr>
@@ -113,7 +108,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					种子类型:
    		 				</td>
    		 				<td>
-   		 					<input name='type' type="text"/>
+   		 				<input name='type' class="easyui-combobox" panelHeight="auto"
+					        data-options=" editable:false,
+					        valueField:'code',
+					        textField:'caption',
+					        url:'<%=basePath%>/codeSeedType/data'">
    		 				</td>
    		 			</tr>
    		 			<tr>
@@ -155,7 +154,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					土地需求:
    		 				</td>
    		 				<td>
-   		 					<input name='landRequirement' type="text"/>
+   		 					<input name='landRequirement' class="easyui-combobox" panelHeight="auto"
+					        data-options=" editable:false,
+					        valueField:'code',
+					        textField:'caption',
+					        data:'<%=basePath%>/codeLandRequire/data'">
+   		 				</td>
    		 				</td>
    		 			</tr>
    		 			<tr>
@@ -175,12 +179,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 		</table>
     		</div>
     	</div>
-    	<div id="positionDialogButtons">
-    		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="gainPostion()">确定</a>
+    	<div id="formContainerButtons">
+    		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveRecord()">确定</a>
     		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#formContainer').dialog('close')">取消</a>
     	</div> 
+    	
+    	
         <table id="grid"></table>
         <div id="msgBox"></div>
+        <div id="positionDialog" class="easyui-dialog" style="width:240px;height:420px;padding:10px 10px" closed="true" buttons="#positionDialogButtons">
+		    <div id="tools-imagePositioner-display" class="tools-imagePositioner-display">
+		    <img class="easyui-draggable easyui-resizable" data-options="onDrag:imagePositioneronDrag"  src="">
+		    </div>
+		</div>
+		<div id="positionDialogButtons">
+			<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok"onclick="gainPostion()">确定</a>
+			<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#positionDialog').dialog('close')">取消</a>
+		</div>  
         <script>
         var grid;
         $(document).ready(function () {
@@ -287,10 +302,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         }
         }},
         {title: '操作', field: 'ID', width: 50, sortable: true,align:'center',editor:{
-        type:'validatebox',
-        options: {
-        required:true
-        }
+	        type:'validatebox',
+	        options: {
+	        required:true
+        	},
+        	formatter:function(value,row){
+                return  '<a href="#" class="easyui-linkbutton c2" onclick="javascript:setImgPosition()">添加</a>';
+               }
         }}
         ]],
         destroyMsg:{
@@ -341,11 +359,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     }   
     
     function newRecord(){
-        $('#formContainer').dialog('open').dialog('center').dialog('setTitle','添加数据');     
-        $('#formEditor').form('clear');
-        $('#formEditor').find("input[name='id']").val(0);
+        $('#formContainer').dialog('open').dialog('center').dialog('setTitle','修改图片显示位置');
     }
-    
+    function setImgPosition(){
+        $('#positionDialog').dialog('open').dialog('center').dialog('setTitle','修改图片位置');
+    }
     function saveRecord() {
         $('#formEditor').form('submit', {
             url: '<%=basePath%>/seed/save',

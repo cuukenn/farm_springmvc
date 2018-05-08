@@ -7,7 +7,8 @@ import cn.jxufe.bean.Message;
 import cn.jxufe.entity.Seed;
 
 public interface SeedService {
-	 public EasyUIData<?> findSome(int type,Pageable pageable);
+	 public EasyUIData<?> findByType(int type,Pageable pageable);
+	 public EasyUIData<?> findByLand(int landRequirement,Pageable pageable);
 	 public Message save(Seed seed);
 	 public Message delete(Seed seed); 
 }

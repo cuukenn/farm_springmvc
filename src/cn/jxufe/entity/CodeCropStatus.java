@@ -15,7 +15,7 @@ public class CodeCropStatus  extends EntityID{
     private int code;
     private String caption;
 	public int getCode() {
-		return code;
+		return code; 
 	}
 	public void setCode(int code) {
 		this.code = code;

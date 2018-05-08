@@ -6,36 +6,27 @@ import org.springframework.data.domain.Pageable;
 
 import cn.jxufe.bean.EasyUIData;
 import cn.jxufe.bean.Message;
-import cn.jxufe.dao.SeedDAO;
-import cn.jxufe.entity.Seed;
-import cn.jxufe.service.SeedService;
+import cn.jxufe.dao.CropsGrowDAO;
+import cn.jxufe.entity.CropsGrow;
+import cn.jxufe.service.CropsGrowService;
 
-public class SeedImp implements SeedService{
+public class CropsGrowImp implements CropsGrowService{
 	@Autowired
-    SeedDAO seedDAO ;
+	CropsGrowDAO cropsGrowDAO ;
 	@Override
-	public EasyUIData<?> findByType(int type, Pageable pageable) {
-		Page<Seed> page = seedDAO.findByType(type,pageable);
-        EasyUIData<Seed> easyUIData = new EasyUIData<Seed>();
+	public EasyUIData<?> findByStatus(int status, Pageable pageable) {
+		Page<CropsGrow> page = cropsGrowDAO.findByStatus(status,pageable);
+        EasyUIData<CropsGrow> easyUIData = new EasyUIData<CropsGrow>();
         easyUIData.setTotal(page.getTotalElements());
         easyUIData.setRows(page.getContent());
         return easyUIData;
 	}
-	
+
 	@Override
-	public EasyUIData<?> findByLand(int landRequirement, Pageable pageable) {
-		Page<Seed> page = seedDAO.findByType(landRequirement,pageable);
-        EasyUIData<Seed> easyUIData = new EasyUIData<Seed>();
-        easyUIData.setTotal(page.getTotalElements());
-        easyUIData.setRows(page.getContent());
-        return easyUIData;
-	}
-	
-	@Override
-	public Message save(Seed seed) {
+	public Message save(CropsGrow cropsGrow) {
 		Message message = new Message();
         try {
-        	seedDAO.save(seed);
+        	cropsGrowDAO.save(cropsGrow);
             message.setCode(0);
             message.setMsg("保存成功");
         }catch(Exception e) {
@@ -46,10 +37,10 @@ public class SeedImp implements SeedService{
 	}
 
 	@Override
-	public Message delete(Seed seed) {
+	public Message delete(CropsGrow cropsGrow) {
 		Message message = new Message();
         try {
-        	seedDAO.delete(seed);
+        	cropsGrowDAO.delete(cropsGrow);
             message.setCode(0);
             message.setMsg("删除成功");
         }catch(Exception e) {

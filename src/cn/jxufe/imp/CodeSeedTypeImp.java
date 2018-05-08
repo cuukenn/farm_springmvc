@@ -7,9 +7,9 @@ import cn.jxufe.entity.CodeSeedType;
 import cn.jxufe.service.CodeSeedTypeService;
 public class CodeSeedTypeImp implements CodeSeedTypeService{
 	@Autowired
-	CodeSeedTypeDAO codeGenderDAO ;
+	CodeSeedTypeDAO codeSeedTypeDAO ;
     @Override
     public Iterable<CodeSeedType> findALl() {
-        return codeGenderDAO.findAll();
+        return codeSeedTypeDAO.findAll();
     }
 }

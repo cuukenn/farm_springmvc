@@ -6,14 +6,14 @@ import javax.persistence.Table;
 import cn.jxufe.bean.EntityID;
 
 @Entity
-@Table(name="T_Send")
+@Table(name="T_Seed")
 public class Seed  extends EntityID{
     /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
     private int cId;
-    private int caption;
+    private String caption;
     private int harvestNum;
     private int cropLevel;
     private int type;
@@ -31,10 +31,10 @@ public class Seed  extends EntityID{
 	public void setcId(int cId) {
 		this.cId = cId;
 	}
-	public int getCaption() {
+	public String getCaption() {
 		return caption;
 	}
-	public void setCaption(int caption) {
+	public void setCaption(String caption) {
 		this.caption = caption;
 	}
 	public int getHarvestNum() {

@@ -29,7 +29,7 @@ import cn.jxufe.service.SeedService;
 	    }
 	    @RequestMapping(value="gridData",produces=MediaType.APPLICATION_JSON_VALUE)
 	    @ResponseBody
-	    public  EasyUIData<?> gridData(EasyUIDataPageRequest pageRequest,@RequestParam(defaultValue="草莓") String caption,Model model){
+	    public  EasyUIData<?> gridData(EasyUIDataPageRequest pageRequest,@RequestParam(defaultValue="") String caption,Model model){
 	        System.out.println(caption);
 	        List<Sort.Order> orders = new ArrayList<Sort.Order>();
 	        if(pageRequest.getOrder().equals("asc")) {
@@ -37,9 +37,16 @@ import cn.jxufe.service.SeedService;
 	        }else {
 	            orders.add(new Sort.Order(Direction.DESC,pageRequest.getSort()));
 	        }
-	        Pageable pageable = new PageRequest(pageRequest.getPage()-1, pageRequest.getRows(), new Sort(orders));       
-//	        return seedService.findSome(caption, pageable);
-	        return null;
+	        Pageable pageable = new PageRequest(pageRequest.getPage()-1, pageRequest.getRows(), new Sort(orders)); 
+	        if(caption.equals(""))
+	        	{
+	        	System.out.println("1");
+	        		return seedService.findBySome(pageable);
+	        	}
+	        else {
+	        	System.out.println("2");
+	        	return seedService.findByCaption(caption, pageable);
+	        }
 	    }
 	    @RequestMapping(value="save",produces=MediaType.APPLICATION_JSON_VALUE)
 	    @ResponseBody

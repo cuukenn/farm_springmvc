@@ -60,6 +60,25 @@ public class SeedImp implements SeedService{
         return message;
 	}
 
+	@Override
+	public EasyUIData<?> findByCaption(String caption, Pageable pageable) {
+		Page<Seed> page = seedDAO.findByCaption(caption,pageable);
+        EasyUIData<Seed> easyUIData = new EasyUIData<Seed>();
+        easyUIData.setTotal(page.getTotalElements());
+        easyUIData.setRows(page.getContent());
+        return easyUIData;
+	}
+
+	@Override
+	public EasyUIData<?> findBySome(Pageable pageable) {
+		// TODO Auto-generated method stub
+		Page<Seed> page = seedDAO.findAll(pageable);
+		EasyUIData<Seed> easyUIData = new EasyUIData<Seed>();
+        easyUIData.setTotal(page.getTotalElements());
+        easyUIData.setRows(page.getContent());
+		return easyUIData;
+	}
+
 	
 
 }

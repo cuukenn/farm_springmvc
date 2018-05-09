@@ -106,11 +106,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					种子类型:
    		 				</td>
    		 				<td>
-   		 				<input name='type' class="easyui-combobox" panelHeight="auto"
-					        data-options=" editable:false,
-					        valueField:'code',
-					        textField:'caption',
-					        url:'<%=basePath%>/codeSeedType/data'">
+	   		 				<input name='type' class="easyui-combobox" panelHeight="auto"
+						        data-options=" editable:false,
+						        valueField:'code',
+						        textField:'caption',
+						        url:'<%=basePath%>codeSeedType/data'">
    		 				</td>
    		 			</tr>
    		 			<tr>
@@ -153,10 +153,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 				</td>
    		 				<td>
    		 					<input name='landRequirement' class="easyui-combobox" panelHeight="auto"
-					        data-options=" editable:false,
-					        valueField:'code',
-					        textField:'caption',
-					        data:'<%=basePath%>/codeLandRequire/data'">
+						        data-options=" editable:false,
+						        valueField:'code',
+						        textField:'caption',
+						        url:'<%=basePath%>codeLandRequire/data'">
    		 				</td>
    		 				</td>
    		 			</tr>
@@ -202,7 +202,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         title: '种子清单',
         height: 600,
         method:'post',
-        url: '<%=basePath%>/eed/gridData',
+        url: '<%=basePath%>seed/gridData',
         saveUrl: '<%=basePath%>seed/save',
         updateUrl: '<%=basePath%>seed/save',
         destroyUrl: '<%=basePath%>seed/delete',
@@ -299,15 +299,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         required:true
         }
         }},
-        {title: '操作', field: 'ID', width: 50, sortable: true,align:'center',editor:{
-	        type:'validatebox',
-	        options: {
-	        required:true
-        	},
+        {title: '操作', field: 'option', width: 50,align:'center',
         	formatter:function(value,row){
-                return  '<a href="#" class="easyui-linkbutton c2" onclick="javascript:setImgPosition()">添加</a>';
+                return  '<a href="#" class="easyui-linkbutton c5" onclick="javascript:setImgPosition()">添加</a>';
                }
-        }}
+        }
         ]],
         destroyMsg:{
 	        norecord:{
@@ -338,7 +334,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         });
         function doSearch(){
 	        grid.datagrid("load",{
-	        gender: $("#genderSearch").val()
+	        caption: $("#genderSearch").val()
         	})
 	    };
         

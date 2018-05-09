@@ -7,5 +7,6 @@ import cn.jxufe.entity.Seed;
 
 public interface SeedDAO extends PagingAndSortingRepository<Seed, Long> {
 	public Page<Seed> findByType(int type,Pageable pageable); 
-	public Page<Seed> findByLandRequirement(int landRequirement,Pageable pageable); 
+	public Page<Seed> findByLandRequirement(int landRequirement,Pageable pageable);
+	public Page<Seed> findByCaption(String caption, Pageable pageable);
 }

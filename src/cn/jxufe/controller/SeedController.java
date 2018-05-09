@@ -38,7 +38,8 @@ import cn.jxufe.service.SeedService;
 	            orders.add(new Sort.Order(Direction.DESC,pageRequest.getSort()));
 	        }
 	        Pageable pageable = new PageRequest(pageRequest.getPage()-1, pageRequest.getRows(), new Sort(orders));       
-	        return seedService.findSome(caption, pageable);
+//	        return seedService.findSome(caption, pageable);
+	        return null;
 	    }
 	    @RequestMapping(value="save",produces=MediaType.APPLICATION_JSON_VALUE)
 	    @ResponseBody

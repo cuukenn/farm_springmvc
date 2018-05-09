@@ -3,16 +3,17 @@ package cn.jxufe.imp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import cn.jxufe.bean.EasyUIData;
 import cn.jxufe.bean.Message;
 import cn.jxufe.dao.SeedDAO;
 import cn.jxufe.entity.Seed;
 import cn.jxufe.service.SeedService;
-
+@Service
 public class SeedImp implements SeedService{
 	@Autowired
-    SeedDAO seedDAO ;
+    SeedDAO seedDAO;
 	@Override
 	public EasyUIData<?> findByType(int type, Pageable pageable) {
 		Page<Seed> page = seedDAO.findByType(type,pageable);

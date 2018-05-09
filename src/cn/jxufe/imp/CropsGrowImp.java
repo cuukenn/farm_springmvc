@@ -3,13 +3,14 @@ package cn.jxufe.imp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import cn.jxufe.bean.EasyUIData;
 import cn.jxufe.bean.Message;
 import cn.jxufe.dao.CropsGrowDAO;
 import cn.jxufe.entity.CropsGrow;
 import cn.jxufe.service.CropsGrowService;
-
+@Service
 public class CropsGrowImp implements CropsGrowService{
 	@Autowired
 	CropsGrowDAO cropsGrowDAO ;

@@ -24,7 +24,8 @@ import cn.jxufe.service.CropsGrowService;
 	    @RequestMapping(value="/gridData",produces=MediaType.APPLICATION_JSON_VALUE)
 	    @ResponseBody
 	    public List<CropsGrow> gridData(int cId) throws Exception {
-	        return cropsGrowService.findSome(cId);    
+//	        return cropsGrowService.findSome(cId);
+	    	return null;
 	    }
 	    @RequestMapping(value="save",produces=MediaType.APPLICATION_JSON_VALUE)
 	    @ResponseBody

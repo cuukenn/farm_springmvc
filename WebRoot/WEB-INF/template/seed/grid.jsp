@@ -17,22 +17,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script type="text/javascript" src="<%=basePath%>ext/easyui/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="<%=basePath%>ext/easyui/plugins/jquery.edatagrid.js"></script>
     <script type="text/javascript" src="<%=basePath%>ext/easyui/locale/easyui-lang-zh_CN.js"></script>
-    <script type="text/javascript" src="<%=basePath%>ext/farm/helper.js?346t"></script>    
+    <script type="text/javascript" src="<%=basePath%>ext/farm/helper.js?346t"></script>   
 </head>
         <body>
         <div id="controlBox" style="background-color:green;">
         	<span style="color:white;">种子名称:</span>
         	<input id="genderSearch" class="easyui-textbox">
 
-        	<a href="#" class="easyui-linkbutton c1" iconCls="icon-search" onclick="doSearch()">查询</a>
+        	<a href="javascript:void(0)" class="easyui-linkbutton c1" iconCls="icon-search" onclick="doSearch()">查询</a>
 
-        	<a href="#" class="easyui-linkbutton c2" iconCls="icon-add" onclick="javascript:newRecord()">添加</a>
+        	<a href="javascript:void(0)" class="easyui-linkbutton c2" iconCls="icon-add" onclick="javascript:newRecord()">添加</a>
 
-        	<a href="#" class="easyui-linkbutton c4" iconCls="icon-edit" onclick="javascript:editRecord()">编辑</a>
+        	<a href="javascript:void(0)" class="easyui-linkbutton c4" iconCls="icon-edit" onclick="javascript:editRecord()">编辑</a>
 
-        	<a href="#" class="easyui-linkbutton c3" iconCls="icon-remove" onclick="javascript:grid.edatagrid('cancelRow')">取消</a>
+        	<a href="javascript:void(0)" class="easyui-linkbutton c3" iconCls="icon-remove" onclick="javascript:grid.edatagrid('cancelRow')">取消</a>
 
-        	<a href="#" class="easyui-linkbutton c5" iconCls="icon-cancel" onclick="javascript:grid.edatagrid('destroyRow')">删除</a>
+        	<a href="javascript:void(0)" class="easyui-linkbutton c5" iconCls="icon-cancel" onclick="javascript:grid.edatagrid('destroyRow')">删除</a>
         </div>
          <div id="formContainer" class="easyui-dialog" style="width:800px;height:420px;padding:10px 10px" closed="true" buttons="#formContainerButtons">
    		 	<form id="formEditor">
@@ -261,7 +261,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         }},
         {title: '操作', field: 'option', width: 50,align:'center',
         	formatter:function(value,row){
-                return  '<a href="#"  class="easyui-linkbutton c5" onclick="showCropsGrowEdit()">成长</a>';
+                return  '<a href="javascript:void(0)" style="background-color:white;border-radius:5px;"  class="easyui-linkbutton" onclick="showCropsGrowEdit()">成长阶段</a>';
                }
         }
         ]],

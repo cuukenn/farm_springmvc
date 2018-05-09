@@ -1,18 +1,15 @@
     var draggableImg ;	
+    var imgExtData={};
 	$(document).ready(function(){
 		draggableImg = $('#tools-imagePositioner-display img');
-		
 		draggableImg.draggable({
             onStopDrag: function () {
 				imgExtData.offsetX = draggableImg.position().left;
 				imgExtData.offsetY = draggableImg.position().top;
 				imgExtData.width = draggableImg.width();
 				imgExtData.height = draggableImg.height();
-                //console.log(imgExtData);
             }
         });
-
-
 		draggableImg.resizable();		
 	
 	});

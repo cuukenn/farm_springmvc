@@ -9,6 +9,7 @@ import cn.jxufe.bean.EasyUIData;
 import cn.jxufe.bean.Message;
 import cn.jxufe.dao.CropsGrowDAO;
 import cn.jxufe.entity.CropsGrow;
+import cn.jxufe.entity.Seed;
 import cn.jxufe.service.CropsGrowService;
 @Service
 public class CropsGrowImp implements CropsGrowService{
@@ -49,6 +50,15 @@ public class CropsGrowImp implements CropsGrowService{
             message.setMsg("删除失败");
         }
         return message;
+	}
+
+	public EasyUIData<?> findBySome(Pageable pageable) {
+		// TODO Auto-generated method stub
+		Page<CropsGrow> page = cropsGrowDAO.findAll(pageable);
+		EasyUIData<CropsGrow> easyUIData = new EasyUIData<CropsGrow>();
+        easyUIData.setTotal(page.getTotalElements());
+        easyUIData.setRows(page.getContent());
+		return easyUIData;
 	}
 
 	

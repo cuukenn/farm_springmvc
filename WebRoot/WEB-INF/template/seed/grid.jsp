@@ -13,56 +13,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link rel="stylesheet" type="text/css" href="<%=basePath%>ext/easyui/themes/icon.css">
     <link rel="stylesheet" type="text/css" href="<%=basePath%>ext/easyui/themes/color.css">
     <link rel="stylesheet" type="text/css" href="<%=basePath%>ext/farm/farm.css">
-     <link rel="stylesheet" type="text/css" href="<%=basePath%>ext/farm/imgPosition.css">
     <script type="text/javascript" src="<%=basePath%>ext/easyui/jquery.min.js"></script>
     <script type="text/javascript" src="<%=basePath%>ext/easyui/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="<%=basePath%>ext/easyui/plugins/jquery.edatagrid.js"></script>
     <script type="text/javascript" src="<%=basePath%>ext/easyui/locale/easyui-lang-zh_CN.js"></script>
     <script type="text/javascript" src="<%=basePath%>ext/farm/helper.js?346t"></script>    
-    <script type="text/javascript" src="<%=basePath%>ext/farm/imgPosition.js?346t"></script> 
-<style>
-        body{
-	        margin: 0px;
-	        background-image:url(images/welcome.png);
-	        background-size:100% 100%;
-	        background-repeat:no-repeat;
-	        background-color: transparent;
-	        border:none;
-	        width:100%;
-	        height:100%;
-        }
-        #grid{
-        	backgound-color:green;
-        }
-        table tbody tr>td:nth-child(3){
-        	padding-left:120px;
-        }
-        </style>
-        </head>
+</head>
         <body>
-        <div id="controlBox">
-        <span style="color:white;">种子名称:</span>
-        <input id="genderSearch" class="easyui-textbox">
+        <div id="controlBox" style="background-color:green;">
+        	<span style="color:white;">种子名称:</span>
+        	<input id="genderSearch" class="easyui-textbox">
 
-        <a href="#" class="easyui-linkbutton c1" iconCls="icon-search"
+        	<a href="#" class="easyui-linkbutton c1" iconCls="icon-search" onclick="doSearch()">查询</a>
 
-        onclick="doSearch()">查询</a>
+        	<a href="#" class="easyui-linkbutton c2" iconCls="icon-add" onclick="javascript:newRecord()">添加</a>
 
-        <a href="#" class="easyui-linkbutton c2" iconCls="icon-add"
+        	<a href="#" class="easyui-linkbutton c4" iconCls="icon-edit" onclick="javascript:editRecord()">编辑</a>
 
-        onclick="javascript:newRecord()">添加</a>
+        	<a href="#" class="easyui-linkbutton c3" iconCls="icon-remove" onclick="javascript:grid.edatagrid('cancelRow')">取消</a>
 
-        <a href="#" class="easyui-linkbutton c4" iconCls="icon-edit"
-
-        onclick="javascript:grid.edatagrid('saveRow')">编辑</a>
-
-        <a href="#" class="easyui-linkbutton c3" iconCls="icon-remove"
-
-        onclick="javascript:grid.edatagrid('cancelRow')">取消</a>
-
-        <a href="#" class="easyui-linkbutton c5" iconCls="icon-cancel"
-
-        onclick="javascript:grid.edatagrid('destroyRow')">删除</a>
+        	<a href="#" class="easyui-linkbutton c5" iconCls="icon-cancel" onclick="javascript:grid.edatagrid('destroyRow')">删除</a>
         </div>
          <div id="formContainer" class="easyui-dialog" style="width:800px;height:420px;padding:10px 10px" closed="true" buttons="#formContainerButtons">
    		 	<form id="formEditor">
@@ -181,19 +151,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveRecord()">确定</a>
     		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#formContainer').dialog('close')">取消</a>
     	</div> 
-    	
-    	
         <table id="grid"></table>
-        <div id="msgBox"></div>
-        <div id="positionDialog" class="easyui-dialog" style="width:240px;height:420px;padding:10px 10px" closed="true" buttons="#positionDialogButtons">
-		    <div id="tools-imagePositioner-display" class="tools-imagePositioner-display">
-		    <img class="easyui-draggable easyui-resizable" data-options="onDrag:imagePositioneronDrag"  src="">
-		    </div>
-		</div>
-		<div id="positionDialogButtons">
-			<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok"onclick="gainPostion()">确定</a>
-			<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#positionDialog').dialog('close')">取消</a>
-		</div>  
+        <div id="msgBox"></div> 
+        <div id="dd"></div> 
         <script>
         var grid;
         $(document).ready(function () {
@@ -301,7 +261,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         }},
         {title: '操作', field: 'option', width: 50,align:'center',
         	formatter:function(value,row){
-                return  '<a href="#" class="easyui-linkbutton c5" onclick="javascript:setImgPosition()">添加</a>';
+                return  '<a href="#"  class="easyui-linkbutton c5" onclick="showCropsGrowEdit()">成长</a>';
                }
         }
         ]],
@@ -355,12 +315,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     function newRecord(){
         $('#formContainer').dialog('open').dialog('center').dialog('setTitle','修改图片显示位置');
     }
-    function setImgPosition(){
-        $('#positionDialog').dialog('open').dialog('center').dialog('setTitle','修改图片位置');
-    }
     function saveRecord() {
         $('#formEditor').form('submit', {
-            url: '<%=basePath%>/seed/save',
+            url: '<%=basePath%>seed/save',
             onSubmit: function (param) {
             return $(this).form('validate');
             },
@@ -377,6 +334,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             }
         	})
         };
+        function showCropsGrowEdit(){
+        	$("#dd").dialog({
+        		width:'800',
+        		height:'420',
+        		title:'编辑成长阶段',
+        		href:'<%=basePath%>cropsGrow/grid',
+        		closed:false,
+        		modal:true,
+        		cache:false
+        	})
+    	}
         </script>
      </body>
 </html>

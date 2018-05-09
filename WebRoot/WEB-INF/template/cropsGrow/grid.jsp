@@ -25,6 +25,283 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script type="text/javascript" src="<%=basePath%>ext/farm/imgPosition.js"></script>
 </head>
 <body>
+	<div id="controlBox">
+        <a href="#" class="easyui-linkbutton c2" iconCls="icon-add" onclick="javascript:newRecord()">添加</a>
 
+        <a href="#" class="easyui-linkbutton c4" iconCls="icon-edit" onclick="javascript:editRecord()">编辑</a>
+
+        <a href="#" class="easyui-linkbutton c3" iconCls="icon-remove" onclick="javascript:cgrid.edatagrid('cancelRow')">取消</a>
+
+        <a href="#" class="easyui-linkbutton c5" iconCls="icon-cancel" onclick="javascript:cgrid.edatagrid('destroyRow')">删除</a>
+    </div>
+         <div id="codeCropContainer" class="easyui-dialog" style="width:800px;height:420px;padding:10px 10px" closed="true" buttons="#codeCropContainerButtons">
+   		 	<form id="cropsGrowEditor">
+   		 		<table>
+   		 			<tr>
+   		 				<td>
+   		 					ID:
+   		 				</td>
+   		 				<td>
+   		 					<input name='id' type="text"/>
+   		 				</td>
+   		 				<td>
+   		 					种子ID:
+   		 				</td>
+   		 				<td>
+   		 					<input name='cId' type="text"/>
+   		 				</td>
+   		 			</tr>
+   		 			<tr>
+   		 				<td>
+   		 					<label>生长阶段:</label>
+   		 				</td>
+   		 				<td>
+   		 					<input name='growStep' type="text"/>
+   		 				</td>
+   		 				<td>
+   		 					生长阶段标题:
+   		 				</td>
+   		 				<td>
+   		 					<input name='growCaption' type="text"/>
+   		 				</td>
+   		 			</tr>
+   		 			<tr>
+   		 				<td>
+   		 					阶段生长时间:
+   		 				</td>
+   		 				<td>
+   		 					<input name='growTime' class="easyui-textbox" ">
+   		 				</td>
+   		 				<td>
+   		 					生虫概率:
+   		 				</td>
+   		 				<td>
+	   		 				<input name='insect' type='text'/>
+   		 				</td>
+   		 			</tr>
+   		 			<tr>
+   		 				<td>
+   		 					图片宽度:
+   		 				</td>
+   		 				<td>
+   		 					<input name='width' type="text"/>
+   		 				</td>
+   		 				<td>
+   		 					图片高度:
+   		 				</td>
+   		 				<td>
+   		 					<input name='height' type="text"/>
+   		 				</td>
+   		 			</tr>
+   		 			<tr>
+   		 				<td>
+   		 					图片offsetX:
+   		 				</td>
+   		 				<td>
+   		 					<input name='offsetX' type="text"/>
+   		 				</td>
+   		 				<td>
+   		 					图片offsetY:
+   		 				</td>
+   		 				<td>
+   		 					<input name='offsetY' type="text"/>
+   		 				</td>
+   		 			</tr>
+   		 			<tr>
+   		 				<td>
+   		 					作物状态:
+   		 				</td>
+   		 				<td>
+   		 					<input name='satus' class="easyui-combobox" panelHeight="auto"
+						        data-options=" editable:false,
+						        valueField:'code',
+						        textField:'caption',
+						        url:'<%=basePath%>codeCropStatus/data'">
+   		 				</td>
+   		 				<td>
+   		 					
+   		 				</td>
+   		 				<td>
+   		 					<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="javascript:showImgEditor()">编辑图片位置</a>
+   		 				</td>
+   		 			</tr>
+   		 		</table>
+    		</form>
+    	</div>
+    	<div id="codeCropContainerButtons">
+    		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveRecord()">确定</a>
+    		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#codeCropContainer').dialog('close')">取消</a>
+    	</div> 
+    	
+    	 <div id="positionDialog" class="easyui-dialog" style="width:240px;height:420px;padding:10px 10px" closed="true" buttons="#positionDialogButtons">
+    			<div id="tools-imagePositioner-display" class="tools-imagePositioner-display">
+    				 <img class="easyui-draggable easyui-resizable" data-options="onDrag:imagePositioneronDrag"  src="">
+    			 </div>
+    	</div>
+		<div id="positionDialogButtons">
+    		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="gainPostion()">确定</a>
+    		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#positionDialog').dialog('close')">取消</a>
+    	</div>  
+        <table id="cgrid"></table>
+        <div id="msgBox"></div> 
 </body>
+<script>
+        var cgrid;
+        $(document).ready(function () {
+        //配置表格
+        cgrid = $('#cgrid').edatagrid({
+	        title: '成长阶段定义',
+	        height: 600,
+	        method:'post',
+	        url: '<%=basePath%>cropsGrow/gridData',
+	        saveUrl: '<%=basePath%>cropsGrow/save',
+	        updateUrl: '<%=basePath%>cropsGrow/save',
+	        destroyUrl: '<%=basePath%>cropsGrow/delete',
+	        border: false,
+	        rownumbers: true,
+	        remoteSort: true,
+	        nowrap: false,
+	        singleSelect: true,
+	        fitColumns: true,
+	        pagination: true,
+	        striped: true,
+	        autoSave:true,
+	        idField: "ID",
+	        columns: [[
+	        {field: 'id',title: 'ID' , width: 20, sortable: true,align:'center'},
+	        {title: '种子ID', field: 'cId', width: 30, sortable: true,align:'center'},
+	        {field: 'growStep',title: '生长阶段' , width: 30, sortable: true,align:'center'},
+	
+	        {title: 'growCaption', field: '生长阶段标题', width: 50, sortable: true,align:'center',editor:{
+	        type:'validatebox',
+	        options: {
+	        required:true
+	        }
+	        }},
+	        {title: '阶段生长时间', field: 'growTime', width: 50, sortable: true,align:'center',editor:{
+		        type:'validatebox',
+		        options: {
+		        required:true
+		        }
+	        }},
+	        {title: '生虫概率', field: 'insect', width: 50, sortable: true,align:'center',editor:{
+	        type:'validatebox',
+	        options: {
+	        required:true
+	        }
+	        }},
+	
+	        {title: '图片宽度', field: 'width', width: 50, sortable: true,align:'center',editor:{
+	        type:'validatebox',
+	        options: {
+	        required:true
+	        }
+	        }},
+	        {title: '图片高度', field: 'height', width: 50, sortable: true,align:'center',editor:{
+	        type:'validatebox',
+	        options: {
+	        required:true
+	        }
+	        },
+	        formatter:function(value,row){
+	        if(value==undefined)return "";
+	        return value+'秒';
+	        }},
+	        {title: '图片offsetX', field: 'offsetX', width: 50, sortable: true,align:'center',editor:{
+	        type:'validatebox',
+	        options: {
+	        required:true
+	        }
+	        }},
+	
+	        {title: '图片offsetY', field: 'offsetY', width: 50, sortable: true,align:'center',editor:{
+		        type:'validatebox',
+		        options: {
+		        required:true}
+	        },
+	        formatter:function(value,row){
+	        if(value==undefined)return "";
+	        return value+'金币';
+	        }},
+	        {title: '作物状态', field: 'status', width: 50, sortable: true,align:'center',editor:{
+	        type:'validatebox',
+	        options: {
+	        required:true
+	        }},
+	        formatter:function(value,row){
+	            if(value==undefined)return "";
+	            return value+'金币';
+	            }
+	        }
+        	]],
+        destroyMsg:{
+	        norecord:{
+		        title:'警告',
+		        msg:'首先需要选中记录，然后在点击删除按钮'
+		        },
+		        confirm:{
+			        title:'确认',
+			        msg:'是否删除选中记录?'
+		        }
+        },
+        onSuccess:function(index,row){
+	        console.log(row);
+	        $("#msgBox").text(row.msg);
+        },
+        onDestroy:function(index,row){
+	        console.log(row);
+	        $("#msgBox").text(row.msg);
+        }
+        });
+        cgrid.datagrid("getPager").pagination({
+	        pageSize: 5,
+	        pageList: [5,10,15,20]
+        });
+        cgrid.datagrid("resize",{
+	        height:($(window).height()-36)
+	        });
+        });
+        
+        function editRecord(){
+            var row = cgrid.datagrid('getSelected');
+            if (row){
+                $('#codeCropContainer').dialog('open').dialog('center').dialog('setTitle','编辑数据');
+                $('#cropsGrowEditor').form('load',row);
+            } else {
+                $.messager.show({
+                    title: "消息",
+                    msg: "请先选择一行数据，然后再尝试点击操作按钮！"
+                });
+            }
+    }   
+    
+    function newRecord(){
+        $('#formContainer').dialog('open').dialog('center').dialog('setTitle','修改图片显示位置');
+    }
+    function setImgPosition(){
+        $('#positionDialog').dialog('open').dialog('center').dialog('setTitle','修改图片位置');
+    }
+    function saveRecord() {
+        $('#formEditor').form('submit', {
+            url: '<%=basePath%>seed/save',
+            onSubmit: function (param) {
+            return $(this).form('validate');
+            },
+            success: function (result) {
+                var result = eval('(' + result + ')');
+                if (result.code == 0) {
+                    $('#formContainer').dialog('close');
+                    grid.datagrid('reload');
+                }
+                $.messager.show({
+                    title: "消息",
+                    msg: result.msg
+                });
+            }
+        	})
+        };
+        function showImgEditor(){
+        	$('#positionDialog').dialog('open').dialog('center').dialog('setTitle','定位编辑器');
+        }
+        </script>
 </html>

@@ -42,7 +42,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					ID:
    		 				</td>
    		 				<td>
-   		 					<input name='ID' type="text"/>
+   		 					<input name='id' type="text"/>
    		 				</td>
    		 				<td>
    		 					种子ID:
@@ -156,6 +156,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div id="dd"></div> 
         <script>
         var grid;
+        var cId;
         $(document).ready(function () {
         //配置表格
         grid = $('#grid').edatagrid({
@@ -177,7 +178,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         autoSave:true,
         idField: "ID",
         columns: [[
-        {field: 'ID',title: 'ID' , width: 20, sortable: true,align:'center'},
+        {field: 'id',title: 'ID' , width: 20, sortable: true,align:'center'},
         {title: '种子ID', field: 'cId', width: 30, sortable: true,align:'center'},
         {field: 'caption',title: '种子名称' , width: 30, sortable: true,align:'center'},
 
@@ -186,13 +187,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         options: {
         required:true
         }
-        }},
+        },
+	    formatter:function(value,row){
+	    	return value+"季作物";
+		}},
         {title: '种子等级', field: 'cropLevel', width: 50, sortable: true,align:'center',editor:{
 	        type:'validatebox',
 	        options: {
 	        required:true
 	        }
-        }},
+        },
+	    formatter:function(value,row){
+	    	return value+"级作物";
+		}},
         {title: '种子类型', field: 'type', width: 50, sortable: true,align:'center',editor:{
         type:'validatebox',
         options: {
@@ -261,7 +268,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         }},
         {title: '操作', field: 'option', width: 50,align:'center',
         	formatter:function(value,row){
-                return  '<a href="javascript:void(0)" style="background-color:white;border-radius:5px;"  class="easyui-linkbutton" onclick="showCropsGrowEdit()">成长阶段</a>';
+                return  '<a href="javascript:void(0)" style="background-color:white;border-radius:5px;"  class="easyui-linkbutton" onclick="javascript:showCropsGrowEdit(+'+row.cId+')">成长阶段</a>';
                }
         }
         ]],
@@ -301,7 +308,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         function editRecord(){
             var row = grid.datagrid('getSelected');
             if (row){
-
                 $('#formContainer').dialog('open').dialog('center').dialog('setTitle','编辑数据');
                 $('#formEditor').form('load',row);
             } else {
@@ -313,7 +319,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     }   
     
     function newRecord(){
-        $('#formContainer').dialog('open').dialog('center').dialog('setTitle','修改图片显示位置');
+    	 $('#formEditor').find("input[name='id']").val(0);
+        $('#formContainer').dialog('open').dialog('center').dialog('setTitle','添加数据');
     }
     function saveRecord() {
         $('#formEditor').form('submit', {
@@ -334,7 +341,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             }
         	})
         };
-        function showCropsGrowEdit(){
+        function showCropsGrowEdit(value){
+        	cId=value;
         	$("#dd").dialog({
         		width:'800',
         		height:'420',

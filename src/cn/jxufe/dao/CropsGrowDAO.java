@@ -9,5 +9,7 @@ import cn.jxufe.entity.Seed;
 public interface CropsGrowDAO extends PagingAndSortingRepository<CropsGrow, Long> {
 
 	Page<CropsGrow> findByStatus(int status, Pageable pageable);
+	Page<CropsGrow> findByCId(int cId, Pageable pageable);
+	
 	
 }

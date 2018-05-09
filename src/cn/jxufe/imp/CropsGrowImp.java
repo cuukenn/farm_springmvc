@@ -61,6 +61,15 @@ public class CropsGrowImp implements CropsGrowService{
 		return easyUIData;
 	}
 
+	@Override
+	public EasyUIData<?> findByCId(int cId, Pageable pageable) {
+		Page<CropsGrow> page = cropsGrowDAO.findByCId(cId,pageable);
+		EasyUIData<CropsGrow> easyUIData = new EasyUIData<CropsGrow>();
+        easyUIData.setTotal(page.getTotalElements());
+        easyUIData.setRows(page.getContent());
+		return easyUIData;
+	}
+
 	
 
 }

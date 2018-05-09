@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,9 +30,9 @@ import cn.jxufe.service.CropsGrowService;
 	    public String grid(){
 	        return "cropsGrow/grid";
 	    }
-	    @RequestMapping(value="/gridData",produces=MediaType.APPLICATION_JSON_VALUE)
+	    @RequestMapping(value="/gridData/{cId}",produces=MediaType.APPLICATION_JSON_VALUE)
 	    @ResponseBody
-	    public  EasyUIData<?> gridData(EasyUIDataPageRequest pageRequest,Model model){
+	    public  EasyUIData<?> gridData(EasyUIDataPageRequest pageRequest,@PathVariable int cId,Model model){
 	        List<Sort.Order> orders = new ArrayList<Sort.Order>();
 	        if(pageRequest.getOrder().equals("asc")) {
 	            orders.add(new Sort.Order(Direction.ASC,pageRequest.getSort()));
@@ -39,7 +40,7 @@ import cn.jxufe.service.CropsGrowService;
 	            orders.add(new Sort.Order(Direction.DESC,pageRequest.getSort()));
 	        }
 	        Pageable pageable = new PageRequest(pageRequest.getPage()-1, pageRequest.getRows(), new Sort(orders)); 
-	        return cropsGrowService.findBySome(pageable);
+	        return cropsGrowService.findByCId(cId,pageable);
 	    }
 	    @RequestMapping(value="save",produces=MediaType.APPLICATION_JSON_VALUE)
 	    @ResponseBody

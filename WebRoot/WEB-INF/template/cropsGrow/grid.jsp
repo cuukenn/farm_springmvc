@@ -91,7 +91,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					作物状态:
    		 				</td>
    		 				<td>
-   		 					<input name='satus' class="easyui-combobox" panelHeight="auto"
+   		 					<input name='status' class="easyui-combobox" panelHeight="auto"
 						        data-options=" editable:false,
 						        valueField:'code',
 						        textField:'caption',
@@ -108,7 +108,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		</form>
     </div>
     <div id="codeCropContainerButtons">
-    		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveRecord()">确定</a>
+    		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="javascript:saveRecord1()">确定</a>
     		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#codeCropContainer').dialog('close')">取消</a>
     </div> 
     <div id="positionDialog" class="easyui-dialog" style="width:240px;height:420px;padding:10px 10px" closed="true" buttons="#positionDialogButtons">
@@ -123,11 +123,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <table id="grid1"></table>
      
  <script type="text/javascript">
-	cgrid = $('#grid1').edatagrid({
+ 	var codeCropStatusData=[];
+ 	getCodeCropStatus();
+	var cgrid = $('#grid1').edatagrid({
 	    title: '成长阶段定义',
 	    height: 600,
 	    method:'post',
-	    url: '<%=basePath%>cropsGrow/gridData',
+	    url: '<%=basePath%>cropsGrow/gridData/'+cId,
 	    saveUrl: '<%=basePath%>cropsGrow/save',
 	    updateUrl: '<%=basePath%>cropsGrow/save',
 	    destroyUrl: '<%=basePath%>cropsGrow/delete',
@@ -146,7 +148,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    {title: '种子ID', field: 'cId', width: 30, sortable: true,align:'center'},
 			    {field: 'growStep',title: '生长阶段' , width: 30, sortable: true,align:'center'},
 	
-	    		{title: 'growCaption', field: '生长阶段标题', width: 50, sortable: true,align:'center',editor:{
+	    		{title: '生长阶段标题', field: 'growCaption', width: 50, sortable: true,align:'center',editor:{
 				    type:'validatebox',
 				    options: {
 				    required:true
@@ -170,7 +172,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				    options: {
 				    required:true
 				    }
-			    }},
+			    },
+			    formatter:function(value,row){
+				    if(value==undefined)return "";
+				    return value+'px';
+		    	}},
 			    {title: '图片高度', field: 'height', width: 50, sortable: true,align:'center',editor:{
 				    type:'validatebox',
 				    options: {
@@ -179,14 +185,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    			},
 				    formatter:function(value,row){
 					    if(value==undefined)return "";
-					    return value+'秒';
+					    return value+'px';
 			    }},
 			    {title: '图片offsetX', field: 'offsetX', width: 50, sortable: true,align:'center',editor:{
 				    type:'validatebox',
 				    options: {
 				    required:true
 				    }
-			    }},
+			    },
+			    formatter:function(value,row){
+				    if(value==undefined)return "";
+				    return value+'px';
+		   		 }},
 	
 			    {title: '图片offsetY', field: 'offsetY', width: 50, sortable: true,align:'center',editor:{
 			        type:'validatebox',
@@ -195,7 +205,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    },
 				    formatter:function(value,row){
 					    if(value==undefined)return "";
-					    return value+'金币';
+					    return value+'px';
 			    }},
 			    {title: '作物状态', field: 'status', width: 50, sortable: true,align:'center',editor:{
 				    type:'validatebox',
@@ -203,8 +213,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				    required:true
 				    }},
 				    formatter:function(value,row){
-				        if(value==undefined)return "";
-				        return value+'金币';
+				    	var rs="";
+				        for(var index in codeCropStatusData){
+				        	if(codeCropStatusData[index].code==value){
+				        		rs=codeCropStatusData[index].caption;
+				        		break;
+				        	}
+				        }
+				        return rs;
 				}}
 		    ]],
 		destroyMsg:{
@@ -247,18 +263,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         }
 	};
 	function newRecord1(){
+		 $('#cropsGrowEditor').find("input[name='id']").val(0);
         $('#codeCropContainer').dialog('open').dialog('center').dialog('setTitle','添加数据');
     };
     function saveRecord1() {
         $('#cropsGrowEditor').form('submit', {
-            url: '<%=basePath%>seed/save',
+            url: '<%=basePath%>cropsGrow/save',
             onSubmit: function (param) {
             return $(this).form('validate');
             },
             success: function (result) {
                 var result = eval('(' + result + ')');
                 if (result.code == 0) {
-                    $('#formContainer').dialog('close');
+                    $('#codeCropContainer').dialog('close');
                     cgrid.datagrid('reload');
                 }
                 $.messager.show({
@@ -303,4 +320,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	
     	$('#positionDialog').dialog('close');
     }
+    function getCodeCropStatus(){
+    	$.post("<%=basePath%>codeCropStatus/data", function(data){
+    		codeCropStatusData=data;
+            });
+    }
+   
 </script>

@@ -10,7 +10,7 @@ public interface SeedService {
 	 public EasyUIData<?> findByType(int type,Pageable pageable);
 	 public EasyUIData<?> findByLand(int landRequirement,Pageable pageable);
 	 public EasyUIData<?> findByCaption(String caption,Pageable pageable);
-	 public EasyUIData<?> findBySome(Pageable pageable);
+	 public EasyUIData<?> findALL(Pageable pageable);
 	 public Message save(Seed seed);
 	 public Message delete(Seed seed); 
 }

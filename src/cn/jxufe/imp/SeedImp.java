@@ -70,7 +70,7 @@ public class SeedImp implements SeedService{
 	}
 
 	@Override
-	public EasyUIData<?> findBySome(Pageable pageable) {
+	public EasyUIData<?> findALL(Pageable pageable) {
 		// TODO Auto-generated method stub
 		Page<Seed> page = seedDAO.findAll(pageable);
 		EasyUIData<Seed> easyUIData = new EasyUIData<Seed>();

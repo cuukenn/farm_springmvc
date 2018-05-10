@@ -174,6 +174,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         singleSelect: true,
         fitColumns: true,
         striped: true,
+        pagination: true,
         autoSave:true,
         idField: "ID",
         columns: [[

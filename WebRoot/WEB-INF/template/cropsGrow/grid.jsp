@@ -30,7 +30,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    nowrap: false,
 	    singleSelect: true,
 	    fitColumns: true,
-	    pagination: true,
+	    pagination: false,
 	    striped: true,
 	    autoSave:true,
 	    idField: "ID",

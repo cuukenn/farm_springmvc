@@ -40,11 +40,9 @@ import cn.jxufe.service.SeedService;
 	        Pageable pageable = new PageRequest(pageRequest.getPage()-1, pageRequest.getRows(), new Sort(orders)); 
 	        if(caption.equals(""))
 	        	{
-	        	System.out.println("1");
-	        		return seedService.findBySome(pageable);
+	        		return seedService.findALL(pageable);
 	        	}
 	        else {
-	        	System.out.println("2");
 	        	return seedService.findByCaption(caption, pageable);
 	        }
 	    }

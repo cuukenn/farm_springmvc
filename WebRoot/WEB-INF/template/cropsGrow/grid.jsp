@@ -13,10 +13,126 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		padding-left:160px;
     	}
 	</style>
-	<script type="text/javascript">
+	<div id="controlBox1" style="display:none;">
+        <a href="javascript:void(0)" class="easyui-linkbutton c2" iconCls="icon-add" onclick="javascript:newRecord1()">添加</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton c4" iconCls="icon-edit" onclick="javascript:editRecord1()">编辑</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton c3" iconCls="icon-remove" onclick="javascript:cgrid.edatagrid('cancelRow')">取消</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton c5" iconCls="icon-cancel" onclick="javascript:cgrid.edatagrid('destroyRow')">删除</a>
+    </div> 
+    <div id="codeCropContainer" class="easyui-dialog" style="width:800px;height:420px;padding:10px 10px;display:none;" closed="true" buttons="#codeCropContainerButtons">
+   		 	<form id="cropsGrowEditor">
+   		 		<table>
+   		 			<tr>
+   		 				<td>
+   		 					ID:
+   		 				</td>
+   		 				<td>
+   		 					<input name='id' class="easyui-textbox"/>
+   		 				</td>
+   		 				<td>
+   		 					种子ID:
+   		 				</td>
+   		 				<td>
+   		 					<input name='cId' class="easyui-textbox" required/>
+   		 				</td>
+   		 			</tr>
+   		 			<tr>
+   		 				<td>
+   		 					<label>生长阶段:</label>
+   		 				</td>
+   		 				<td>
+   		 					<input name='growStep' class="easyui-textbox" required/>
+   		 				</td>
+   		 				<td>
+   		 					生长阶段标题:
+   		 				</td>
+   		 				<td>
+   		 					<input name='growCaption' class="easyui-textbox" required/>
+   		 				</td>
+   		 			</tr>
+   		 			<tr>
+   		 				<td>
+   		 					阶段生长时间:
+   		 				</td>
+   		 				<td>
+   		 					<input name='growTime' class="easyui-textbox" required/>
+   		 				</td>
+   		 				<td>
+   		 					生虫概率:
+   		 				</td>
+   		 				<td>
+	   		 				<input name='insect'class="easyui-textbox" required/>
+   		 				</td>
+   		 			</tr>
+   		 			<tr>
+   		 				<td>
+   		 					图片宽度:
+   		 				</td>
+   		 				<td>
+   		 					<input name='width' class="easyui-textbox" required/>
+   		 				</td>
+   		 				<td>
+   		 					图片高度:
+   		 				</td>
+   		 				<td>
+   		 					<input name='height' class="easyui-textbox" required/>
+   		 				</td>
+   		 			</tr>
+   		 			<tr>
+   		 				<td>
+   		 					图片offsetX:
+   		 				</td>
+   		 				<td>
+   		 					<input name='offsetX' class="easyui-textbox" required/>
+   		 				</td>
+   		 				<td>
+   		 					图片offsetY:
+   		 				</td>
+   		 				<td>
+   		 					<input name='offsetY' class="easyui-textbox" required/>
+   		 				</td>
+   		 			</tr>
+   		 			<tr>
+   		 				<td>
+   		 					作物状态:
+   		 				</td>
+   		 				<td>
+   		 					<input name='status' class="easyui-combobox" panelHeight="auto"
+						        data-options=" editable:false,
+						        valueField:'code',
+						        textField:'caption',
+						        url:'<%=basePath%>codeCropStatus/data' " required/>
+   		 				</td>
+   		 				<td>
+   		 					
+   		 				</td>
+   		 				<td>
+   		 					<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="javascript:showImgEditor()">编辑图片位置</a>
+   		 				</td>
+   		 			</tr>
+   		 		</table>
+    		</form>
+    </div>
+    <div id="codeCropContainerButtons" style="display:none;">
+    		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="javascript:saveRecord1()">确定</a>
+    		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#codeCropContainer').dialog('close')">取消</a>
+    </div> 
+    <div id="positionDialog" class="easyui-dialog" style="width:240px;height:420px;padding:10px 10px;display:none;" closed="true" buttons="#positionDialogButtons">
+    			<div id="tools-imagePositioner-display" class=" tools-imagePositioner-display">
+    				 <img class="easyui-draggable easyui-resizable" data-options="onDrag:imagePositioneronDrag"  src="">
+    			 </div>
+    	</div>
+	<div id="positionDialogButtons" style="display:none;">
+    		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="gainPostion()">确定</a>
+    		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#positionDialog').dialog('close')">取消</a>
+    	</div>  
+    <table id="grid1"></table>
+    <script type="text/javascript">
  	var codeCropStatusData=[];
+ 	var cgrid;
  	getCodeCropStatus();
-	var cgrid = $('#grid1').edatagrid({
+ 	$(function(){
+		cgrid = $('#grid1').edatagrid({
 	    title: '成长阶段定义',
 	    height: '420',
 	    method:'post',
@@ -131,9 +247,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		onDestroy:function(index,row){
 		    console.log(row);
 		    $("#msgBox").text(row.msg);
-		}
+		},
+		onDblClickRow:function (rowIndex, rowData){
+			cgrid.datagrid("endEdit", rowIndex);
+    	}
 		});
-
+		$("#controlBox1").css("display","block");
+		$("#codeCropContainer").css("display","block");
+		$("#codeCropContainerButtons").css("display","block");
+		$("#positionDialog").css("display","block");
+		$("#positionDialogButtons").css("display","block");
+ 	});
 	function editRecord1(){
         var row = cgrid.datagrid('getSelected');
         if (row){
@@ -147,7 +271,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         }
 	};
 	function newRecord1(){
-		 $('#cropsGrowEditor').resetForm();
+		 $('#cropsGrowEditor').form("reset");
 		 $('#cropsGrowEditor').find("input[name='id']").val(0);
         $('#codeCropContainer').dialog('open').dialog('center').dialog('setTitle','添加数据');
     };
@@ -212,118 +336,4 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     }
    
 </script>
-	<div id="controlBox1">
-        <a href="javascript:void(0)" class="easyui-linkbutton c2" iconCls="icon-add" onclick="javascript:newRecord1()">添加</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton c4" iconCls="icon-edit" onclick="javascript:editRecord1()">编辑</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton c3" iconCls="icon-remove" onclick="javascript:cgrid.edatagrid('cancelRow')">取消</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton c5" iconCls="icon-cancel" onclick="javascript:cgrid.edatagrid('destroyRow')">删除</a>
-    </div> 
-    <div id="codeCropContainer" class="easyui-dialog" style="width:800px;height:420px;padding:10px 10px" closed="true" buttons="#codeCropContainerButtons">
-   		 	<form id="cropsGrowEditor">
-   		 		<table>
-   		 			<tr>
-   		 				<td>
-   		 					ID:
-   		 				</td>
-   		 				<td>
-   		 					<input name='id' type="text"/>
-   		 				</td>
-   		 				<td>
-   		 					种子ID:
-   		 				</td>
-   		 				<td>
-   		 					<input name='cId' type="text"/>
-   		 				</td>
-   		 			</tr>
-   		 			<tr>
-   		 				<td>
-   		 					<label>生长阶段:</label>
-   		 				</td>
-   		 				<td>
-   		 					<input name='growStep' type="text"/>
-   		 				</td>
-   		 				<td>
-   		 					生长阶段标题:
-   		 				</td>
-   		 				<td>
-   		 					<input name='growCaption' type="text"/>
-   		 				</td>
-   		 			</tr>
-   		 			<tr>
-   		 				<td>
-   		 					阶段生长时间:
-   		 				</td>
-   		 				<td>
-   		 					<input name='growTime' class="easyui-textbox" ">
-   		 				</td>
-   		 				<td>
-   		 					生虫概率:
-   		 				</td>
-   		 				<td>
-	   		 				<input name='insect' type='text'/>
-   		 				</td>
-   		 			</tr>
-   		 			<tr>
-   		 				<td>
-   		 					图片宽度:
-   		 				</td>
-   		 				<td>
-   		 					<input name='width' type="text"/>
-   		 				</td>
-   		 				<td>
-   		 					图片高度:
-   		 				</td>
-   		 				<td>
-   		 					<input name='height' type="text"/>
-   		 				</td>
-   		 			</tr>
-   		 			<tr>
-   		 				<td>
-   		 					图片offsetX:
-   		 				</td>
-   		 				<td>
-   		 					<input name='offsetX' type="text"/>
-   		 				</td>
-   		 				<td>
-   		 					图片offsetY:
-   		 				</td>
-   		 				<td>
-   		 					<input name='offsetY' type="text"/>
-   		 				</td>
-   		 			</tr>
-   		 			<tr>
-   		 				<td>
-   		 					作物状态:
-   		 				</td>
-   		 				<td>
-   		 					<input name='status' class="easyui-combobox" panelHeight="auto"
-						        data-options=" editable:false,
-						        valueField:'code',
-						        textField:'caption',
-						        url:'<%=basePath%>codeCropStatus/data'">
-   		 				</td>
-   		 				<td>
-   		 					
-   		 				</td>
-   		 				<td>
-   		 					<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="javascript:showImgEditor()">编辑图片位置</a>
-   		 				</td>
-   		 			</tr>
-   		 		</table>
-    		</form>
-    </div>
-    <div id="codeCropContainerButtons">
-    		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="javascript:saveRecord1()">确定</a>
-    		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#codeCropContainer').dialog('close')">取消</a>
-    </div> 
-    <div id="positionDialog" class="easyui-dialog" style="width:240px;height:420px;padding:10px 10px" closed="true" buttons="#positionDialogButtons">
-    			<div id="tools-imagePositioner-display" class=" tools-imagePositioner-display">
-    				 <img class="easyui-draggable easyui-resizable" data-options="onDrag:imagePositioneronDrag"  src="">
-    			 </div>
-    	</div>
-	<div id="positionDialogButtons">
-    		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="gainPostion()">确定</a>
-    		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#positionDialog').dialog('close')">取消</a>
-    	</div>  
-    <table id="grid1"></table>
  

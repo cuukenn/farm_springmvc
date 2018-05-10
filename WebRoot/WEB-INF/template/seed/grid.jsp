@@ -17,7 +17,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script type="text/javascript" src="<%=basePath%>ext/easyui/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="<%=basePath%>ext/easyui/plugins/jquery.edatagrid.js"></script>
     <script type="text/javascript" src="<%=basePath%>ext/easyui/locale/easyui-lang-zh_CN.js"></script>
-    <script type="text/javascript" src="<%=basePath%>ext/farm/helper.js?346t"></script>   
+    <script type="text/javascript" src="<%=basePath%>ext/farm/helper.js?346t"></script> 
 </head>
         <body>
         <div id="controlBox" style="background-color:green;">
@@ -42,13 +42,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					ID:
    		 				</td>
    		 				<td>
-   		 					<input name='id' type="text"/>
+   		 					<input name='id' class="easyui-textbox" />
    		 				</td>
    		 				<td>
    		 					种子ID:
    		 				</td>
    		 				<td>
-   		 					<input name='cId' type="text"/>
+   		 					<input name='cId'class="easyui-textbox" required/>
    		 				</td>
    		 			</tr>
    		 			<tr>
@@ -56,13 +56,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					<label>种子名称</label>
    		 				</td>
    		 				<td>
-   		 					<input name='caption' type="text"/>
+   		 					<input name='caption' class="easyui-textbox" required/>
    		 				</td>
    		 				<td>
    		 					X季作物:
    		 				</td>
    		 				<td>
-   		 					<input name='harvestNum' type="text"/>
+   		 					<input name='harvestNum' class="easyui-textbox" required/>
    		 				</td>
    		 			</tr>
    		 			<tr>
@@ -70,7 +70,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					种子等级:
    		 				</td>
    		 				<td>
-   		 					<input name='cropLevel' type="text"/>
+   		 					<input name='cropLevel' class="easyui-textbox" required/>
    		 				</td>
    		 				<td>
    		 					种子类型:
@@ -80,7 +80,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						        data-options=" editable:false,
 						        valueField:'code',
 						        textField:'caption',
-						        url:'<%=basePath%>codeSeedType/data'">
+						        url:'<%=basePath%>codeSeedType/data'" required/>
    		 				</td>
    		 			</tr>
    		 			<tr>
@@ -88,13 +88,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					可获经验:
    		 				</td>
    		 				<td>
-   		 					<input name='exp' type="text"/>
+   		 					<input name='exp' class="easyui-textbox" required/>
    		 				</td>
    		 				<td>
    		 					每季成熟所需时间:
    		 				</td>
    		 				<td>
-   		 					<input name='matureTime' type="text"/>
+   		 					<input name='matureTime' class="easyui-textbox" required/>
    		 				</td>
    		 			</tr>
    		 			<tr>
@@ -102,13 +102,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					每季成熟可获收:
    		 				</td>
    		 				<td>
-   		 					<input name='output' type="text"/>
+   		 					<input name='output' class="easyui-textbox" required/>
    		 				</td>
    		 				<td>
    		 					种子采购价:
    		 				</td>
    		 				<td>
-   		 					<input name='price' type="text"/>
+   		 					<input name='price' class="easyui-textbox" required/>
    		 				</td>
    		 			</tr>
    		 			<tr>
@@ -116,7 +116,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					每个收获的果实:
    		 				</td>
    		 				<td>
-   		 					<input name='price4UnitSale' type="text"/>
+   		 					<input name='price4UnitSale' class="easyui-textbox" required/>
    		 				</td>
    		 				<td>
    		 					土地需求:
@@ -126,7 +126,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						        data-options=" editable:false,
 						        valueField:'code',
 						        textField:'caption',
-						        url:'<%=basePath%>codeLandRequire/data'">
+						        url:'<%=basePath%>codeLandRequire/data'" required/>
    		 				</td>
    		 				</td>
    		 			</tr>
@@ -135,13 +135,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					每季成熟可获积分:
    		 				</td>
    		 				<td>
-   		 					<input name='score' type="text"/>
+   		 					<input name='score' class="easyui-textbox" required/>
    		 				</td>
    		 				<td>
    		 					提示信息:
    		 				</td>
    		 				<td>
-   		 					<input name='tip' type="text"/>
+   		 					<input name='tip' class="easyui-textbox" required/>
    		 				</td>
    		 			</tr>
    		 		</table>
@@ -153,7 +153,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	</div> 
         <table id="grid"></table>
         <div id="msgBox"></div> 
-        <div id="dd"  style="overflow-y:hidden!important;"></div> 
+        <div id="cropGrow"  style="overflow-y:hidden!important;"></div> 
         <script>
         var grid;
         var cId;
@@ -289,7 +289,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         onDestroy:function(index,row){
 	        console.log(row);
 	        $("#msgBox").text(row.msg);
-        }
+        },
+        onDblClickRow:function (rowIndex, rowData){
+        		grid.datagrid("endEdit", rowIndex);
+        	}
         });
         grid.datagrid("getPager").pagination({
 	        pageSize: 5,
@@ -319,7 +322,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     }   
     
     function newRecord(){
-    	 $('#formEditor').resetForm();
+    	 $('#formEditor').form("reset");
     	 $('#formEditor').find("input[name='id']").val(0);
         $('#formContainer').dialog('open').dialog('center').dialog('setTitle','添加数据');
     }
@@ -344,7 +347,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         };
         function showCropsGrowEdit(value){
         	cId=value;
-        	$("#dd").dialog({
+        	$("#cropGrow").window({
         		width:'800',
         		height:'420',
         		title:'编辑成长阶段',

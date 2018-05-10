@@ -153,7 +153,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	</div> 
         <table id="grid"></table>
         <div id="msgBox"></div> 
-        <div id="dd"></div> 
+        <div id="dd"  style="overflow-y:hidden!important;"></div> 
         <script>
         var grid;
         var cId;
@@ -319,6 +319,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     }   
     
     function newRecord(){
+    	 $('#formEditor').resetForm();
     	 $('#formEditor').find("input[name='id']").val(0);
         $('#formContainer').dialog('open').dialog('center').dialog('setTitle','添加数据');
     }

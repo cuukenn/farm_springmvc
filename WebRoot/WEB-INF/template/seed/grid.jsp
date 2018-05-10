@@ -42,7 +42,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					ID:
    		 				</td>
    		 				<td>
-   		 					<input name='id' class="easyui-textbox" />
+   		 					<input name='id' class="easyui-textbox" value='0' required/>
    		 				</td>
    		 				<td>
    		 					种子ID:
@@ -323,7 +323,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
     function newRecord(){
     	 $('#formEditor').form("reset");
-    	 $('#formEditor').find("input[name='id']").val(0);
         $('#formContainer').dialog('open').dialog('center').dialog('setTitle','添加数据');
     }
     function saveRecord() {

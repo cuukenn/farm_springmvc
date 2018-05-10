@@ -27,7 +27,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					ID:
    		 				</td>
    		 				<td>
-   		 					<input name='id' class="easyui-textbox"/>
+   		 					<input name='id' class="easyui-textbox" value='0' required/>
    		 				</td>
    		 				<td>
    		 					种子ID:
@@ -69,13 +69,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					图片宽度:
    		 				</td>
    		 				<td>
-   		 					<input name='width' class="easyui-textbox" required/>
+   		 					<input imgD='width' name='width' class="easyui-textbox" required/>
    		 				</td>
    		 				<td>
    		 					图片高度:
    		 				</td>
    		 				<td>
-   		 					<input name='height' class="easyui-textbox" required/>
+   		 					<input imgD='height' name='height' class="easyui-textbox" required/>
    		 				</td>
    		 			</tr>
    		 			<tr>
@@ -83,13 +83,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					图片offsetX:
    		 				</td>
    		 				<td>
-   		 					<input name='offsetX' class="easyui-textbox" required/>
+   		 					<input imgD='offsetX'  name='offsetX' class="easyui-textbox" required/>
    		 				</td>
    		 				<td>
    		 					图片offsetY:
    		 				</td>
    		 				<td>
-   		 					<input name='offsetY' class="easyui-textbox" required/>
+   		 					<input imgD='offsetY' name='offsetY' class="easyui-textbox" required/>
    		 				</td>
    		 			</tr>
    		 			<tr>
@@ -272,7 +272,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	};
 	function newRecord1(){
 		 $('#cropsGrowEditor').form("reset");
-		 $('#cropsGrowEditor').find("input[name='id']").val(0);
         $('#codeCropContainer').dialog('open').dialog('center').dialog('setTitle','添加数据');
     };
     function saveRecord1() {
@@ -315,11 +314,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     };
     function gainPostion(){
     	
-    	var cropsGrowEditor=$('#cropsGrowEditor');
-    	var imgWidth=cropsGrowEditor.find('input[name="width"]');
-    	var imgHeight=cropsGrowEditor.find('input[name="height"]');
-    	var imgOffsetX=cropsGrowEditor.find('input[name="offsetX"]');
-    	var imgOffsetY=cropsGrowEditor.find('input[name="offsetY"]');
+    	var cropsGrowEditor=$("#cropsGrowEditor");
+    	var imgWidth=cropsGrowEditor.find('input[imgD="width"]');
+    	var imgHeight=cropsGrowEditor.find('input[imgD="height"]');
+    	var imgOffsetX=cropsGrowEditor.find('input[imgD="offsetX"]');
+    	var imgOffsetY=cropsGrowEditor.find('input[imgD="offsetY"]');
     	
     	var imgDrag=$("#tools-imagePositioner-display img");
     	imgOffsetX.val(parseInt(imgDrag.css("left")));

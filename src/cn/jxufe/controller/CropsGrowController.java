@@ -32,15 +32,8 @@ import cn.jxufe.service.CropsGrowService;
 	    }
 	    @RequestMapping(value="/gridData/{cId}",produces=MediaType.APPLICATION_JSON_VALUE)
 	    @ResponseBody
-	    public  EasyUIData<?> gridData(EasyUIDataPageRequest pageRequest,@PathVariable int cId,Model model){
-	        List<Sort.Order> orders = new ArrayList<Sort.Order>();
-	        if(pageRequest.getOrder().equals("asc")) {
-	            orders.add(new Sort.Order(Direction.ASC,pageRequest.getSort()));
-	        }else {
-	            orders.add(new Sort.Order(Direction.DESC,pageRequest.getSort()));
-	        }
-	        Pageable pageable = new PageRequest(pageRequest.getPage()-1, pageRequest.getRows(), new Sort(orders)); 
-	        return cropsGrowService.findByCId(cId,pageable);
+	    public  List<CropsGrow> gridData(@PathVariable int cId,Model model){
+	        return cropsGrowService.findByCId(cId);
 	    }
 	    @RequestMapping(value="save",produces=MediaType.APPLICATION_JSON_VALUE)
 	    @ResponseBody

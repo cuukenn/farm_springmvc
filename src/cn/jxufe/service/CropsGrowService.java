@@ -9,7 +9,7 @@ import cn.jxufe.entity.CropsGrow;
 public interface CropsGrowService {
 	 public EasyUIData<?> findByStatus(int status,Pageable pageable);
 	 public EasyUIData<?> findBySome(Pageable pageable);
-	 public EasyUIData<?> findByCId(int cId,Pageable pageable);
+	 public java.util.List<CropsGrow> findByCId(int cId);
 	 public Message save(CropsGrow cropsGrow);
 	 public Message delete(CropsGrow cropsGrow); 
 }

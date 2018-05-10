@@ -1,5 +1,7 @@
 package cn.jxufe.imp;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -62,12 +64,8 @@ public class CropsGrowImp implements CropsGrowService{
 	}
 
 	@Override
-	public EasyUIData<?> findByCId(int cId, Pageable pageable) {
-		Page<CropsGrow> page = cropsGrowDAO.findByCId(cId,pageable);
-		EasyUIData<CropsGrow> easyUIData = new EasyUIData<CropsGrow>();
-        easyUIData.setTotal(page.getTotalElements());
-        easyUIData.setRows(page.getContent());
-		return easyUIData;
+	public List<CropsGrow> findByCId(int cId) {
+		return cropsGrowDAO.findByCId(cId);
 	}
 
 	

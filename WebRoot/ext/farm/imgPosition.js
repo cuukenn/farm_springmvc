@@ -15,7 +15,6 @@
 	});
 
 	function positionerLoadImage(){
-		console.log(imgExtData);
 		draggableImg.css("position","absolute");
 		draggableImg.css("left",imgExtData.offsetX+"px");
 		draggableImg.css("top",imgExtData.offsetY+"px");

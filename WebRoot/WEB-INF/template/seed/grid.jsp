@@ -5,7 +5,7 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -22,7 +22,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <body>
         <div id="controlBox" style="background-color:green;">
         	<span style="color:white;">种子名称:</span>
-        	<input id="genderSearch" class="easyui-textbox">
+        	<input id="genderSearch"  type="text"/>
 
         	<a href="javascript:void(0)" class="easyui-linkbutton c1" iconCls="icon-search" onclick="doSearch()">查询</a>
 
@@ -42,13 +42,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					ID:
    		 				</td>
    		 				<td>
-   		 					<input name='id' class="easyui-textbox" value='0' required/>
+   		 					<inpu type="text" t name='id'   value='0'  class="easyui-textbox"  class="easyui-textbox" required="required"/>
    		 				</td>
    		 				<td>
    		 					种子ID:
    		 				</td>
    		 				<td>
-   		 					<input name='cId'class="easyui-textbox" required/>
+   		 					<input type="text"  name='cId'   class="easyui-textbox" required="required"/>
    		 				</td>
    		 			</tr>
    		 			<tr>
@@ -56,13 +56,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					<label>种子名称</label>
    		 				</td>
    		 				<td>
-   		 					<input name='caption' class="easyui-textbox" required/>
+   		 					<input type="text"  name='caption'     class="easyui-textbox" required="required"/>
    		 				</td>
    		 				<td>
    		 					X季作物:
    		 				</td>
    		 				<td>
-   		 					<input name='harvestNum' class="easyui-textbox" required/>
+   		 					<input type="text"  name='harvestNum'    class="easyui-textbox" required="required"/>
    		 				</td>
    		 			</tr>
    		 			<tr>
@@ -70,17 +70,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					种子等级:
    		 				</td>
    		 				<td>
-   		 					<input name='cropLevel' class="easyui-textbox" required/>
+   		 					<input type="text"  name='cropLevel'    class="easyui-textbox" required="required"/>
    		 				</td>
    		 				<td>
    		 					种子类型:
    		 				</td>
    		 				<td>
-	   		 				<input name='type' class="easyui-combobox" panelHeight="auto"
+	   		 				<input type="text"  name='type' class="easyui-combobox" panelHeight="auto"
 						        data-options=" editable:false,
 						        valueField:'code',
 						        textField:'caption',
-						        url:'<%=basePath%>codeSeedType/data'" required/>
+						        url:'<%=basePath%>codeSeedType/data'"  required="required"/>
    		 				</td>
    		 			</tr>
    		 			<tr>
@@ -88,13 +88,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					可获经验:
    		 				</td>
    		 				<td>
-   		 					<input name='exp' class="easyui-textbox" required/>
+   		 					<input type="text"  name='exp'    class="easyui-textbox" required="required"/>
    		 				</td>
    		 				<td>
    		 					每季成熟所需时间:
    		 				</td>
    		 				<td>
-   		 					<input name='matureTime' class="easyui-textbox" required/>
+   		 					<input type="text"  name='matureTime'    class="easyui-textbox" required="required"/>
    		 				</td>
    		 			</tr>
    		 			<tr>
@@ -102,13 +102,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					每季成熟可获收:
    		 				</td>
    		 				<td>
-   		 					<input name='output' class="easyui-textbox" required/>
+   		 					<input type="text"  name='output'    class="easyui-textbox" required="required"/>
    		 				</td>
    		 				<td>
    		 					种子采购价:
    		 				</td>
    		 				<td>
-   		 					<input name='price' class="easyui-textbox" required/>
+   		 					<input type="text"  name='price'    class="easyui-textbox" required="required"/>
    		 				</td>
    		 			</tr>
    		 			<tr>
@@ -116,17 +116,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					每个收获的果实:
    		 				</td>
    		 				<td>
-   		 					<input name='price4UnitSale' class="easyui-textbox" required/>
+   		 					<input type="text"  name='price4UnitSale'  class="easyui-textbox" required="required"/>
    		 				</td>
    		 				<td>
    		 					土地需求:
    		 				</td>
    		 				<td>
-   		 					<input name='landRequirement' class="easyui-combobox" panelHeight="auto"
+   		 					<input type="text"  name='landRequirement' class="easyui-combobox" panelHeight="auto"
 						        data-options=" editable:false,
 						        valueField:'code',
 						        textField:'caption',
-						        url:'<%=basePath%>codeLandRequire/data'" required/>
+						        url:'<%=basePath%>codeLandRequire/data'"  class="easyui-textbox" required="required"/>
    		 				</td>
    		 				</td>
    		 			</tr>
@@ -135,13 +135,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					每季成熟可获积分:
    		 				</td>
    		 				<td>
-   		 					<input name='score' class="easyui-textbox" required/>
+   		 					<input type="text"  name='score'    class="easyui-textbox" required="required"/>
    		 				</td>
    		 				<td>
    		 					提示信息:
    		 				</td>
    		 				<td>
-   		 					<input name='tip' class="easyui-textbox" required/>
+   		 					<input type="text"  name='tip'    class="easyui-textbox" required="required"/>
    		 				</td>
    		 			</tr>
    		 		</table>

@@ -27,13 +27,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					ID:
    		 				</td>
    		 				<td>
-   		 					<input name='id' class="easyui-textbox" value='0' required/>
+   		 					<input type="text" name='id'   value='0'  class="easyui-textbox" required="required"/>
    		 				</td>
    		 				<td>
    		 					种子ID:
    		 				</td>
    		 				<td>
-   		 					<input name='cId' class="easyui-textbox" required/>
+   		 					<input type="text"  name='cId'  class="easyui-textbox" required="required"/>
    		 				</td>
    		 			</tr>
    		 			<tr>
@@ -41,13 +41,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					<label>生长阶段:</label>
    		 				</td>
    		 				<td>
-   		 					<input name='growStep' class="easyui-textbox" required/>
+   		 					<input type="text"  name='growStep'  class="easyui-textbox" required="required"/>
    		 				</td>
    		 				<td>
    		 					生长阶段标题:
    		 				</td>
    		 				<td>
-   		 					<input name='growCaption' class="easyui-textbox" required/>
+   		 					<input type="text"  name='growCaption'  class="easyui-textbox" required="required"/>
    		 				</td>
    		 			</tr>
    		 			<tr>
@@ -55,13 +55,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					阶段生长时间:
    		 				</td>
    		 				<td>
-   		 					<input name='growTime' class="easyui-textbox" required/>
+   		 					<input type="text"  name='growTime'  class="easyui-textbox" required="required"/>
    		 				</td>
    		 				<td>
    		 					生虫概率:
    		 				</td>
    		 				<td>
-	   		 				<input name='insect'class="easyui-textbox" required/>
+	   		 				<input type="text"  name='insect'  class="easyui-textbox" required="required"/>
    		 				</td>
    		 			</tr>
    		 			<tr>
@@ -69,13 +69,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					图片宽度:
    		 				</td>
    		 				<td>
-   		 					<input imgD='width' name='width' class="easyui-textbox" required/>
+   		 					<input type="text"  imgD='width' name='width'  class="easyui-textbox" required="required"/>
    		 				</td>
    		 				<td>
    		 					图片高度:
    		 				</td>
    		 				<td>
-   		 					<input imgD='height' name='height' class="easyui-textbox" required/>
+   		 					<input type="text"  imgD='height' name='height'  class="easyui-textbox" required="required"/>
    		 				</td>
    		 			</tr>
    		 			<tr>
@@ -83,13 +83,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					图片offsetX:
    		 				</td>
    		 				<td>
-   		 					<input imgD='offsetX'  name='offsetX' class="easyui-textbox" required/>
+   		 					<input type="text"  imgD='offsetX'  name="offsetX"  class="easyui-textbox" required="required"/>
    		 				</td>
    		 				<td>
    		 					图片offsetY:
    		 				</td>
    		 				<td>
-   		 					<input imgD='offsetY' name='offsetY' class="easyui-textbox" required/>
+   		 					<input type="text"  imgD='offsetY' name="offsetY" class="easyui-textbox" required="required" />
    		 				</td>
    		 			</tr>
    		 			<tr>
@@ -97,11 +97,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					作物状态:
    		 				</td>
    		 				<td>
-   		 					<input name='status' class="easyui-combobox" panelHeight="auto"
+   		 					<input type="text"  name='status' class="easyui-combobox" panelHeight="auto"
 						        data-options=" editable:false,
 						        valueField:'code',
 						        textField:'caption',
-						        url:'<%=basePath%>codeCropStatus/data' " required/>
+						        url:'<%=basePath%>codeCropStatus/data' " required="required"/>
    		 				</td>
    		 				<td>
    		 					
@@ -296,6 +296,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	function showImgEditor(){
 		var url='<%=basePath%>images/crops/'+getImageName();
 		$("#tools-imagePositioner-display img").attr("src",url);
+		
+		imgExtData.offsetX = $('#cropsGrowEditor input[imgD="offsetX"]').textbox("getValue");
+		imgExtData.offsetY =$('#cropsGrowEditor input[imgD="offsetY"]').textbox("getValue");
+		imgExtData.width = $('#cropsGrowEditor input[imgD="width"]').textbox("getValue");
+		imgExtData.height = $('#cropsGrowEditor input[imgD="height"]').textbox("getValue");
+		positionerLoadImage();
+
     	$('#positionDialog').dialog('open').dialog('center').dialog('setTitle','定位编辑器');
     };
     function getImageName(){
@@ -313,19 +320,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	return result;
     };
     function gainPostion(){
-    	
-    	var cropsGrowEditor=$("#cropsGrowEditor");
-    	var imgWidth=cropsGrowEditor.find('input[imgD="width"]');
-    	var imgHeight=cropsGrowEditor.find('input[imgD="height"]');
-    	var imgOffsetX=cropsGrowEditor.find('input[imgD="offsetX"]');
-    	var imgOffsetY=cropsGrowEditor.find('input[imgD="offsetY"]');
+		
+    	var imgWidth=$('#cropsGrowEditor input[imgD="width"]');
+    	var imgHeight=$('#cropsGrowEditor input[imgD="height"]');
+    	var imgOffsetX=$('#cropsGrowEditor input[imgD="offsetX"]');
+    	var imgOffsetY=$('#cropsGrowEditor input[imgD="offsetY"]');
     	
     	var imgDrag=$("#tools-imagePositioner-display img");
-    	imgOffsetX.val(parseInt(imgDrag.css("left")));
-    	imgOffsetY.val(parseInt(imgDrag.css("top")));
-    	imgWidth.val(parseInt(imgDrag.css("width")));
-    	imgHeight.val(parseInt(imgDrag.css("height")));
-    	
+    	imgOffsetX.textbox("setValue",parseInt(imgDrag.css("left")));
+    	imgOffsetY.textbox("setValue", parseInt(imgDrag.css("top")));
+    	imgWidth.textbox("setValue",parseInt(imgDrag.css("width")));
+    	imgHeight.textbox("setValue",parseInt(imgDrag.css("height")));
     	$('#positionDialog').dialog('close');
     }
     function getCodeCropStatus(){

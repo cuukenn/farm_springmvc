@@ -270,10 +270,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	$.post( '<%=basePath%>cropsGrow/delete',row,function(msg){
     		 $("#msgBox").text(row.msg);
     	});
-    	grid.datagrid('reload');
+    	cgrid.datagrid('reload');
     };
 	function newRecord1(){
 		 $('#cropsGrowEditor').form("reset");
+		 
         $('#codeCropContainer').dialog('open').dialog('center').dialog('setTitle','添加数据');
     };
     function saveRecord1() {

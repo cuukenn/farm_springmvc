@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.jxufe.bean.Message;
 import cn.jxufe.entity.CropsGrow;
+import cn.jxufe.entity.Seed;
 import cn.jxufe.service.CropsGrowService;
 
 @Controller
@@ -32,4 +33,9 @@ import cn.jxufe.service.CropsGrowService;
 	    public Message save(CropsGrow cropsGrow,Model model){       
 	        return cropsGrowService.save(cropsGrow);
 	    }
+	    @RequestMapping(value="delete",produces=MediaType.APPLICATION_JSON_VALUE)
+	    @ResponseBody
+	    public Message delete(CropsGrow cropsGrow,Model model){     
+	        return cropsGrowService.delete(cropsGrow);
+	    }  
 	}

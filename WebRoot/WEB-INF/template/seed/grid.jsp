@@ -42,15 +42,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					ID:
    		 				</td>
    		 				<td>
-   		 					<inpu type="text"  name='id'   value='0'  class="easyui-textbox"  class="easyui-textbox" required="required"/>
+   		 					<inpu type="text"  name='id'   value='0'   class="easyui-numberbox" required="required"/>
    		 				</td>
    		 				<td>
    		 					种子ID:
    		 				</td>
    		 				<td>
-   		 					<input type="text"  name='cId'   class="easyui-textbox" required="required"/>
-   		 				</td>
-   		 			</tr>
+   		 					<input type="text"  name='cId'   class="easyui-numberbox " data-options="precision:0,min:1"  required="required"></td>
+          			  </tr>
    		 			<tr>
    		 				<td>
    		 					<label>种子名称</label>
@@ -62,7 +61,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					X季作物:
    		 				</td>
    		 				<td>
-   		 					<input type="text"  name='harvestNum'    class="easyui-textbox" required="required"/>
+   		 					<input type="text"  name='harvestNum'    class="easyui-numberbox" required="required"/>
    		 				</td>
    		 			</tr>
    		 			<tr>
@@ -70,7 +69,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					种子等级:
    		 				</td>
    		 				<td>
-   		 					<input type="text"  name='cropLevel'    class="easyui-textbox" required="required"/>
+   		 					<input type="text"  name='cropLevel'    class="easyui-numberbox" required="required"/>
    		 				</td>
    		 				<td>
    		 					种子类型:
@@ -88,13 +87,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					可获经验:
    		 				</td>
    		 				<td>
-   		 					<input type="text"  name='exp'    class="easyui-textbox" required="required"/>
+   		 					<input type="text"  name='exp'    class="easyui-numberbox" required="required"/>
    		 				</td>
    		 				<td>
    		 					每季成熟所需时间:
    		 				</td>
    		 				<td>
-   		 					<input type="text"  name='matureTime'    class="easyui-textbox" required="required"/>
+   		 					<input type="text"  name='matureTime'    class="easyui-numberbox" required="required"/>
    		 				</td>
    		 			</tr>
    		 			<tr>
@@ -102,13 +101,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					每季成熟可获收:
    		 				</td>
    		 				<td>
-   		 					<input type="text"  name='output'    class="easyui-textbox" required="required"/>
+   		 					<input type="text"  name='output'    class="easyui-numberbox" required="required"/>
    		 				</td>
    		 				<td>
    		 					种子采购价:
    		 				</td>
    		 				<td>
-   		 					<input type="text"  name='price'    class="easyui-textbox" required="required"/>
+   		 					<input type="text"  name='price'    class="easyui-numberbox" required="required"/>
    		 				</td>
    		 			</tr>
    		 			<tr>
@@ -116,7 +115,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					每个收获的果实:
    		 				</td>
    		 				<td>
-   		 					<input type="text"  name='price4UnitSale'  class="easyui-textbox" required="required"/>
+   		 					<input type="text"  name='price4UnitSale'  class="easyui-numberbox" required="required"/>
    		 				</td>
    		 				<td>
    		 					土地需求:
@@ -135,7 +134,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					每季成熟可获积分:
    		 				</td>
    		 				<td>
-   		 					<input type="text"  name='score'    class="easyui-textbox" required="required"/>
+   		 					<input type="text"  name='score'    class="easyui-numberbox" required="required"/>
    		 				</td>
    		 				<td>
    		 					提示信息:

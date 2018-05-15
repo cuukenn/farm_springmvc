@@ -33,7 +33,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					种子ID:
    		 				</td>
    		 				<td>
-   		 					<input type="text"  name='cId'  class="easyui-textbox" required="required"/>
+   		 					<input type="text"  name='cId'  class="easyui-numberbox" required="required"/>
    		 				</td>
    		 			</tr>
    		 			<tr>
@@ -41,7 +41,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					<label>生长阶段:</label>
    		 				</td>
    		 				<td>
-   		 					<input type="text"  name='growStep'  class="easyui-textbox" required="required"/>
+   		 					<input type="text"  name='growStep'  class="easyui-numberbox" required="required"/>
    		 				</td>
    		 				<td>
    		 					生长阶段标题:
@@ -55,13 +55,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					阶段生长时间:
    		 				</td>
    		 				<td>
-   		 					<input type="text"  name='growTime'  class="easyui-textbox" required="required"/>
+   		 					<input type="text"  name='growTime'  class="easyui-numberbox" required="required"data-options="precision:0,min:1"/>
    		 				</td>
    		 				<td>
    		 					生虫概率:
    		 				</td>
    		 				<td>
-	   		 				<input type="text"  name='insect'  class="easyui-textbox" required="required"/>
+	   		 				<input type="text"  name='insect'  class="easyui-numberbox" required="required"data-options="precision:1"/>
    		 				</td>
    		 			</tr>
    		 			<tr>
@@ -69,13 +69,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					图片宽度:
    		 				</td>
    		 				<td>
-   		 					<input type="text"  imgD='width' name='width'  class="easyui-textbox" required="required"/>
+   		 					<input type="text"  imgD='width' name='width'  class="easyui-numberbox" required="required"data-options="editable:false"/>
    		 				</td>
    		 				<td>
    		 					图片高度:
    		 				</td>
    		 				<td>
-   		 					<input type="text"  imgD='height' name='height'  class="easyui-textbox" required="required"/>
+   		 					<input type="text"  imgD='height' name='height'  class="easyui-numberbox" required="required" data-options="editable:false"/>
    		 				</td>
    		 			</tr>
    		 			<tr>
@@ -83,13 +83,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					图片offsetX:
    		 				</td>
    		 				<td>
-   		 					<input type="text"  imgD='offsetX'  name="offsetX"  class="easyui-textbox" required="required"/>
+   		 					<input type="text"  imgD='offsetX'  name="offsetX"  class="easyui-numberbox" required="required"data-options="editable:false"/>
    		 				</td>
    		 				<td>
    		 					图片offsetY:
    		 				</td>
    		 				<td>
-   		 					<input type="text"  imgD='offsetY' name="offsetY" class="easyui-textbox" required="required" />
+   		 					<input type="text"  imgD='offsetY' name="offsetY" class="easyui-numberbox" required="required" data-options="editable:false"/>
    		 				</td>
    		 			</tr>
    		 			<tr>

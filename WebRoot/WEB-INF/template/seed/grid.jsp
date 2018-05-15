@@ -32,7 +32,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
         	<a href="javascript:void(0)" class="easyui-linkbutton c3" iconCls="icon-remove" onclick="javascript:grid.edatagrid('cancelRow')">取消</a>
 
-        	<a href="javascript:void(0)" class="easyui-linkbutton c5" iconCls="icon-cancel" onclick="javascript:grid.edatagrid('destroyRow')">删除</a>
+        	<a href="javascript:void(0)" class="easyui-linkbutton c5" iconCls="icon-cancel" onclick="javascript:deleteRecord()">删除</a>
         </div>
          <div id="formContainer" class="easyui-dialog" style="width:800px;height:420px;padding:10px 10px" closed="true" buttons="#formContainerButtons">
    		 	<form id="formEditor">
@@ -42,7 +42,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					ID:
    		 				</td>
    		 				<td>
-   		 					<inpu type="text" t name='id'   value='0'  class="easyui-textbox"  class="easyui-textbox" required="required"/>
+   		 					<inpu type="text"  name='id'   value='0'  class="easyui-textbox"  class="easyui-textbox" required="required"/>
    		 				</td>
    		 				<td>
    		 					种子ID:
@@ -286,10 +286,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        console.log(row);
 	        $("#msgBox").text(row.msg);
         },
-        onDestroy:function(index,row){
-	        console.log(row);
-	        $("#msgBox").text(row.msg);
-        },
         onDblClickRow:function (rowIndex, rowData){
         		grid.datagrid("endEdit", rowIndex);
         	}
@@ -323,6 +319,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
     function newRecord(){
     	 $('#formEditor').form("reset");
+    	 $('#formEditor').find('input[name="id"]').val("0");
         $('#formContainer').dialog('open').dialog('center').dialog('setTitle','添加数据');
     }
     function saveRecord() {
@@ -343,6 +340,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 });
             }
         	})
+        };
+        function deleteRecord() {
+        	var row = grid.datagrid('getSelected');
+        	$.post('<%=basePath%>seed/delete',row,function(msg){
+        		 $("#msgBox").text(row.msg);
+        	});
+        	grid.datagrid('reload');
         };
         function showCropsGrowEdit(value){
         	cId=value;

@@ -17,7 +17,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <a href="javascript:void(0)" class="easyui-linkbutton c2" iconCls="icon-add" onclick="javascript:newRecord1()">添加</a>
         <a href="javascript:void(0)" class="easyui-linkbutton c4" iconCls="icon-edit" onclick="javascript:editRecord1()">编辑</a>
         <a href="javascript:void(0)" class="easyui-linkbutton c3" iconCls="icon-remove" onclick="javascript:cgrid.edatagrid('cancelRow')">取消</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton c5" iconCls="icon-cancel" onclick="javascript:cgrid.edatagrid('destroyRow')">删除</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton c5" iconCls="icon-cancel" onclick="javascript:deleteRecord1()">删除</a>
     </div> 
     <div id="codeCropContainer" class="easyui-dialog" style="width:800px;height:420px;padding:10px 10px;display:none;" closed="true" buttons="#codeCropContainerButtons">
    		 	<form id="cropsGrowEditor">
@@ -139,7 +139,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    url: '<%=basePath%>cropsGrow/gridData/'+cId,
 	    saveUrl: '<%=basePath%>cropsGrow/save',
 	    updateUrl: '<%=basePath%>cropsGrow/save',
-	    destroyUrl: '<%=basePath%>cropsGrow/delete',
 	    border: false,
 	    rownumbers: true,
 	    remoteSort: true,
@@ -244,10 +243,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    console.log(row);
 		    $("#msgBox").text(row.msg);
 		},
-		onDestroy:function(index,row){
-		    console.log(row);
-		    $("#msgBox").text(row.msg);
-		},
 		onDblClickRow:function (rowIndex, rowData){
 			cgrid.datagrid("endEdit", rowIndex);
     	}
@@ -270,6 +265,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             });
         }
 	};
+	function deleteRecord1() {
+    	var row = cgrid.datagrid('getSelected');
+    	$.post( '<%=basePath%>cropsGrow/delete',row,function(msg){
+    		 $("#msgBox").text(row.msg);
+    	});
+    	grid.datagrid('reload');
+    };
 	function newRecord1(){
 		 $('#cropsGrowEditor').form("reset");
         $('#codeCropContainer').dialog('open').dialog('center').dialog('setTitle','添加数据');

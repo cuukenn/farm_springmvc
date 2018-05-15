@@ -259,7 +259,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         options: {
         required:true
         }
-        }},
+        },formatter:function(value,row){
+	    	return value+"积分";
+		}},
         {title: '提示信息', field: 'tip', width: 50, sortable: true,align:'center',editor:{
         type:'validatebox',
         options: {

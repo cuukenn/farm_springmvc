@@ -12,11 +12,12 @@ public class FileSaver {
 		if (!file.isEmpty()) {  
             try {
                 String filePath = request.getSession().getServletContext().getRealPath("/") +imagesPath  
-                        + file.getOriginalFilename();  
+                        + file.getOriginalFilename(); 
                 file.transferTo(new File(filePath));
                 message.setCode(0);
                 message.setMsg("保存成功");
-            } catch (Exception e) {  
+            } catch (Exception e) {
+            	e.getMessage();
                 message.setCode(-1001);
                 message.setMsg("保存失败");
             }  

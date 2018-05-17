@@ -218,7 +218,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         msg: result.msg
                     });
                 }
-            })  
+            })
         } 
         </script>
      </body>

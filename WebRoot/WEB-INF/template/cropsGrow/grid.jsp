@@ -240,8 +240,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		        }
 		},
 		onSuccess:function(index,row){
-		    console.log(row);
-		    $("#msgBox").text(row.msg);
+		    $.messager.show({
+                title: "消息",
+                msg: row.msg
+            });
 		},
 		onDblClickRow:function (rowIndex, rowData){
 			cgrid.datagrid("endEdit", rowIndex);
@@ -267,8 +269,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	};
 	function deleteRecord1() {
     	var row = cgrid.datagrid('getSelected');
-    	$.post( '<%=basePath%>cropsGrow/delete',row,function(msg){
-    		 $("#msgBox").text(row.msg);
+    	$.post( '<%=basePath%>cropsGrow/delete',row,function(data){
+    		$.messager.show({
+                title: "消息",
+                msg: data.msg
+            });
     	});
     	cgrid.datagrid('reload');
     };

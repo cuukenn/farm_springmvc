@@ -344,8 +344,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         };
         function deleteRecord() {
         	var row = grid.datagrid('getSelected');
-        	$.post('<%=basePath%>seed/delete',row,function(msg){
-        		 $("#msgBox").text(row.msg);
+        	$.post('<%=basePath%>seed/delete',row,function(data){
+        		 $.messager.show({
+                     title: "消息",
+                     msg: data.msg
+                 });
         	});
         	grid.datagrid('reload');
         };

@@ -13,12 +13,20 @@ public class User extends EntityID {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private String uId;
 	private String heads;
 	private String username;
 	private String nickname;
 	private int exp;
 	private int score;
 	private int price;
+	
+	public String getuId() {
+		return uId;
+	}
+	public void setuId(String uId) {
+		this.uId = uId;
+	}
 	public String getHeads() {
 		return heads;
 	}

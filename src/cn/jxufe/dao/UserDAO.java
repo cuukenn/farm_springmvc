@@ -7,5 +7,5 @@ import cn.jxufe.entity.User;
 
 
 public interface UserDAO extends PagingAndSortingRepository<User, Long> {
-	public Page<User> findByNickname(String nickname,Pageable pageable); 
+	public Page<User> findByNicknameLike(String nickname,Pageable pageable); 
 }

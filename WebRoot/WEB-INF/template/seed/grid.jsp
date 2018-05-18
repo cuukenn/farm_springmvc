@@ -156,7 +156,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <script>
         var grid;
         var cId;
+        var codeLandRequire;
         $(document).ready(function () {
+        getCodeLandRequire();
         //配置表格
         grid = $('#grid').edatagrid({
         title: '种子清单',
@@ -250,7 +252,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         options: {
         required:true
         }
-        }},
+        },formatter:function(value,row){
+	    	return getCodeLandRequireFromCode(value);
+		}},
 
         {title: '每季成熟可获积分', field: 'score', width: 50, sortable: true,align:'center',
         editor:{
@@ -298,6 +302,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         grid.datagrid("resize",{
 	        height:($(window).height()-36)
 	        });
+        
         });
         function doSearch(){
 	        grid.datagrid("load",{
@@ -364,6 +369,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         		cache:false
         	})
     	}
+        function getCodeLandRequire(){
+        	$.post('<%=basePath%>codeLandRequire/data',
+        			function(data){
+        		codeLandRequire=data;
+        	})
+        }
+        function getCodeLandRequireFromCode(code){
+        	for(var index in codeLandRequire){
+        		if(codeLandRequire[index].code==code){
+        			return codeLandRequire[index].caption;
+        		}
+        	}
+        }
         </script>
      </body>
 </html>

@@ -220,7 +220,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     		heads:imageName
                     	}
                     })
-                    grid.datagrid('beginEdit',indexGloble)
+                    var row = grid.datagrid('getSelected');
+                    $.post('<%=basePath%>user/save',row,function(data){
+               		 $.messager.show({
+                            title: "消息",
+                            msg: data.msg
+                        });
+               	});
                 }
             })
         } 

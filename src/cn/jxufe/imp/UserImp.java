@@ -14,7 +14,11 @@ import cn.jxufe.service.UserService;
 public class UserImp implements UserService{
 	@Autowired
     UserDAO userDAO;
-
+	/**
+	 * 
+	 * 通过昵称模糊查询
+	 * @see cn.jxufe.service.UserService
+	 */
 	@Override
 	public EasyUIData<?> findByNickname(String nickname, Pageable pageable) {
 		Page<User> page = userDAO.findByNicknameLike(nickname, pageable);
@@ -23,7 +27,10 @@ public class UserImp implements UserService{
         easyUIData.setRows(page.getContent());
         return easyUIData;
 	}
-
+	/**
+	 * 查看全部
+	 * @see cn.jxufe.service.UserService
+	 */
 	@Override
 	public EasyUIData<?> findALL(Pageable pageable) {
 		Page<User> page = userDAO.findAll(pageable);
@@ -32,7 +39,10 @@ public class UserImp implements UserService{
         easyUIData.setRows(page.getContent());
 		return easyUIData;
 	}
-
+	/**
+	 * 保存
+	 * @see cn.jxufe.service.UserService
+	 */
 	@Override
 	public Message save(User user) {
 		Message message = new Message();
@@ -46,7 +56,10 @@ public class UserImp implements UserService{
         }
         return message;
 	}
-
+	/**
+	 * 删除
+	 * @see cn.jxufe.service.UserService
+	 */
 	@Override
 	public Message delete(User user) {
 		Message message = new Message();

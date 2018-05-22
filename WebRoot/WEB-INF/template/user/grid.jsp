@@ -52,6 +52,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div id="msgBox"></div> 
         <div id="cropGrow"  style="overflow-y:hidden!important;"></div> 
         <script>
+        var indexGloble;
+        var rowGloble;
         var grid;
         var cId;
         $(document).ready(function () {
@@ -73,17 +75,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         striped: true,
         pagination: true,
         autoSave:true,
-        idField: "ID",
+        idField: "id",
         columns: [[
-        {field: 'id',title: 'ID' , width: 20, sortable: true,align:'center'},
-        {title: 'uId', field: 'uId', width: 50, sortable: true,align:'center',
-        	editor:{
-		        type:'validatebox',
-		        options: {
-		        required:true
-		        }
-        	}
-        },
+        {title: 'id', field: 'id', width: 50, sortable: true,align:'center'},
         {title: '头像', field: 'heads', width: 50, sortable: true,align:'center',
         	editor:{
 		        type:'validatebox',
@@ -119,7 +113,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		        }
         	},
 	    	formatter:function(value,row){
-	    		return '<img style="height:30px;"  src="<%=basePath%>images/火把僵尸.png">'+value;
+	    		return '<img style="height:30px;"  src="<%=basePath%>images/exp.png">'+value;
 			}
         },
         {title: '积分', field: 'score', width: 50, sortable: true,align:'center',
@@ -130,7 +124,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		        }
         	},
 	    	formatter:function(value,row){
-	    		return '<img style="height:30px;"  src="<%=basePath%>images/僵尸.png">'+value;
+	    		return '<img style="height:30px;"  src="<%=basePath%>images/积分.png">'+value;
 			}
         },
         {title: '金币', field: 'price', width: 50, sortable: true,align:'center',
@@ -141,12 +135,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		        }
         	},
 	    	formatter:function(value,row){
-	    		return '<img style="height:30px;"  src="<%=basePath%>images/举旗僵尸.png">'+value;
+	    		return '<img style="height:30px;"  src="<%=basePath%>images/金币.png">'+value;
 			}
         },
         {title: '操作', field: 'option', width: 50,align:'center',
-        	formatter:function(value,row){
-                return  '<a href="javascript:void(0)" style="background-color:white;border-radius:5px;"  class="easyui-linkbutton" onclick="javascript:showFormEdit()">上传头像</a>'
+        	formatter:function(value,row,index){
+                return  '<a href="javascript:void(0)" style="background-color:white;border-radius:5px;"  class="easyui-linkbutton" onclick="javascript:showFormEdit('+index+')">上传头像</a>'
                 		+'<a href="javascript:void(0)" style="background-color:white;border-radius:5px;margin-left:30px;"  class="easyui-linkbutton" onclick="javascript:grid.edatagrid(\'saveRow\')">保存数据</a>'
                }
         }
@@ -195,8 +189,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         	});
         	grid.datagrid('reload');
         };
-        function showFormEdit(){
-        	 $('#formContainer').dialog('open').dialog('center').dialog('setTitle','上传头像');
+        function showFormEdit(index,row){
+        	indexGloble=index;
+        	$('#formContainer').dialog('open').dialog('center').dialog('setTitle','上传头像');
     	}
         function ImportShipmentStatusList() {
             if ($("#fuImportMultipleShipmentStatus").val() == "" ) { 
@@ -206,6 +201,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 });
                 return;  
             }  
+            var images=$("#fuImportMultipleShipmentStatus").val().split('\\');
+            var imageName=images[images.length-1];
             $('#formEditor').form('submit', {
                 url: '<%=basePath%>file/saveHeadImg',
                 success: function (result) {
@@ -217,6 +214,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         title: "消息",
                         msg: result.msg
                     });
+                    grid.datagrid('updateRow',{
+                    	index:indexGloble,
+                    	row:{
+                    		heads:imageName
+                    	}
+                    })
+                    grid.datagrid('beginEdit',indexGloble)
                 }
             })
         } 

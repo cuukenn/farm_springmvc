@@ -28,7 +28,7 @@
 </head>
 <body class="bar">
 	<div align="right" width="100%">
-		<a href="user/grid" target="workspace"><img class="menu shadow" src="images/seedManager.png" width="50px"></a>
+		<a href="user/grid" target="workspace"><img class="menu shadow" src="images/法老僵尸.png" width="50px"></a>
 		<a href="seed/grid" target="workspace"><img class="menu shadow" src="images/seedManager.png" width="50px"></a>
 	<div>
 </body>

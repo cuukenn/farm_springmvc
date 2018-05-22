@@ -119,7 +119,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		        }
         	},
 	    	formatter:function(value,row){
-	    		return '<img style="height:30px;"  src="<%=basePath%>images/store.png">'+value;
+	    		return '<img style="height:30px;"  src="<%=basePath%>images/火把僵尸.png">'+value;
 			}
         },
         {title: '积分', field: 'score', width: 50, sortable: true,align:'center',
@@ -130,7 +130,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		        }
         	},
 	    	formatter:function(value,row){
-	    		return '<img style="height:30px;"  src="<%=basePath%>images/store.png">'+value;
+	    		return '<img style="height:30px;"  src="<%=basePath%>images/僵尸.png">'+value;
 			}
         },
         {title: '金币', field: 'price', width: 50, sortable: true,align:'center',
@@ -141,7 +141,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		        }
         	},
 	    	formatter:function(value,row){
-	    		return '<img style="height:30px;"  src="<%=basePath%>images/store.png">'+value;
+	    		return '<img style="height:30px;"  src="<%=basePath%>images/举旗僵尸.png">'+value;
 			}
         },
         {title: '操作', field: 'option', width: 50,align:'center',

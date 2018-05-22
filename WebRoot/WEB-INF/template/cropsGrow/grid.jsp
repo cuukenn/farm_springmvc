@@ -161,20 +161,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				    }
 	    		}},
 	    		{title: '阶段生长时间', field: 'growTime', width: 50, sortable: true,align:'center',editor:{
-			        type:'validatebox',
+			        type:'numberbox',
 			        options: {
 			        required:true
 			        }
 			    }},
 			    {title: '生虫概率', field: 'insect', width: 50, sortable: true,align:'center',editor:{
-				    type:'validatebox',
+				    type:'numberbox',
 				    options: {
 				    required:true
 				    }
 			    }},
 	
 			    {title: '图片宽度', field: 'width', width: 50, sortable: true,align:'center',editor:{
-				    type:'validatebox',
+				    type:'numberbox',
 				    options: {
 				    required:true
 				    }
@@ -184,7 +184,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				    return value+'px';
 		    	}},
 			    {title: '图片高度', field: 'height', width: 50, sortable: true,align:'center',editor:{
-				    type:'validatebox',
+				    type:'numberbox',
 				    options: {
 				    required:true
 				    }
@@ -194,7 +194,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					    return value+'px';
 			    }},
 			    {title: '图片offsetX', field: 'offsetX', width: 50, sortable: true,align:'center',editor:{
-				    type:'validatebox',
+				    type:'numberbox',
 				    options: {
 				    required:true
 				    }
@@ -205,7 +205,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		   		 }},
 	
 			    {title: '图片offsetY', field: 'offsetY', width: 50, sortable: true,align:'center',editor:{
-			        type:'validatebox',
+			        type:'numberbox',
 			        options: {
 			        required:true}
 			    },
@@ -214,7 +214,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					    return value+'px';
 			    }},
 			    {title: '作物状态', field: 'status', width: 50, sortable: true,align:'center',editor:{
-				    type:'validatebox',
+				    type:'numberbox',
 				    options: {
 				    required:true
 				    }},

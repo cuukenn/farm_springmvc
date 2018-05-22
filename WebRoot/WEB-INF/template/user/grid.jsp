@@ -19,19 +19,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script type="text/javascript" src="<%=basePath%>ext/easyui/locale/easyui-lang-zh_CN.js"></script>
     <script type="text/javascript" src="<%=basePath%>ext/farm/helper.js?346t"></script> 
 </head>
-        <body>
-        <div id="controlBox" style="background-color:green;">
-        	<span style="color:white;">用户名称:</span>
+<style>
+	html,body{
+       margin: 0px;
+	   border:none;
+	   width:100%;
+	   height:100%;
+    }
+</style>
+<body>
+    <div id="windowContainer" class="easyui-window" title="用户管理" style="width:100%;height:100%;" closed="false" buttons="#windowContainerButtons">
+		 <div id="controlBox" style="background-color:green;">
+        	<span style="color:white;">用户昵称:</span>
         	<input id="genderSearch"  type="text"/>
-
         	<a href="javascript:void(0)" class="easyui-linkbutton c1" iconCls="icon-search" onclick="doSearch()">查询</a>
-
         	<a href="javascript:void(0)" class="easyui-linkbutton c2" iconCls="icon-add" onclick="javascript:grid.edatagrid('addRow')">添加</a>
-
         	<a href="javascript:void(0)" class="easyui-linkbutton c3" iconCls="icon-remove" onclick="javascript:grid.edatagrid('cancelRow')">取消</a>
-
         	<a href="javascript:void(0)" class="easyui-linkbutton c5" iconCls="icon-cancel" onclick="javascript:deleteRecord()">删除</a>
-        </div>
          <div id="formContainer" class="easyui-dialog" style="width:460px;height:150px;padding:10px 10px" closed="true" buttons="#formContainerButtons">
    		 	<form id="formEditor" enctype="multipart/form-data" method="post">
    		 		<table>
@@ -50,8 +54,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	</div> 
         <table id="grid"></table>
         <div id="msgBox"></div> 
-        <div id="cropGrow"  style="overflow-y:hidden!important;"></div> 
-        <script>
+        <div id="windowContainerButtons" style="position:absolute;bottom:0px;right:30px">
+    		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#windowContainer').dialog('close')">关闭窗口</a>
+   		</div>
+    </div>
+    
+</body>
+<script>
         var indexGloble;
         var rowGloble;
         var grid;
@@ -60,7 +69,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         //配置表格
         grid = $('#grid').edatagrid({
         title: '用户清单',
-        height: 600,
+        height: '460px',
         method:'post',
         url: '<%=basePath%>user/gridData',
         saveUrl: '<%=basePath%>user/save',
@@ -93,11 +102,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         	editor:{
 		        type:'validatebox',
 		        options: {
-		        required:true
+		        	required:true
 		        }
         	}
         },
-        {title: '昵称', field: 'nickname', width: 50, sortable: true,align:'center',
+        {title: '用户昵称', field: 'nickname', width: 50, sortable: true,align:'center',
         	editor:{
 		        type:'validatebox',
 		        options: {
@@ -107,9 +116,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         },
         {title: '经验值', field: 'exp', width: 50, sortable: true,align:'center',
         	editor:{
-		        type:'validatebox',
+		        type:'numberbox',
 		        options: {
-		        required:true
+		        	required:true
 		        }
         	},
 	    	formatter:function(value,row){
@@ -118,7 +127,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         },
         {title: '积分', field: 'score', width: 50, sortable: true,align:'center',
         	editor:{
-		        type:'validatebox',
+		        type:'numberbox',
 		        options: {
 		        required:true
 		        }
@@ -129,7 +138,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         },
         {title: '金币', field: 'price', width: 50, sortable: true,align:'center',
         	editor:{
-		        type:'validatebox',
+		        type:'numberbox',
 		        options: {
 		        required:true
 		        }
@@ -170,9 +179,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        pageSize: 5,
 	        pageList: [5,10,15,20]
         });
-        grid.datagrid("resize",{
-	        height:($(window).height()-36)
-	        });
         });
         function doSearch(){
 	        grid.datagrid("load",{
@@ -194,6 +200,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         	$('#formContainer').dialog('open').dialog('center').dialog('setTitle','上传头像');
     	}
         function ImportShipmentStatusList() {
+        	var row = grid.datagrid('getSelected');
+        	var rowIndex=grid.datagrid('getRowIndex',row);
             if ($("#fuImportMultipleShipmentStatus").val() == "" ) { 
                 $.messager.show({
                     title: "消息",
@@ -214,22 +222,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         title: "消息",
                         msg: result.msg
                     });
-                    grid.datagrid('updateRow',{
-                    	index:indexGloble,
-                    	row:{
-                    		heads:imageName
-                    	}
-                    })
-                    var row = grid.datagrid('getSelected');
-                    $.post('<%=basePath%>user/save',row,function(data){
-               		 $.messager.show({
-                            title: "消息",
-                            msg: data.msg
-                        });
-               	});
-                }
-            })
-        } 
-        </script>
-     </body>
+                    $('#grid').edatagrid('beginEdit',rowIndex);
+                    var edt=$('#grid').edatagrid('getEditor',{
+                    		index:rowIndex,
+                    		field:'heads'
+                    	});
+                    $(edt.target).val(imageName);
+                    $('#grid').edatagrid('endEdit',rowIndex);
+                    }
+                })
+        }
+</script>
 </html>

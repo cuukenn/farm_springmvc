@@ -14,7 +14,9 @@
 			width:100%;
 			height:100%;
         }
-    </style>
+</style>
 </head>
-<body></body>
+<body>
+
+</body>
 </html>

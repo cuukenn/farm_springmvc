@@ -19,7 +19,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script type="text/javascript" src="<%=basePath%>ext/easyui/locale/easyui-lang-zh_CN.js"></script>
     <script type="text/javascript" src="<%=basePath%>ext/farm/helper.js?346t"></script> 
 </head>
-        <body>
+<body>
         <div id="controlBox" style="background-color:green;">
         	<span style="color:white;">种子名称:</span>
         	<input id="genderSearch"  type="text"/>
@@ -144,7 +144,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 				</td>
    		 			</tr>
    		 		</table>
-    		</div>
+    		</form>
     	</div>
     	<div id="formContainerButtons">
     		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveRecord()">确定</a>
@@ -184,7 +184,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         {field: 'caption',title: '种子名称' , width: 30, sortable: true,align:'center'},
 
         {title: 'X季作物', field: 'harvestNum', width: 50, sortable: true,align:'center',editor:{
-        type:'validatebox',
+        type:'numberbox',
         options: {
         required:true
         }
@@ -193,7 +193,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	return value+"季作物";
 		}},
         {title: '种子等级', field: 'cropLevel', width: 50, sortable: true,align:'center',editor:{
-	        type:'validatebox',
+	        type:'numberbox',
 	        options: {
 	        required:true
 	        }
@@ -202,20 +202,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	return value+"级作物";
 		}},
         {title: '种子类型', field: 'type', width: 50, sortable: true,align:'center',editor:{
-        type:'validatebox',
+        type:'numberbox',
         options: {
         required:true
         }
         }},
 
         {title: '可获经验', field: 'exp', width: 50, sortable: true,align:'center',editor:{
-        type:'validatebox',
+        type:'numberbox',
         options: {
         required:true
         }
         }},
         {title: '每季成熟所需时间', field: 'matureTime', width: 50, sortable: true,align:'center',editor:{
-        type:'validatebox',
+        type:'numberbox',
         options: {
         required:true
         }
@@ -225,7 +225,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         return value+'秒';
         }},
         {title: '每季成熟可获收', field: 'output', width: 50, sortable: true,align:'center',editor:{
-        type:'validatebox',
+        type:'numberbox',
         options: {
         required:true
         }
@@ -242,13 +242,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         return value+'金币';
         }},
         {title: '每个收获的果实', field: 'price4UnitSale', width: 50, sortable: true,align:'center',editor:{
-        type:'validatebox',
+        type:'numberbox',
         options: {
         required:true
         }
         }},
         {title: '土地需求', field: 'landRequirement', width: 50, sortable: true,align:'center',editor:{
-        type:'validatebox',
+        type:'numberbox',
         options: {
         required:true
         }
@@ -258,7 +258,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
         {title: '每季成熟可获积分', field: 'score', width: 50, sortable: true,align:'center',
         editor:{
-        type:'validatebox',
+        type:'numberbox',
         options: {
         required:true
         }

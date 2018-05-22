@@ -20,7 +20,7 @@ public class UserImp implements UserService{
 	 * @see cn.jxufe.service.UserService
 	 */
 	@Override
-	public EasyUIData<?> findByNickname(String nickname, Pageable pageable) {
+	public EasyUIData<?> findByNicknameLike(String nickname, Pageable pageable) {
 		Page<User> page = userDAO.findByNicknameLike(nickname, pageable);
         EasyUIData<User> easyUIData = new EasyUIData<User>();
         easyUIData.setTotal(page.getTotalElements());

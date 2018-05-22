@@ -176,7 +176,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         });
         function doSearch(){
 	        grid.datagrid("load",{
-	        username: $("#genderSearch").val()
+	        nickname: $("#genderSearch").val()
         	})
 	    };   
         function deleteRecord() {

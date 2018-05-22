@@ -62,7 +62,7 @@ import cn.jxufe.service.UserService;
 	        		return userService.findALL(pageable);
 	        	}
 	        else {
-	        	return userService.findByNickname(nickname, pageable);
+	        	return userService.findByNicknameLike(nickname, pageable);
 	        }
 	    }
 	    /**

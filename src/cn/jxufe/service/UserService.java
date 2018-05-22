@@ -15,7 +15,7 @@ public interface UserService {
 	 *            分页
 	 * @return 所有的EasyUIData分页列表
 	 */
-	public EasyUIData<?> findByNickname(String nickname, Pageable pageable);
+	public EasyUIData<?> findByNicknameLike(String nickname, Pageable pageable);
 
 	/**
 	 * 

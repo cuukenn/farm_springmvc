@@ -7,6 +7,13 @@ import org.springframework.web.multipart.MultipartFile;
 import cn.jxufe.bean.Message;
 
 public class FileSaver {
+	/**
+	 * 
+	 * @param imagesPath 图片路径
+	 * @param request 请求
+	 * @param file 文件
+	 * @return 运行消息结果
+	 */
 	public static Message save(String imagesPath,HttpServletRequest request,MultipartFile file) {
 		Message message = new Message();
 		if (!file.isEmpty()) {  

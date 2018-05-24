@@ -45,6 +45,7 @@ public class FarmController {
 	@RequestMapping(value = "setCurUser", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public Message setCurUser(HttpSession session, @RequestBody User user) {
+		System.out.println("-------------------dasdasdasdas--------------");
 		return farmService.setCurUser(session, user);
 	}
 }

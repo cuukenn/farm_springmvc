@@ -73,6 +73,21 @@ public class UserController {
 			return userService.findByNicknameLike(nickname, pageable);
 		}
 	}
+	/**
+	 * @param pageRequest
+	 *            接收前台传来的pageRequest对象
+	 * @see EasyUIDataPageRequest
+	 * @param nickname
+	 *            用于接受前台传来的名字查询字符
+	 * @param model
+	 *            MVC框架里Model对象
+	 * @return EasyUIData的一个对象结果以JSON的格式返回
+	 */
+	@RequestMapping(value = "gridDataALL", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Iterable<User> gridData(Model model) {
+		return userService.findALL();
+	}
 
 	/**
 	 * 

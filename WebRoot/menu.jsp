@@ -28,6 +28,8 @@
 </head>
 <body class="bar">
 	<div align="right" width="100%">
+		<a href="farm/grid" target="workspace"><img class="menu shadow" src="images/menu-1.png" width="50px"></a>
+		<a href="shop/grid" target="workspace"><img class="menu shadow" src="images/menu-1.png" width="50px"></a>
 		<a href="user/grid" target="workspace"><img class="menu shadow" src="images/menu-1.png" width="50px"></a>
 		<a href="seed/grid" target="workspace"><img class="menu shadow" src="images/seedManager.png" width="50px"></a>
 	<div>

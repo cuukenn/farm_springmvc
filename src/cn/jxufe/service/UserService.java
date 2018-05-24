@@ -40,4 +40,12 @@ public interface UserService {
 	 * @return 删除运行结果消息状态
 	 */
 	public Message delete(User user);
+	
+	/**
+	 * 
+	 * @param pageable
+	 *            分页
+	 * @return 所有的EasyUIData分页列表
+	 */
+	public  Iterable<User> findALL();
 }

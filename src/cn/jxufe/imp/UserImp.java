@@ -73,4 +73,8 @@ public class UserImp implements UserService{
         }
         return message;
 	}
+	@Override
+	public Iterable<User> findALL() {
+		return this.userDAO.findAll();
+	}
 }

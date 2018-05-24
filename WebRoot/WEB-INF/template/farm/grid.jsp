@@ -40,7 +40,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		 <form>
 			 	<lable for="id">当前用户</lable>
 			 	<input id="userId" class="easyui-combobox" name="id" data-options="
-			 		data:dataList,
+					url: '<%=basePath%>user/gridDataALL',
+					method: 'post',
 					valueField: 'id',
 					textField:'username',
 					panelWidth: 350,
@@ -54,16 +55,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div id="msgBox"></div> 
 </body>
 <script>
-var dataList=null;
-$(function(){
-	getDataList();
-})
-function getDataList(){
-	$.post('<%=basePath%>user/gridDataALL',function(data){
-		dataList=data;
-	})
-	console.log(dataList)
-}
 function formatItem(row){
 	return '<img style="height:30px;" src="<%=basePath%>images/headImages/'+row.heads+'"/>'+'|'
 			+row.username+'|'
@@ -73,20 +64,15 @@ function formatItem(row){
 }
 function changeUser(){
 	var val=$('#userId').val();
-	$.ajax({
-		dataType:'json',
-		type:'post',
-		url:'<%=basePath%>farm/setCurUser',
-		success:function(result){
+	$.post('<%=basePath%>farm/setCurUser',
+		{id:val},
+		function(result){
 			console.log(result);
 	        $.messager.show({
 	            title: "消息",
 	            msg: result.msg
 	        });
-	     },
-	     data:{"id":val}
-	})
-	console.log(val)
+	     },'json');
 }
 </script>
 </html>

@@ -40,8 +40,6 @@ public class UserController {
 	 * @see cn.jxufe.service.UserService
 	 */
 	private UserService userService;
-	private FarmService farmService;
-
 	@RequestMapping(value = "grid")
 	/**
 	 * 
@@ -108,9 +106,4 @@ public class UserController {
 		return userService.delete(user);
 	}
 
-	@RequestMapping(value = "setCurUser", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public Message setCurUser(HttpSession session, @RequestBody User user) {
-		return farmService.setCurUser(session, user);
-	}
 }

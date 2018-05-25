@@ -79,7 +79,10 @@ function changeUser(){
 		data:JSON.stringify(recordGlobal),
 		success:function(data){
 			var ms="";
-			if(data.code==0)ms="切换"+recordGlobal.username+"成功"
+			if(data.code==0){
+				ms="切换"+recordGlobal.username+"成功";
+				parent[0].changeInfo(recordGlobal);
+			}
 			else ms="切换失败，请重新切换"
 			$.messager.show({
                 title: "消息",

@@ -36,25 +36,33 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         }
 </style>
 <body>
-    <div id="windowContainer" class="easyui-window" title="用户选择" style="width:100%;height:100%;" closed="false">
-		 <form>
-			 	<lable for="id">当前用户</lable>
-			 	<input id="userId" class="easyui-combobox" name="id" data-options="
-					url: '<%=basePath%>user/gridDataALL',
-					method: 'post',
-					valueField: 'id',
-					textField:'username',
-					panelWidth: 350,
-					panelHeight: 'auto',
-					formatter: formatItem"/>
-				<p>请在下拉列表框中选择用户昵称，并点击确认按钮设置当前用户信息</p>
-				</br>
-				<button onclick="javascript:changeUser()">确认</button>
-		 </form>
-    </div>
+    <div id="windowContainer" class="easyui-window" title="用户选择" style="width:35%;height:40%;" closed="false">
+		<form style="width:100%;">
+			<p>当前用户</p>
+			<input id="userId" class="easyui-combobox" name="id" style="width:100%"
+				data-options="
+							url: '<%=basePath%>user/gridDataALL',
+							method: 'post',
+							valueField: 'id',
+							textField:'username',
+							panelWidth: '35%',
+							panelHeight: 'auto',
+							formatter: formatItem" />
+			<p>请在下拉列表框中选择用户昵称，并点击确认按钮设置当前用户信息</p>
+			<button style="width:20%;border-radius:10px;margin-left:40%;margin-top:10%" type="button" onclick="javascript:changeUser()">确认</button>
+		</form>
+	</div>
     <div id="msgBox"></div> 
 </body>
 <script>
+var recordGlobal=null;
+$(function(){
+	$('#userId').combobox({
+		onSelect: function(record){
+			recordGlobal=record;
+		}
+	});
+})
 function formatItem(row){
 	return '<img style="height:30px;" src="<%=basePath%>images/headImages/'+row.heads+'"/>'+'|'
 			+row.username+'|'
@@ -63,16 +71,22 @@ function formatItem(row){
 			+'积分:'+row.score;
 }
 function changeUser(){
-	var val=$('#userId').val();
-	$.post('<%=basePath%>farm/setCurUser',
-		{id:val},
-		function(result){
-			console.log(result);
-	        $.messager.show({
-	            title: "消息",
-	            msg: result.msg
-	        });
-	     },'json');
+	$.ajax({
+		contentType:"application/json",
+		url:'<%=basePath%>farm/setCurUser',
+		type:'post',
+		dataType:'json',
+		data:JSON.stringify(recordGlobal),
+		success:function(data){
+			var ms="";
+			if(data.code==0)ms="切换"+recordGlobal.username+"成功"
+			else ms="切换失败，请重新切换"
+			$.messager.show({
+                title: "消息",
+                msg: ms
+            });
+		}
+	})
 }
 </script>
 </html>

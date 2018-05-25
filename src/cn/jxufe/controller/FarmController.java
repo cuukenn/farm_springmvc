@@ -23,29 +23,34 @@ public class FarmController {
 	private UserService userService;
 	/**
 	 * FarmService接口对象
+	 * 
 	 * @see cn.jxufe.service.FarmService
 	 */
+	@Autowired
 	private FarmService farmService;
+
 	@RequestMapping(value = "grid")
 	public String grid() {
 		return "farm/grid";
 	}
+
 	@RequestMapping(value = "getUser", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public List<User> getUser(){
+	public List<User> getUser() {
 		return (List<User>) userService.findALL(null);
 	}
 
-/**
- * 
- * @param session 接收前台的HttpSession信息
- * @param user 接收选择的用户信息
- * @return 将当前的用户信息放入session
- */
+	/**
+	 * 
+	 * @param session
+	 *            接收前台的HttpSession信息
+	 * @param user
+	 *            接收选择的用户信息
+	 * @return 将当前的用户信息放入session
+	 */
 	@RequestMapping(value = "setCurUser", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public Message setCurUser(HttpSession session, @RequestBody User user) {
-		System.out.println("-------------------dasdasdasdas--------------");
 		return farmService.setCurUser(session, user);
 	}
 }

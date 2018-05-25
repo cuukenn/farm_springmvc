@@ -8,12 +8,6 @@ import cn.jxufe.bean.EntityID;
 @Entity
 @Table(name = "T_User")
 public class User extends EntityID {
-
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	/**
 	 * 用户头像名
 	 */

@@ -9,13 +9,13 @@ import cn.jxufe.entity.SeedBag;
 public interface SeedBagService {
 	/**
 	 * 
-	 * @param uId
+	 * @param id
 	 *            用户id
 	 * @param pageable
 	 *            分页
 	 * @return 所有的EasyUIData分页列表
 	 */
-	public EasyUIData<?> findByUIdLike(int uId, Pageable pageable);
+	public EasyUIData<?> findByUIdLike(long uId, Pageable pageable);
 	/**
 	 * 
 	 * @param uId

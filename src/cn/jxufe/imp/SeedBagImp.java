@@ -19,7 +19,7 @@ public class SeedBagImp implements SeedBagService{
 	 * 根据用户id模糊查询该用户的种子背包
 	 * @see cn.jxufe.service.SeedBagService
 	 */
-	public EasyUIData<?> findByUIdLike(int uId, Pageable pageable) {
+	public EasyUIData<?> findByUIdLike(long uId, Pageable pageable) {
 		Page<SeedBag> page = seedBagDAO.findByUIdLike(uId, pageable);
         EasyUIData<SeedBag> easyUIData = new EasyUIData<SeedBag>();
         easyUIData.setTotal(page.getTotalElements());

@@ -1,7 +1,5 @@
 package cn.jxufe.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,11 +32,6 @@ public class FarmController {
 		return "farm/grid";
 	}
 
-	@RequestMapping(value = "getUser", produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public List<User> getUser() {
-		return (List<User>) userService.findALL(null);
-	}
 
 	/**
 	 * 

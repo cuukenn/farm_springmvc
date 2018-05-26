@@ -15,7 +15,7 @@ public interface SeedBagService {
 	 *            分页
 	 * @return 所有的EasyUIData分页列表
 	 */
-	public EasyUIData<?> findByUIdLike(long uId, Pageable pageable);
+	public Iterable<SeedBag> findByUId(long uId);
 	/**
 	 * 
 	 * @param uId

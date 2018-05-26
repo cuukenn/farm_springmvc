@@ -17,7 +17,7 @@ public class SeedBag extends EntityID {
 	/**
 	 * 用户id
 	 */
-	private int uId;
+	private long uId;
 	/**
 	 * 种子id
 	 */
@@ -26,10 +26,10 @@ public class SeedBag extends EntityID {
 	 * 种子数量
 	 */
 	private int cNumber;
-	public int getuId() {
+	public long getuId() {
 		return uId;
 	}
-	public void setuId(int uId) {
+	public void setuId(long uId) {
 		this.uId = uId;
 	}
 	public int getcId() {

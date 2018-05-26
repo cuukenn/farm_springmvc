@@ -42,17 +42,11 @@ public class ShopController {
 
 	@RequestMapping(value = "gridData", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public EasyUIData<?> gridData(EasyUIDataPageRequest pageRequest, HttpSession session,
-			Model model) {
-		List<Sort.Order> orders = new ArrayList<Sort.Order>();
-		if (pageRequest.getOrder().equals("asc")) {
-			orders.add(new Sort.Order(Direction.ASC, pageRequest.getSort()));
-		} else {
-			orders.add(new Sort.Order(Direction.DESC, pageRequest.getSort()));
-		}
-		Pageable pageable = new PageRequest(pageRequest.getPage() - 1, pageRequest.getRows(), new Sort(orders));
-		
-			return seedBagService.findByUIdLike(((User)session.getAttribute("user")).getId(), pageable);
+	public Iterable<?> gridData(HttpSession session,Model model) {
+			long id=-1l;
+			User user=(User)session.getAttribute("user");
+			if(user!=null)id=user.getId();
+			return seedBagService.findByUId(id);
 	}
 	@RequestMapping(value = "save", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody

@@ -83,8 +83,8 @@ body {
 				<img src="images/exp.png" />
 			</div>
 			<div class="userBoxContent">
-				<p>诸葛亮</p>
-				<p>经验|诸葛亮|积分</p>
+				<p>未选择用户</p>
+				<p>未选择用户</p>
 			</div>
 		</div>
 	</div>
@@ -96,14 +96,22 @@ body {
 	<div>
 </body>
 <script>
+	init();
 	function changeInfo(data){
-		var rs=data.username+'|'
-		+'经验:'+data.exp+'|'
-		+'金币:'+data.price+'|'
-		+'积分:'+data.score;
-		$('.userBoxContent>p:nth-child(1)').text(data.username);
-		$('.userBoxContent>p:nth-child(2)').text(rs);
-		$('.userBoxHeads>img').attr('src','<%=basePath%>images/headImages/'+data.heads);
+		if(data){
+			var rs=data.username+'|'
+			+'经验:'+data.exp+'|'
+			+'金币:'+data.price+'|'
+			+'积分:'+data.score;
+			$('.userBoxContent>p:nth-child(1)').text(data.username);
+			$('.userBoxContent>p:nth-child(2)').text(rs);
+			$('.userBoxHeads>img').attr('src','<%=basePath%>images/headImages/'+data.heads);
+		}
+	}
+	function init(){
+		$.post('<%=basePath%>farm/getCurUser',function(data){
+			changeInfo(data);
+		})
 	}
 </script>
 </html>

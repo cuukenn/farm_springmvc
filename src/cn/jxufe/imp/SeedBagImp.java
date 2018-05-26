@@ -65,6 +65,8 @@ public class SeedBagImp implements SeedBagService {
 				seedBagDAO.save(seedBagOld);
 				userOld.setPrice(userOld.getPrice()-seedOld.getPrice());
 				userDAO.save(userOld);
+				message.setCode(0);
+				message.setMsg("保存成功");
 				return message;
 			} else {
 				seedBag.setcNumber(1);

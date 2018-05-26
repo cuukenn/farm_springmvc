@@ -133,7 +133,7 @@ body {
 .singleSeed {
 	width: 140px;
 	height: 100%;
-	background-color: red;
+	background-color: white;
 	position: relative;
 	margin-left: 10px;
 	float: left;
@@ -148,7 +148,7 @@ body {
 	margin-right: auto;
 	width: 20px;
 	height: 20px;
-	background-color: white;
+	background-color: red;
 	border-radius: 10px;
 }
 
@@ -210,11 +210,25 @@ body {
 <script>
 var listGloble;
 var wid=150;
+var LandCationData;
+getLandCationData();
 init();
 var cardview = $.extend({}, $.fn.datagrid.defaults.view, {
 	renderRow: function(target, fields, frozen, rowIndex, rowData){
 		var cc = [];
 		var imgUrl=rowData.cId+"/5.png";
+		console.log(rowData)
+		var descript="名称:"+rowData.caption
+		+"\n级别:"+rowData.cropLevel
+		+"\n价格:"+rowData.price
+		+"\n类别:"+rowData.type
+		+"\n土地:"+getLandCation(rowData.landRequirement)
+		+"\n可收获季:"+rowData.harvestNum
+		+"\n成熟时间:"+rowData.matureTime
+		+"\n当季收获:"+rowData.output
+		+"\n经验收获:"+rowData.exp
+		+"\n单个果实可获金币:"+rowData.price4UnitSale;
+		console.log(descript)
 		if (!frozen){
 			var rs='<div class="cardView">'
 					+'<div class="cardViewContent">'
@@ -222,11 +236,11 @@ var cardview = $.extend({}, $.fn.datagrid.defaults.view, {
 							+'<p>'+rowData.tip+'</p>'
 						+'</div>'
 						+'<div class="cardViewBottomImg">'
-							+'<img src="'+'<%=basePath%>images/crops/'+imgUrl+'" alt="" />'
+							+'<img src="'+'<%=basePath%>images/crops/'+imgUrl+'" title="'+descript+'" />'
 						+'</div>'
 					+'</div>'
 					+'<div class="cardViewBottom">'
-						+'<button class="cardViewBottomButton">我要购买</button>'
+						+'<button onclick="buy('+rowData.cId+')" class="cardViewBottomButton">我要购买</button>'
 					+'</div>'
 				+'</div>';
 		}
@@ -256,10 +270,11 @@ function init(){
 	})
 }
 function draw(){
-	var template='<div class="singleSeed"><div class="seedBagCount">40</div><div class="seedBagImg"><img src="/farm/images/boder.jpg" /></div></div>';
+	var template='<div class="singleSeed"><div class="seedBagCount">countPlaceolder</div><div class="seedBagImg"><img src="imgPlaceholder" /></div></div>';
 	var rs="";
 	for(var i=0;i<listGloble.length;i++){
-		rs=rs+template;
+		var tmp=template.replace('countPlaceolder',listGloble[i].cNumber).replace('imgPlaceholder','<%=basePath%>images/crops/'+listGloble[i].cId+'/5.png'); 
+		rs=rs+tmp;
 	}
 	var scrollBox=document.querySelector('.scrollBox');
 	scrollBox.style.width=(wid)*listGloble.length+"px";
@@ -274,6 +289,45 @@ function buttonClick(state){
 	}
 	else{
 		seedBagContent.scrollLeft-=wid>>2;
+	}
+}
+function buy(id){
+	$.ajax({
+		contentType:"application/json",
+		url:'<%=basePath%>shop/save',
+		type:'post',
+		dataType:'json',
+		data:JSON.stringify({"cId": id}),
+		success:function(data){
+			var ms=data.msg;
+			if(data.code==0){
+				ms="购买成功"
+				init();
+				parent[0].init();
+			}
+			$.messager.show({
+	                title: "消息",
+	                msg: ms
+	         });
+		}
+	})
+}
+function getLandCationData(){
+	$.ajax({
+		url:'<%=basePath%>codeLandRequire/data',
+		type:'post',
+		dataType:'json',
+		success:function(data){
+			LandCationData=data;
+		},
+		async:false
+	})
+}
+function getLandCation(id){
+	for(var index in LandCationData){
+		if(LandCationData[index].code==id){
+			return LandCationData[index].caption;
+		}
 	}
 }
 </script>

@@ -15,4 +15,6 @@ public interface UserDAO extends PagingAndSortingRepository<User, Long> {
 	 * @return 所有的结果
 	 */
 	public Page<User> findByNicknameLike(String nickname,Pageable pageable); 
+	
+	public User findById(long id);
 }

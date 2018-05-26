@@ -173,6 +173,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 msg: row.msg
             });
 	        grid.datagrid('reload');
+	        parent[0].init();
         }
         });
         grid.datagrid("getPager").pagination({

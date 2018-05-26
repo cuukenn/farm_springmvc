@@ -48,4 +48,6 @@ public interface UserService {
 	 * @return 所有的EasyUIData分页列表
 	 */
 	public  Iterable<User> findALL();
+	
+	public  User findById(long id);
 }

@@ -77,4 +77,8 @@ public class UserImp implements UserService{
 	public Iterable<User> findALL() {
 		return this.userDAO.findAll();
 	}
+	@Override
+	public User findById(long id) {
+		return this.userDAO.findById(id);
+	}
 }

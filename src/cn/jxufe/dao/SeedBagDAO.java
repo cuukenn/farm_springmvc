@@ -23,4 +23,6 @@ public interface SeedBagDAO extends PagingAndSortingRepository<SeedBag, Long> {
 	 * @return 所有的结果
 	 */
 	public Page<SeedBag> findByCIdLike(int cId,Pageable pageable); 
+	
+	public SeedBag findByCIdAndUId(int cId,long uId);
 }

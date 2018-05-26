@@ -58,6 +58,9 @@ public class FarmController {
 	@RequestMapping(value = "getCurUser", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public User setCurUser(HttpSession session) {
-		return (User)session.getAttribute("user");
+		User userOld=(User)session.getAttribute("user");
+		User userNew=userService.findById(userOld.getId());
+		if(userNew!=null)session.setAttribute("user",userNew);
+		return userNew;
 	}
 }

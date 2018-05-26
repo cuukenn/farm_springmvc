@@ -25,7 +25,7 @@ public class SeedBag extends EntityID {
 	/**
 	 * 种子数量
 	 */
-	private int cNumber;
+	private int cNumber=0;
 	public long getuId() {
 		return uId;
 	}

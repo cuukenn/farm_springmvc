@@ -73,6 +73,7 @@ body {
 	border-radius:10px;
 	border:1px solid black;
 	background-color:blue;
+	color:white;
 }
 </style>
 </head>

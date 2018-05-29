@@ -48,7 +48,7 @@ body {
 .cardViewContent {
 	width: 100%;
 	height: 80%;
-	background: url(/farm/images/boder.jpg) no-repeat center center;
+	background: url(/farm/images/boder.png) no-repeat center center;
 	background-size: cover;
 	position: relative;
 }
@@ -81,7 +81,6 @@ body {
 .cardViewBottom {
 	width: 100%;
 	height: 20%;
-	background-color: yellow;
 	position: relative;
 }
 

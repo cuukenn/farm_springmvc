@@ -5,7 +5,7 @@ import javax.servlet.http.HttpSession;
 import cn.jxufe.bean.Message;
 import cn.jxufe.entity.User;
 
-public interface FarmService {
+public interface FarmerService {
 	/**
 	 * 
 	 * @param session 一个会话用来保存当前的user用户

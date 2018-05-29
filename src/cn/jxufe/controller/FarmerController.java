@@ -11,25 +11,25 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.jxufe.bean.Message;
 import cn.jxufe.entity.User;
-import cn.jxufe.service.FarmService;
+import cn.jxufe.service.FarmerService;
 import cn.jxufe.service.UserService;
 
 @Controller
 @RequestMapping("farm")
-public class FarmController {
+public class FarmerController {
 	@Autowired
 	private UserService userService;
 	/**
 	 * FarmService接口对象
 	 * 
-	 * @see cn.jxufe.service.FarmService
+	 * @see cn.jxufe.service.FarmerService
 	 */
 	@Autowired
-	private FarmService farmService;
+	private FarmerService farmerService;
 
 	@RequestMapping(value = "grid")
 	public String grid() {
-		return "farm/grid";
+		return "farmer/grid";
 	}
 
 
@@ -44,7 +44,7 @@ public class FarmController {
 	@RequestMapping(value = "setCurUser", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public Message setCurUser(HttpSession session, @RequestBody User user) {
-		return farmService.setCurUser(session, user);
+		return farmerService.setCurUser(session, user);
 	}
 	
 	/**

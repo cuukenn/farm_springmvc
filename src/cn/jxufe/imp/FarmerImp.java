@@ -6,9 +6,9 @@ import org.springframework.stereotype.Service;
 
 import cn.jxufe.bean.Message;
 import cn.jxufe.entity.User;
-import cn.jxufe.service.FarmService;
+import cn.jxufe.service.FarmerService;
 @Service
-public class FarmImp implements FarmService{
+public class FarmerImp implements FarmerService{
 	/**
 	 * 
 	 */

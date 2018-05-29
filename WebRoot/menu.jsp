@@ -56,37 +56,41 @@ body {
 }
 
 .userBoxContent {
-	float:left;
-	width: auto;
-	height: 100%;
 	position:relative;
+	float:left;
 }
-.userBoxContent>p:nth-child(1){
+.username{
 	position:absolute;
 	width:200px;
 	font-size: 4em;
+	left:20px;
+	top:-20px;
 	color:yellow;
 }
-.userBoxContent>p:nth-child(2){
+.userDetail{
 	position:absolute;
-	width:200px;
+	width:165px;
+	left:20px;
+	top:25px;
 	font-size: 2em;
 	border-radius:10px;
 	border:1px solid black;
-	background-color:blue;
+	background-color:#3EC6FC;
 	color:white;
+	padding-left:5px;
 }
+
 </style>
 </head>
 <body class="bar">
 	<div align="left">
 		<div class="userBox">
 			<div class="userBoxHeads">
-				<img class="menu shadow"  src="images/exp.png" />
+				<img class="menu shadow"  src="images/unknow.png" />
 			</div>
 			<div class="userBoxContent">
-				<p>未选择用户</p>
-				<p>未选择用户</p>
+				<p class='username'>姓名</p>
+				<p class='userDetail'>信息</p>
 			</div>
 		</div>
 	</div>

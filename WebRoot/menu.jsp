@@ -69,7 +69,7 @@ body {
 }
 .userDetail{
 	position:absolute;
-	width:165px;
+	width:180px;
 	left:20px;
 	top:25px;
 	font-size: 2em;

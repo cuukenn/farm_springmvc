@@ -63,7 +63,7 @@ body {
 
 .cardViewBottomDescript>p {
 	text-align: center;
-	color: black;
+	color: white;
 }
 
 .cardViewBottomImg {
@@ -99,7 +99,7 @@ body {
 	width: 100%;
 	height: 600px;
 	left: 20%;
-	top: 0%;
+	top: 5%;
 }
 </style>
 <body>

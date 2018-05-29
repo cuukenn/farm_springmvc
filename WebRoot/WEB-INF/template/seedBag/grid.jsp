@@ -85,8 +85,9 @@ body {
 	width: 20px;
 	height: 20px;
 	line-height:20px;
-	background-color: white;
+	background-color: red;
 	border-radius: 10px;
+	color:yellow;
 }
 
 .seedBagPreButton {

@@ -40,6 +40,7 @@ public class SeedBagImp implements SeedBagService {
 	}
 
 	/**
+	 * @see cn.jxufe.service.SeedBagService
 	 * 保存
 	 */
 	@Override
@@ -83,6 +84,7 @@ public class SeedBagImp implements SeedBagService {
 	}
 
 	/**
+	 * @see cn.jxufe.service.SeedBagService
 	 * 删除种子
 	 */
 	@Override

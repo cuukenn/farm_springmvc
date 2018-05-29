@@ -97,9 +97,9 @@ body {
 #tableBox {
 	position: absolute;
 	width: 100%;
-	height: 600px;
+	height: 570px;
 	left: 20%;
-	top: 5%;
+	top: 0%;
 }
 </style>
 <body>

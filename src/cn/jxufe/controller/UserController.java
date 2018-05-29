@@ -3,6 +3,8 @@ package cn.jxufe.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +13,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -45,7 +48,43 @@ public class UserController {
 	public String grid() {
 		return "user/grid";
 	}
-
+	
+	@RequestMapping(value = "userSelect")
+	public String selectGrid() {
+		return "user/userSelect";
+	}
+	
+	/**
+	 * 
+	 * @param session
+	 *            接收前台的HttpSession信息
+	 * @param user
+	 *            接收选择的用户信息
+	 * @return 将当前的用户信息放入session
+	 */
+	@RequestMapping(value = "setCurUser", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Message setCurUser(HttpSession session, @RequestBody User user) {
+		return userService.setCurUser(session, user);
+	}
+	
+	/**
+	 * 
+	 * @param session
+	 *            接收前台的HttpSession信息
+	 * @param user
+	 *            接收选择的用户信息
+	 * @return 将当前的用户信息放入session
+	 */
+	@RequestMapping(value = "getCurUser", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public User setCurUser(HttpSession session) {
+		User userOld=(User)session.getAttribute("user");
+		User userNew=userService.findById(userOld.getId());
+		if(userNew!=null)session.setAttribute("user",userNew);
+		return userNew;
+	}
+	
 	/**
 	 * @param pageRequest
 	 *            接收前台传来的pageRequest对象

@@ -1,5 +1,7 @@
 package cn.jxufe.service;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.data.domain.Pageable;
 
 import cn.jxufe.bean.EasyUIData;
@@ -48,6 +50,14 @@ public interface UserService {
 	 * @return 所有的EasyUIData分页列表
 	 */
 	public  Iterable<User> findALL();
+	
+	/**
+	 * 
+	 * @param session 一个会话用来保存当前的user用户
+	 * @param user 当前用户
+	 * @return 返回设置用户是否成功的消息
+	 */
+	public Message setCurUser(HttpSession session, User user);
 	
 	public  User findById(long id);
 }

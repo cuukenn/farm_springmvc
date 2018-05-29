@@ -1,5 +1,7 @@
 package cn.jxufe.imp;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -80,5 +82,22 @@ public class UserImp implements UserService{
 	@Override
 	public User findById(long id) {
 		return this.userDAO.findById(id);
+	}
+	
+	/**
+	 * 
+	 */
+	@Override
+	public Message setCurUser(HttpSession session, User user) {
+		Message message = new Message();
+        try {
+        	session.setAttribute("user", user);
+            message.setCode(0);
+            message.setMsg("设置用户成功");
+        }catch(Exception e) {
+            message.setCode(-1005);
+            message.setMsg("设置用户失败");
+        }
+        return message;
 	}
 }

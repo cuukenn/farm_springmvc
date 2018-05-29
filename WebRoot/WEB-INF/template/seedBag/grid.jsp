@@ -35,12 +35,11 @@ body {
 	background-color: transparent;
 	border: none;
 }
-
 .seedBagContainer {
 	position: absolute;
-	width: 40%;
+	width: 60%;
 	height: 90%;
-	left: 30%;
+	left: 20%;
 	top: 5%;
 }
 
@@ -66,9 +65,11 @@ body {
 }
 
 .singleSeed {
-	width: 140px;
+	width: 200px;
 	height: 100%;
 	background-color: white;
+	background: url(/farm/images/boder.png) no-repeat center center;
+	background-size: cover;
 	position: relative;
 	margin-left: 10px;
 	float: left;
@@ -83,7 +84,8 @@ body {
 	margin-right: auto;
 	width: 20px;
 	height: 20px;
-	background-color: red;
+	line-height:20px;
+	background-color: white;
 	border-radius: 10px;
 }
 
@@ -132,7 +134,7 @@ body {
 </body>
 <script>
 var listGloble;
-var wid=150;
+var wid=210;
 init();
 function init(){
 	$.post('<%=basePath%>shop/gridData',function(data){

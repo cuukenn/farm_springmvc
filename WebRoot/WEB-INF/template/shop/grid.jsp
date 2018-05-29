@@ -118,18 +118,16 @@ body {
 	<div id="msgBox"></div> 
 </body>
 <script>
-var LandCationData;
-getLandCationData();
 resizeFrame();
 var cardview = $.extend({}, $.fn.datagrid.defaults.view, {
 	renderRow: function(target, fields, frozen, rowIndex, rowData){
 		var cc = [];
-		var imgUrl=rowData.cId+"/5.png";
+		var imgUrl=rowData.cId+"/"+rowData.growStep+".png";
 		var descript="名称:"+rowData.caption
 		+"\n级别:"+rowData.cropLevel
 		+"\n价格:"+rowData.price
 		+"\n类别:"+rowData.type
-		+"\n土地:"+getLandCation(rowData.landRequirement)
+		+"\n土地:"+rowData.landRequireCaption
 		+"\n可收获季:"+rowData.harvestNum
 		+"\n成熟时间:"+rowData.matureTime
 		+"\n当季收获:"+rowData.output
@@ -156,7 +154,7 @@ var cardview = $.extend({}, $.fn.datagrid.defaults.view, {
 });
 $('#tt').datagrid({
 	title:"种子仓库",
-	url: '<%=basePath%>seed/gridData/',
+	url: '<%=basePath%>seedStorage/gridData',
 	method:'post',
 	border: false,
 	rownumbers: true,
@@ -169,24 +167,6 @@ $('#tt').datagrid({
 	autoSave:true,
 	view: cardview
 });
-function getLandCationData(){
-	$.ajax({
-		url:'<%=basePath%>codeLandRequire/data',
-		type:'post',
-		dataType:'json',
-		success:function(data){
-			LandCationData=data;
-		},
-		async:false
-	})
-}
-function getLandCation(id){
-	for(var index in LandCationData){
-		if(LandCationData[index].code==id){
-			return LandCationData[index].caption;
-		}
-	}
-}
 function buy(id,caption){
 	var template="确认购买NULL的种子么?";
 	template=template.replace("NULL",caption);

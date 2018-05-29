@@ -138,7 +138,7 @@ var listGloble;
 var wid=210;
 init();
 function init(){
-	$.post('<%=basePath%>shop/gridData',function(data){
+	$.post('<%=basePath%>seedBagView/gridData',function(data){
 		listGloble=data;
 		 draw();
 	})
@@ -147,7 +147,12 @@ function draw(){
 	var template='<div class="singleSeed"><div class="seedBagCount">countPlaceolder</div><div class="seedBagImg"><img src="imgPlaceholder" /></div></div>';
 	var rs="";
 	for(var i=0;i<listGloble.length;i++){
-		var tmp=template.replace('countPlaceolder',listGloble[i].cNumber).replace('imgPlaceholder','<%=basePath%>images/crops/'+listGloble[i].cId+'/5.png'); 
+		var descript=listGloble[i].caption
+			+"\n单季产量:"+listGloble[i].output
+			+"\n果实单价:"+listGloble[i].price
+			+"\n季数:"+listGloble[i].harvestNum
+			+"\n土地:"+listGloble[i].landRequireCaption;
+		var tmp=template.replace('countPlaceolder',listGloble[i].cNumber).replace('imgPlaceholder','<%=basePath%>images/crops/'+listGloble[i].cId+'/'+listGloble[i].growStep+'.png'); 
 		rs=rs+tmp;
 	}
 	var scrollBox=document.querySelector('.scrollBox');

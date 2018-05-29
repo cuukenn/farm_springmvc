@@ -1,4 +1,4 @@
-package cn.jxufe.entity;
+package cn.jxufe.view;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -7,7 +7,7 @@ import cn.jxufe.bean.EntityID;
 
 @Entity
 @Table(name = "V_SeedStorage")
-public class SeedStorage extends EntityID {
+public class SeedStorageView extends EntityID {
 	private static final long serialVersionUID = 1L;
 	/**
 	 * 种子id
@@ -81,7 +81,7 @@ public class SeedStorage extends EntityID {
 	/**
 	 * 种子类型描述
 	 */
-	private String seedTypeCation;
+	private String seedTypeCaption;
 	/**
 	 * 成熟步骤
 	 */
@@ -116,11 +116,12 @@ public class SeedStorage extends EntityID {
 	public void setLandRequireCaption(String landRequireCaption) {
 		this.landRequireCaption = landRequireCaption;
 	}
-	public String getSeedTypeCation() {
-		return seedTypeCation;
+	
+	public String getSeedTypeCaption() {
+		return seedTypeCaption;
 	}
-	public void setSeedTypeCation(String seedTypeCation) {
-		this.seedTypeCation = seedTypeCation;
+	public void setSeedTypeCaption(String seedTypeCaption) {
+		this.seedTypeCaption = seedTypeCaption;
 	}
 	public int getCropLevel() {
 		return cropLevel;

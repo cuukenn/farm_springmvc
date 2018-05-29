@@ -217,7 +217,6 @@ var cardview = $.extend({}, $.fn.datagrid.defaults.view, {
 	renderRow: function(target, fields, frozen, rowIndex, rowData){
 		var cc = [];
 		var imgUrl=rowData.cId+"/5.png";
-		console.log(rowData)
 		var descript="名称:"+rowData.caption
 		+"\n级别:"+rowData.cropLevel
 		+"\n价格:"+rowData.price
@@ -228,7 +227,6 @@ var cardview = $.extend({}, $.fn.datagrid.defaults.view, {
 		+"\n当季收获:"+rowData.output
 		+"\n经验收获:"+rowData.exp
 		+"\n单个果实可获金币:"+rowData.price4UnitSale;
-		console.log(descript)
 		if (!frozen){
 			var rs='<div class="cardView">'
 					+'<div class="cardViewContent">'
@@ -240,7 +238,7 @@ var cardview = $.extend({}, $.fn.datagrid.defaults.view, {
 						+'</div>'
 					+'</div>'
 					+'<div class="cardViewBottom">'
-						+'<button onclick="buy('+rowData.cId+')" class="cardViewBottomButton">我要购买</button>'
+						+'<button onclick="buy('+rowData.cId+',\''+rowData.caption+'\')" class="cardViewBottomButton">我要购买</button>'
 					+'</div>'
 				+'</div>';
 		}
@@ -291,26 +289,32 @@ function buttonClick(state){
 		seedBagContent.scrollLeft-=wid>>2;
 	}
 }
-function buy(id){
-	$.ajax({
-		contentType:"application/json",
-		url:'<%=basePath%>shop/save',
-		type:'post',
-		dataType:'json',
-		data:JSON.stringify({"cId": id}),
-		success:function(data){
-			var ms=data.msg;
-			if(data.code==0){
-				ms="购买成功"
-				init();
-				parent[0].init();
-			}
-			$.messager.show({
-	                title: "消息",
-	                msg: ms
-	         });
-		}
-	})
+function buy(id,caption){
+	var template="确认购买NULL的种子么?";
+	template=template.replace("NULL",caption);
+	$.messager.confirm('种子购买',template,function(r){
+	    if (r){
+	    	$.ajax({
+	    		contentType:"application/json",
+	    		url:'<%=basePath%>shop/save',
+	    		type:'post',
+	    		dataType:'json',
+	    		data:JSON.stringify({"cId": id}),
+	    		success:function(data){
+	    			var ms=data.msg;
+	    			if(data.code==0){
+	    				ms="购买成功"
+	    				init();
+	    				parent[0].init();
+	    			}
+	    			$.messager.show({
+	    	                title: "消息",
+	    	                msg: ms
+	    	         });
+	    		}
+	    	})
+	    }
+	});
 }
 function getLandCationData(){
 	$.ajax({

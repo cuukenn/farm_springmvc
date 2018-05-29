@@ -14,6 +14,7 @@ import cn.jxufe.bean.Message;
 import cn.jxufe.entity.SeedBag;
 import cn.jxufe.entity.User;
 import cn.jxufe.service.SeedBagService;
+import cn.jxufe.service.SeedService;
 
 @Controller
 @RequestMapping("shop")
@@ -26,7 +27,9 @@ public class ShopController {
 	@Autowired
 	private SeedBagService seedBagService;
 
-
+	@Autowired
+	private SeedService seedService;
+	
 	@RequestMapping(value = "grid")
 	public String grid() {
 		return "shop/grid";
@@ -46,7 +49,16 @@ public class ShopController {
 		User user=(User)session.getAttribute("user");
 		if(user!=null) {
 			seedBag.setuId(user.getId());
-			return seedBagService.save(seedBag);
+			if(seedService.findByCID(seedBag.getcId())!=null) {
+				return seedBagService.save(seedBag);
+			}
+			else {
+				Message message=new Message();
+				message.setCode(-101);
+				message.setMsg("种子不存在");
+				return message;
+			}
+			
 		}
 		else {
 			Message message=new Message();

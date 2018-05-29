@@ -60,4 +60,6 @@ public interface SeedService {
 	 * @return 删除运行结果消息状态
 	 */
 	public Message delete(Seed seed);
+	
+	public Seed findByCID(int cId);
 }

@@ -79,6 +79,11 @@ public class SeedImp implements SeedService{
 		return easyUIData;
 	}
 
+	@Override
+	public Seed findByCID(int cId) {
+        return seedDAO.findByCId(cId);
+	}
+
 	
 
 }

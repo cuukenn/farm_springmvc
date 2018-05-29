@@ -158,10 +158,10 @@ function draw(){
 var seedBagContent=document.querySelector('.seedBagContent');
 function buttonClick(state){
 	if(state>=0){
-		seedBagContent.scrollLeft+=wid>>2;
+		seedBagContent.scrollLeft+=wid;
 	}
 	else{
-		seedBagContent.scrollLeft-=wid>>2;
+		seedBagContent.scrollLeft-=wid;
 	}
 }
 function buy(id,caption){

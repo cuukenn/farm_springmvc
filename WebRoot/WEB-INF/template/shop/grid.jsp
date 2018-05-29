@@ -55,8 +55,9 @@ body {
 
 .cardViewBottomDescript {
 	position: absolute;
-	width: 100%;
+	width: 90%;
 	top: 2%;
+	left:4%;
 	z-index: 2;
 }
 

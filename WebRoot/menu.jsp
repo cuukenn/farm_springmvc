@@ -50,7 +50,8 @@ body {
 }
 
 .userBoxHeads>img {
-	width: 40px;
+	width: 60px;
+	height:60px;
 	height: auto;
 }
 
@@ -81,7 +82,7 @@ body {
 	<div align="left">
 		<div class="userBox">
 			<div class="userBoxHeads">
-				<img src="images/exp.png" />
+				<img class="menu shadow"  src="images/exp.png" />
 			</div>
 			<div class="userBoxContent">
 				<p>未选择用户</p>

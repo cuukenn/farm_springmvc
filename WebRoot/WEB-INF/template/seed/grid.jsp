@@ -274,7 +274,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         }},
         {title: '操作', field: 'option', width: 50,align:'center',
         	formatter:function(value,row){
-                return  '<a href="javascript:void(0)" style="background-color:white;border-radius:5px;"  class="easyui-linkbutton" onclick="javascript:showCropsGrowEdit(+'+row.cId+')">成长阶段</a>';
+                return  '<a href="javascript:void(0)" style="background-color:white;border-radius:5px;"  class="easyui-linkbutton" onclick="javascript:showCropsGrowEdit()">成长阶段</a>';
                }
         }
         ]],
@@ -288,9 +288,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			        msg:'是否删除选中记录?'
 		        }
         },
+        onSelect:function(rowIndex, rowData){
+        	cId=rowData.cId;
+        },
         onSuccess:function(index,row){
-	        console.log(row);
-	        $("#msgBox").text(row.msg);
+        	$.messager.show({
+                title: "消息",
+                msg: row.msg
+            });
         },
         onDblClickRow:function (rowIndex, rowData){
         		grid.datagrid("endEdit", rowIndex);
@@ -358,8 +363,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         	});
         	grid.datagrid('reload');
         };
-        function showCropsGrowEdit(value){
-        	cId=value;
+        function showCropsGrowEdit(){
         	$("#cropGrow").window({
         		width:'800',
         		height:'420',

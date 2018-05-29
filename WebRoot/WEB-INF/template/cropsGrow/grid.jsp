@@ -33,7 +33,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					种子ID:
    		 				</td>
    		 				<td>
-   		 					<input type="text"  name='cId'  class="easyui-numberbox" required="required"/>
+   		 					<input id="cId" type="text"  name='cId'  class="easyui-numberbox" required="required"/>
    		 				</td>
    		 			</tr>
    		 			<tr>
@@ -280,7 +280,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     };
 	function newRecord1(){
 		 $('#cropsGrowEditor').form("reset");
-		 
+		 $('#cId').numberbox('setValue',cId);
         $('#codeCropContainer').dialog('open').dialog('center').dialog('setTitle','添加数据');
     };
     function saveRecord1() {

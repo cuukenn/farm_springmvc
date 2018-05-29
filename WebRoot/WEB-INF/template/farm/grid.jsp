@@ -56,6 +56,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </body>
 <script>
 var recordGlobal=null;
+resizeFrame();
 $(function(){
 	$('#userId').combobox({
 		onSelect: function(record){
@@ -90,6 +91,10 @@ function changeUser(){
             });
 		}
 	})
+}
+function resizeFrame(){
+	window.parent.document.getElementById("tools").src="tools.jsp";
+	window.parent.document.getElementById("framesets").rows='60,*,50';
 }
 </script>
 </html>

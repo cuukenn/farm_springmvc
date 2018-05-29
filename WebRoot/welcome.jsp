@@ -19,4 +19,11 @@
 <body>
 
 </body>
+<script>
+resizeFrame();
+function resizeFrame(){
+	window.parent.document.getElementById("tools").src="tools.jsp";
+	window.parent.document.getElementById("framesets").rows='60,*,50';
+}
+</script>
 </html>

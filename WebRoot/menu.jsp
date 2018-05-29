@@ -90,10 +90,11 @@ body {
 		</div>
 	</div>
 	<div align="right" width="60%">
-		<a href="farm/grid" target="workspace"><img class="menu shadow" src="images/menu-1.png" width="50px"></a>
-		<a href="shop/grid" target="workspace"><img class="menu shadow" src="images/shop.png" width="50px"></a>
-		<a href="user/grid" target="workspace"><img class="menu shadow" src="images/menu-1.png" width="50px"></a>
-		<a href="seed/grid" target="workspace"><img class="menu shadow" src="images/seedManager.png" width="50px"></a>
+		<a href="welcome.jsp" target="workspace"><img class="menu shadow" src="images/landHead.png" width="50px" height="50px"></a>
+		<a href="farm/grid" target="workspace"><img class="menu shadow" src="images/user.png" width="45px" height="50px"></a>
+		<a href="shop/grid" target="workspace"><img class="menu shadow" src="images/shop.png" width="50px" height="50px"></a>
+		<a href="user/grid" target="workspace"><img class="menu shadow" src="images/menu-1.png" width="50px" height="50px"></a>
+		<a href="seed/grid" target="workspace"><img class="menu shadow" src="images/seedManager.png" width="50px" height="50px"></a>
 	<div>
 </body>
 <script>

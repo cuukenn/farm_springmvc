@@ -65,6 +65,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         var rowGloble;
         var grid;
         var cId;
+        resizeFrame();
+        function resizeFrame(){
+        	window.parent.document.getElementById("tools").src="tools.jsp";
+        	window.parent.document.getElementById("framesets").rows='60,*,50';
+        }
         $(document).ready(function () {
         //配置表格
         grid = $('#grid').edatagrid({

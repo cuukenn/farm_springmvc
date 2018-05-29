@@ -157,6 +157,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         var grid;
         var cId;
         var codeLandRequire;
+        resizeFrame();
         $(document).ready(function () {
         getCodeLandRequire();
         //配置表格
@@ -381,6 +382,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         			return codeLandRequire[index].caption;
         		}
         	}
+        }
+        function resizeFrame(){
+        	window.parent.document.getElementById("tools").src="tools.jsp";
+        	window.parent.document.getElementById("framesets").rows='60,*,50';
         }
         </script>
      </body>

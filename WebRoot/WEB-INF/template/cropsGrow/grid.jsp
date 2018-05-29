@@ -131,6 +131,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  	var codeCropStatusData=[];
  	var cgrid;
  	getCodeCropStatus();
+ 	resizeFrame();
  	$(function(){
 		cgrid = $('#grid1').edatagrid({
 	    title: '成长阶段定义',
@@ -346,6 +347,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		codeCropStatusData=data;
             });
     }
-   
+    function resizeFrame(){
+    	window.parent.document.getElementById("tools").src="tools.jsp";
+    	window.parent.document.getElementById("framesets").rows='60,*,50';
+    }
 </script>
  

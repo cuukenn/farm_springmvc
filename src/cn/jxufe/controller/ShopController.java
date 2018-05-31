@@ -26,15 +26,26 @@ public class ShopController {
 	 */
 	@Autowired
 	private SeedBagService seedBagService;
-
+	/**
+	 * SeedService接口对象
+	 * @see cn.jxufe.service.SeedService
+	 */
 	@Autowired
 	private SeedService seedService;
-	
+	/**
+	 * 
+	 * @return 返回消息放入到RequestMapping中
+	 */
 	@RequestMapping(value = "grid")
 	public String grid() {
 		return "shop/grid";
 	}
-
+	/**
+	 * 
+	 * @param session 接收HttpSession对象
+	 * @param model 接收MVC框架传到model层的数据
+	 * @return 以JSON格式返回查找SeedBag对象
+	 */
 	@RequestMapping(value = "gridData", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public Iterable<?> gridData(HttpSession session,Model model) {
@@ -43,6 +54,14 @@ public class ShopController {
 			if(user!=null)id=user.getId();
 			return seedBagService.findByUId(id);
 	}
+	/**
+	 * 
+	 * @param seedBag 接收种子收纳袋SeedBag对象
+	 * @see cn.jxufe.entity.SeedBag
+	 * @param session 接收HttpSession对象
+	 * @param model 接收MVC框架传到model层的数据
+	 * @return 以JSON格式返回保存seedBag数据的处理消息体类Message对象
+	 */
 	@RequestMapping(value = "save", produces = MediaType.APPLICATION_JSON_VALUE,consumes=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public Message save(@RequestBody SeedBag seedBag, HttpSession session,Model model) {
@@ -55,7 +74,7 @@ public class ShopController {
 			else {
 				Message message=new Message();
 				message.setCode(-101);
-				message.setMsg("种子不存在");
+				message.setMsg("所购种子不存在");
 				return message;
 			}
 			
@@ -63,12 +82,19 @@ public class ShopController {
 		else {
 			Message message=new Message();
 			message.setCode(-100);
-			message.setMsg("未登录");
+			message.setMsg("购买失败");
 			return message;
 		}
 		
 	}
-
+/**
+ * 
+ * @param seedBag 接收种子收纳袋SeedBag对象
+ * @see cn.jxufe.entity.SeedBag
+ * @param session 接收HttpSession对象
+ * @param model 接收MVC框架传到model层的数据
+ * @return 以JSON格式返回删除seedBag数据的处理消息体类Message对象
+ */
 	@RequestMapping(value = "delete", produces = MediaType.APPLICATION_JSON_VALUE,consumes=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public Message delete(@RequestBody SeedBag seedBag, HttpSession session,Model model) {
@@ -80,7 +106,7 @@ public class ShopController {
 		else {
 			Message message=new Message();
 			message.setCode(-100);
-			message.setMsg("未登录");
+			message.setMsg("删除失败");
 			return message;
 		}
 		

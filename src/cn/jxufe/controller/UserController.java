@@ -25,7 +25,7 @@ import cn.jxufe.entity.User;
 import cn.jxufe.service.UserService;
 
 /**
- * MVCæ¡†æ¶é‡Œçš„controlleræ§åˆ¶å±‚ç±»
+ *ÓÃ»§¹ÜÀíÀïµÄ MVC¿ò¼ÜÀïcontroller²ãÀà
  * 
  * @author Administrator
  *
@@ -35,7 +35,7 @@ import cn.jxufe.service.UserService;
 public class UserController {
 	@Autowired
 	/**
-	 * UserServiceæ¥å£å¯¹è±¡
+	 * UserService½Ó¿Ú¶ÔÏó
 	 * 
 	 * @see cn.jxufe.service.UserService
 	 */
@@ -43,7 +43,7 @@ public class UserController {
 	@RequestMapping(value = "grid")
 	/**
 	 * 
-	 * @return è¿”å›å­—ç¬¦ä¸²åˆ°RequestMappingé‡Œé¢
+	 * @return ·µ»Ø¶ÔÏó·ÅÈëµ½RequestMappingµ±ÖĞ
 	 */
 	public String grid() {
 		return "user/grid";
@@ -57,10 +57,10 @@ public class UserController {
 	/**
 	 * 
 	 * @param session
-	 *            æ¥æ”¶å‰å°çš„HttpSessionä¿¡æ¯
+	 *           ½ÓÊÕä¯ÀÀÆ÷µÄHttpSession¶ÔÏó
 	 * @param user
-	 *            æ¥æ”¶é€‰æ‹©çš„ç”¨æˆ·ä¿¡æ¯
-	 * @return å°†å½“å‰çš„ç”¨æˆ·ä¿¡æ¯æ”¾å…¥session
+	 *            ½ÓÊÕÓÃ»§User¶ÔÏó
+	 * @return °ÑÓÃ»§ĞÅÏ¢·ÅÈësessionÓÃJSONµÄ¸ñÊ½·µ»Ø´¦ÀíÌáÊ¾ÏûÏ¢MessageÀà¶ÔÏó
 	 */
 	@RequestMapping(value = "setCurUser", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -70,11 +70,9 @@ public class UserController {
 	
 	/**
 	 * 
-	 * @param session
-	 *            æ¥æ”¶å‰å°çš„HttpSessionä¿¡æ¯
-	 * @param user
-	 *            æ¥æ”¶é€‰æ‹©çš„ç”¨æˆ·ä¿¡æ¯
-	 * @return å°†å½“å‰çš„ç”¨æˆ·ä¿¡æ¯æ”¾å…¥session
+	 * @param session ½ÓÊÕä¯ÀÀÆ÷µÄHttpSession¶ÔÏó
+	 * @param user ½ÓÊÕÓÃ»§User¶ÔÏó
+	 * @return ÓÃJSONµÄ¸ñÊ½·µ»ØÉèÖÃµÄÓÃ»§UserÀà¶ÔÏó
 	 */
 	@RequestMapping(value = "getCurUser", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -86,14 +84,11 @@ public class UserController {
 	}
 	
 	/**
-	 * @param pageRequest
-	 *            æ¥æ”¶å‰å°ä¼ æ¥çš„pageRequestå¯¹è±¡
+	 * @param pageRequest ½ÓÊÕÇ°Ì¨´«À´µÄ·ÖÒ³ÇëÇó
 	 * @see EasyUIDataPageRequest
-	 * @param nickname
-	 *            ç”¨äºæ¥å—å‰å°ä¼ æ¥çš„åå­—æŸ¥è¯¢å­—ç¬¦
-	 * @param model
-	 *            MVCæ¡†æ¶é‡ŒModelå¯¹è±¡
-	 * @return EasyUIDataçš„ä¸€ä¸ªå¯¹è±¡ç»“æœä»¥JSONçš„æ ¼å¼è¿”å›
+	 * @param nickname ½ÓÊÕêÇ³Æ²éÕÒµÄ²ÎÊı
+	 * @param model MVC¿ò¼ÜµÄmodel²ã²ÎÊı
+	 * @return ·µ»ØEasyUIData±í²¢ÒÔJSON¸ñÊ½·µ»Ø
 	 */
 	@RequestMapping(value = "gridData", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -113,14 +108,9 @@ public class UserController {
 		}
 	}
 	/**
-	 * @param pageRequest
-	 *            æ¥æ”¶å‰å°ä¼ æ¥çš„pageRequestå¯¹è±¡
-	 * @see EasyUIDataPageRequest
-	 * @param nickname
-	 *            ç”¨äºæ¥å—å‰å°ä¼ æ¥çš„åå­—æŸ¥è¯¢å­—ç¬¦
-	 * @param model
-	 *            MVCæ¡†æ¶é‡ŒModelå¯¹è±¡
-	 * @return EasyUIDataçš„ä¸€ä¸ªå¯¹è±¡ç»“æœä»¥JSONçš„æ ¼å¼è¿”å›
+	 * 
+	 * @param model ½ÓÊÕMVC¿ò¼ÜµÄmodel²ãÊı¾İ
+	 * @return ·µ»Ø²éÕÒµÄ½á¹û²¢ÒÔJSONµÄ¸ñÊ½·µ»Ø
 	 */
 	@RequestMapping(value = "gridDataALL", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -130,12 +120,10 @@ public class UserController {
 
 	/**
 	 * 
-	 * @param user
-	 *            æ¥æ”¶é€‰ä¸­æˆ–åˆ›å»ºçš„ä¸€ä¸ªUserå¯¹è±¡
+	 * @param user ½ÓÊÕUserÀà¶ÔÏó
 	 * @see cn.jxufe.entity.User
-	 * @param model
-	 *            MVCæ¡†æ¶é‡ŒModelå¯¹è±¡
-	 * @return æ‰§è¡Œç»“æœçš„Messageå¯¹è±¡ä»¥JSONçš„æ ¼å¼è¿”å›
+	 * @param model ½ÓÊÕMVC¿ò¼Ü´«µ½model²ãÊı¾İ
+	 * @return ·µ»Ø±£´æ´¦ÀíºóÏûÏ¢ÌåMessageµÄ¶ÔÏó
 	 */
 	@RequestMapping(value = "save", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -144,12 +132,10 @@ public class UserController {
 	}
 
 	/**
-	 * @param user
-	 *            æ¥æ”¶å‰å°é€‰ä¸­çš„ä¸€ä¸ªUserå¯¹è±¡
+	 * @param user ½ÓÊÕUserÀà¶ÔÏó
 	 * @see cn.jxufe.entity.User
-	 * @param model
-	 *            MVCæ¡†æ¶é‡ŒModelå¯¹è±¡
-	 * @return æ‰§è¡Œç»“æœçš„Messageå¯¹è±¡ä»¥JSONçš„æ ¼å¼è¿”å›
+	 * @param model ½ÓÊÕMVC¿ò¼Ü´«µ½model²ãÊı¾İ
+	 * @return ·µ»ØÉ¾³ı´¦ÀíºóÏûÏ¢ÌåMessageµÄ¶ÔÏó
 	 */
 	@RequestMapping(value = "delete", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody

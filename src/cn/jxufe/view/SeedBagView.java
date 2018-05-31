@@ -13,15 +13,42 @@ public class SeedBagView extends EntityID {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	
+	/**
+	 * 种子id
+	 */
 	private int cId;
+	/**
+	 * 用户id
+	 */
 	private long uId;
+	/**
+	 * 种子数量
+	 */
 	private int cNumber;
+	/**
+	 * 种子描述
+	 */
 	private String seedCaption;
+	/**
+	 * 土地描述
+	 */
 	private String landRequireCaption;
+	/**
+	 * 种子生长季数
+	 */
 	private int harvestNum;
+	/**
+	 * 产量
+	 */
 	private int output;
+	/**
+	 * 价格
+	 */
 	private int price;
+	/**
+	 * 生长阶段
+	 */
 	private int growStep;
 	
 	public int getGrowStep() {

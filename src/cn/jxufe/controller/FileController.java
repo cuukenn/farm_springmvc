@@ -13,12 +13,6 @@ import cn.jxufe.utils.FileSaver;
 @Controller
 @RequestMapping("file")
 public class FileController {
-	/**
-	 * 
-	 * @param request 接收request请求HttpServletRequest对象
-	 * @param uploadFile 接收上传的文件MultipartFile对象
-	 * @return 返回保存文件处理消息体Message对象
-	 */
 	@RequestMapping(value = "saveHeadImg", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public Message saveHeadImg(HttpServletRequest request, @RequestParam("filePathName") MultipartFile uploadFile) {

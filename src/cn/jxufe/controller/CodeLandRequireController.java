@@ -13,11 +13,6 @@ import cn.jxufe.service.CodeLandRequireService;
 	public class CodeLandRequireController {
 	    @Autowired
 	    private CodeLandRequireService codeLandRequireService;
-	    /**
-	     * 
-	     * @return 以JSON格式返回查找的结果
-	     * @throws Exception 异常处理
-	     */
 	    @RequestMapping(value="/data",produces=MediaType.APPLICATION_JSON_VALUE)
 	    @ResponseBody
 	    public Iterable<CodeLandRequire> data() throws Exception {

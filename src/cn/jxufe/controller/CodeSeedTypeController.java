@@ -12,11 +12,6 @@ import cn.jxufe.service.CodeSeedTypeService;
 	public class CodeSeedTypeController {
 	    @Autowired
 	    private CodeSeedTypeService codeSeedTypeService;
-	    /**
-	     * 
-	     * @return 以JSON格式返回查找的结果
-	     * @throws Exception 异常处理
-	     */
 	    @RequestMapping(value="/data",produces=MediaType.APPLICATION_JSON_VALUE)
 	    @ResponseBody
 	    public Iterable<CodeSeedType> data() throws Exception {

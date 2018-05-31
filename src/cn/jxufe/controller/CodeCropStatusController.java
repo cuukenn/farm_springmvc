@@ -13,11 +13,6 @@ import cn.jxufe.service.CodeCropStatusService;
 	public class CodeCropStatusController {
 	    @Autowired
 	    private CodeCropStatusService codeCropStatusService;
-	    /**
-	     * 
-	     * @return 以JSON格式返回查找的结果
-	     * @throws Exception 异常处理
-	     */
 	    @RequestMapping(value="/data",produces=MediaType.APPLICATION_JSON_VALUE)
 	    @ResponseBody
 	    public Iterable<CodeCropStatus> data() throws Exception {

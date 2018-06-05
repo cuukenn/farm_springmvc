@@ -3,14 +3,12 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.socket.TextMessage;
 
-import cn.jxufe.bean.ChatUser;
+import cn.jxufe.bean.FarmAction;
 import cn.jxufe.bean.Message;
-import cn.jxufe.bean.Talk;
-import cn.jxufe.service.ChatService;
+import cn.jxufe.entity.User;
 import cn.jxufe.service.FarmService;
-import cn.jxufe.websocket.ChatActionHandler;
+import cn.jxufe.websocket.FarmActionHandler;
 @Service
 public class FarmImp implements FarmService {	
 	
@@ -20,12 +18,11 @@ public class FarmImp implements FarmService {
 	
 	
 	@Override
-	public Message action(HttpSession session,Talk talk) {
+	public Message action(HttpSession session,FarmAction farmAction) {
 		Message result = new Message();
-		ChatUser chatUser = (User)session.getAttribute("chatUser");
+		User user = (User)session.getAttribute("user");
 		try {
-			chatActionHandler.sendMessageToUser(talk.getTo(),
-					new TextMessage(chatUser.getUsername()+":"+talk.getMessage()));
+//			farmActionHandler.sendMessageToUser(user, farmAction.getMessageList().toString());
 		}catch(Exception e) {
 			result.setCode(-1);
 			result.setMsg("消息发送失败！");

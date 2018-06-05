@@ -5,4 +5,6 @@ import cn.jxufe.view.LandView;
 
 public interface LandViewService {
 	public Message save(LandView landView);
+	public Iterable<LandView> findALL();
+	public Iterable<LandView> findByCId(long id);
 }

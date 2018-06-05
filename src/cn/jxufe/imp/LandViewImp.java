@@ -26,4 +26,14 @@ public class LandViewImp  implements LandViewService {
         return message;
 	}
 
+	@Override
+	public Iterable<LandView> findALL() {
+		return landViewDAO.findAll();
+	}
+
+	@Override
+	public Iterable<LandView> findByCId(long id) {
+		return landViewDAO.findByCId(id);
+	}
+
 }

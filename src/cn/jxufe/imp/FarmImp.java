@@ -5,14 +5,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.TextMessage;
 
-import cn.jxufe.bean.FarmAction;
 import cn.jxufe.bean.Message;
+import cn.jxufe.dao.LandDAO;
 import cn.jxufe.dao.LandViewDAO;
 import cn.jxufe.dao.SeedDAO;
+import cn.jxufe.dao.UserDAO;
+import cn.jxufe.entity.Land;
 import cn.jxufe.entity.Seed;
 import cn.jxufe.entity.User;
 import cn.jxufe.service.FarmService;
-import cn.jxufe.view.LandView;
 import cn.jxufe.websocket.FarmActionHandler;
 import net.sf.json.JSONObject;
 @Service
@@ -24,6 +25,12 @@ public class FarmImp implements FarmService {
 	
 	@Autowired
 	LandViewDAO landViewDAO;
+	
+	@Autowired
+	UserDAO userDAO;
+	
+	@Autowired
+	LandDAO landDAO;
 	
 	@Autowired
 	SeedDAO seedDAO;
@@ -46,12 +53,12 @@ public class FarmImp implements FarmService {
 
 
 	@Override
-	public Message actionPlant(int landId, int cId, HttpSession session) {
+	public Message actionPlant(long uId, int cId, HttpSession session) {
 		Message result = new Message();
-		LandView landView= landViewDAO.findByLandId(landId);
-		if(landView==null) {
+		User user = userDAO.findById(uId);
+		if(user==null) {
 			result.setCode(-1);
-			result.setMsg("土地错误！");
+			result.setMsg("不存在该用户");
 			return result;
 		}
 		
@@ -61,13 +68,16 @@ public class FarmImp implements FarmService {
 			result.setMsg("种子错误！");
 			return result;
 		}
-		
-		Object user = session.getAttribute("user");
+		Land land=new Land();
+		land.setcId(cId);
+		land.setuId(uId);
+		landDAO.save(land);
+		Object obj = session.getAttribute("user");
 		Seed seed2=new Seed();
-		JSONObject obj=JSONObject.fromObject(landView);
+//		JSONObject json=JSONObject.fromObject(landView);
 		
 		try {
-			farmActionHandler.sendMessageToUser(user.toString(),new TextMessage(obj.toString()));
+			farmActionHandler.sendMessageToUser(obj.toString(),new TextMessage(obj.toString()));
 			
 		}catch(Exception e) {
 			result.setCode(-1);

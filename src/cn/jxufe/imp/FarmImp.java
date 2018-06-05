@@ -56,18 +56,18 @@ public class FarmImp implements FarmService {
 		}
 		
 		Seed seed= seedDAO.findByCId(cId);
-		if(landView==null) {
+		if(seed==null) {
 			result.setCode(-1);
 			result.setMsg("种子错误！");
 			return result;
 		}
 		
-		User user = (User)session.getAttribute("user");
+		Object user = session.getAttribute("user");
 		Seed seed2=new Seed();
 		JSONObject obj=JSONObject.fromObject(landView);
 		
 		try {
-			farmActionHandler.sendMessageToUser(user,new TextMessage(obj.toString()));
+			farmActionHandler.sendMessageToUser(user.toString(),new TextMessage(obj.toString()));
 			
 		}catch(Exception e) {
 			result.setCode(-1);

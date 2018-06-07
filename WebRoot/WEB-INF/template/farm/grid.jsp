@@ -73,12 +73,30 @@ body {
 	height:20px;
 	left:10px;
 	top:10px;
+	display:none;
 }
 .tran{
 	transform-style: preserve-3d;
     transform-origin:50% 50%;
     transform: perspective(8000px) rotateX(50deg) rotateZ(-5deg);
 }
+
+.bozhong{
+	cursor:url(<%=basePath%>images/cursors/bozhong.cur) default                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ;
+}
+.chuchong{
+	cursor:url(<%=basePath%>images/cursors/chuchong.cur) default;
+}
+.chukucao{
+	cursor:url(<%=basePath%>images/cursors/chukucao.cur) default;
+}
+.dengdai{
+	cursor:url(<%=basePath%>images/cursors/dengdai.cur) default;
+}
+.shouhuo{
+	cursor:url(<%=basePath%>images/cursors/shouhuo.cur) default;
+}
+
 </style>
 <body>
 	<div class="content">
@@ -90,6 +108,11 @@ body {
 </body>
 <script>
 	let cIdGlobal=-1;
+	const cur=new Array();
+	cur.push({
+		"bozhong","chuchong","chukucao","dengdai","shouhuo"
+	});
+	
 	$(function(){
 		resizeFrame();
 		initWebSocket();
@@ -254,6 +277,11 @@ body {
 		let elmS = '.farm>div:nth-child(' +eve.landId+ ')';
 		let elm =$(elmS);
 		
+		
+		if(eve==="NOLAND"){
+			elm.find('.crop').css('display','none');
+			elm.find('.insect').css('display','none');
+		}
 		//作物
 		let crop=elm.find('.crop');
 		crop.attr('src','imgUrl');
@@ -273,20 +301,20 @@ body {
 		}
 	}
     
-    function plantAction(){
-    	let obj={};
+    function plantAction(landId,cId){                                                                                                                                                                                                                                
+    	let obj={landId:landId,cId:cId};
     	doSend(socket,obj,'POST',actionPlantUrl,plantUpdate);
     }
-    function killWormAction(){
-    	let obj={};
+    function killWormAction(landId){
+    	let obj={landId:landId};
     	doSend(socket,obj,'POST',actionKillWormUrl,killWormUpdate);
     }
-    function harvestAction(){
-    	let obj={};
+    function harvestAction(landId){
+    	let obj={landId:landId};
     	doSend(socket,obj,'POST',actionHarvestUrl,harvestUpdate);
     }
-    function cleanLandAction(){
-    	let obj={};
+    function cleanLandAction(landId){
+    	let obj={landId:landId};
     	doSend(socket,obj,'POST',actionCleanLandUrl,cleanLandUpdate);
     }
 	

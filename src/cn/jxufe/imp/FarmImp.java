@@ -105,10 +105,9 @@ public class FarmImp implements FarmService {
 		landDAO.save(newLand);
 
 		landView = landViewDAO.findByUIdAndLandId(user.getId(), landId);
-		ArrayList<LandView> arrayList;
-//		arrayList.add(landView);
-		
-		JSONArray array = JSONArray.fromObject(landView);
+		ArrayList<LandView> arrayList = new ArrayList<>();
+		arrayList.add(landView);
+		JSONArray array = JSONArray.fromObject(arrayList.iterator());
 		
 		try {
 			farmActionHandler.sendMessageToUser(user.toString(), new TextMessage(array.toString()));
@@ -140,20 +139,24 @@ public class FarmImp implements FarmService {
 			result.setMsg("用户不合法");
 			return result;
 		}
-		LandView landView = landViewDAO.findByUIdAndLandId(user.getId(), landId);
-		if (landView == null) {
+		Land land = landDAO.findByLandIdAndUId(landId, user.getId());
+		if (land == null) {
 			result.setCode(-1);
 			result.setMsg("该土地上不存在植物");
 			return result;
 		}
 
-		if (landView.getWorm() == 0) {
+		if (land.getWorm() == 0) {
 			result.setCode(-1);
 			result.setMsg("该植物不存在害虫");
 			return result;
 		}
-		landView.setWorm(0);
-		JSONArray array = JSONArray.fromObject(landView);
+		land.setWorm(0);
+		landDAO.save(land);
+		LandView landView = landViewDAO.findByUIdAndLandId(user.getId(), landId);
+		ArrayList<LandView> arrayList = new ArrayList<>();
+		arrayList.add(landView);
+		JSONArray array = JSONArray.fromObject(arrayList.iterator());
 		try {
 			farmActionHandler.sendMessageToUser(user.toString(), new TextMessage(array.toString()));
 		} catch (Exception e) {
@@ -181,17 +184,22 @@ public class FarmImp implements FarmService {
 			result.setMsg("用户不合法");
 			return result;
 		}
-
-		LandView landView = landViewDAO.findByUIdAndLandId(user.getId(), landId);
-		if (landView == null) {
+		
+		Land land = landDAO.findByLandIdAndUId(landId, user.getId());
+		if (land == null) {
 			result.setCode(-1);
 			result.setMsg("该土地上不存在植物");
 			return result;
 		}
-
-		landView.setGrowStep(landView.getGrowStep() + 1);
-		landViewDAO.save(landView);
-		JSONArray array = JSONArray.fromObject(landView);
+		
+		land.setStatus(land.getStatus() + 1);
+		landDAO.save(land);
+		
+		LandView landView = landViewDAO.findByUIdAndLandId(user.getId(), landId);
+		
+		ArrayList<LandView> arrayList = new ArrayList<>();
+		arrayList.add(landView);
+		JSONArray array = JSONArray.fromObject(arrayList.iterator());
 
 		try {
 			farmActionHandler.sendMessageToUser(user.toString(), new TextMessage(array.toString()));
@@ -221,27 +229,31 @@ public class FarmImp implements FarmService {
 			result.setMsg("用户不合法");
 			return result;
 		}
-
-		LandView landView = landViewDAO.findByUIdAndLandId(user.getId(), landId);
-		if (landView == null) {
+		
+		Land land = landDAO.findByLandIdAndUId(landId, user.getId());
+		if (land == null) {
 			result.setCode(-1);
 			result.setMsg("该土地上不存在植物");
 			return result;
 		}
-
-		Land land = landDAO.findByLandIdAndUId(landId, user.getId());
-		landDAO.delete(land);
-
-		land = landDAO.findByLandIdAndUId(landId, user.getId());
-		if (land != null) {
-			result.setCode(-1);
-			result.setMsg("除草失败");
-			return result;
+		
+		LandView landView = landViewDAO.findByUIdAndLandId(user.getId(), landId);
+		TextMessage textMessage;
+		if(landView.getCurHarvestNum()<landView.getHarvestNum()) {
+			land.setCurHarvestNum(landView.getCurHarvestNum()+1);
+			land.setStatus(1);
+			landDAO.save(land);
+			ArrayList<LandView> arrayList = new ArrayList<>();
+			arrayList.add(landView);
+			JSONArray array = JSONArray.fromObject(arrayList.iterator());
+			textMessage = new TextMessage(array.toString());
+		}else {
+			landDAO.delete(land);
+			textMessage = new TextMessage("NOLAND");
 		}
-
+		
 		try {
-			farmActionHandler.sendMessageToUser(user.toString(), new TextMessage("NOLAND"));
-
+			farmActionHandler.sendMessageToUser(user.toString(),textMessage);
 		} catch (Exception e) {
 			result.setCode(-1);
 			result.setMsg("除草失败！");

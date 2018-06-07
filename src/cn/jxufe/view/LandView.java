@@ -13,6 +13,7 @@ import cn.jxufe.bean.EntityID;
 public class LandView extends EntityID {
 	private int growTime;// 阶段生长时间
 	private int insect;// 长虫概率
+	private int status;
 
 	private String caption;// 种子名称
 	private int width;// 宽度
@@ -243,5 +244,13 @@ public class LandView extends EntityID {
 
 	public void setCropsCaptipn(String cropsCaptipn) {
 		this.cropsCaptipn = cropsCaptipn;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
 }

@@ -20,7 +20,7 @@ public class ChatServlet extends HttpServlet{
 		       .getWebApplicationContext(getServletContext())
 		       .getAutowireCapableBeanFactory().autowireBean(this);		
 		System.out.println("/******************** 后台游戏服务开始启动 ***************************/");
-		gameService.ActionStart();
+		gameService.gameStart();
 		System.out.println("/******************** 后台游戏服务启动完成 ***************************/");
 	}	
 }

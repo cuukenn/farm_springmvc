@@ -67,6 +67,13 @@ body {
 .tools-imagePositioner-display>img:nth-child(2){
 	position: absolute;	
 }
+.insect{
+	position: absolute;	
+	width:20px;
+	height:20px;
+	left:10px;
+	top:10px;
+}
 .tran{
 	transform-style: preserve-3d;
     transform-origin:50% 50%;
@@ -96,8 +103,9 @@ body {
 	const rows=4;
 
 	let temlate='<div onclick="showSelectSeed(idslot)" class="tools-imagePositioner-display">'
-				+'<img src="<%=basePath%>images/lands/landDefault.png" alt="">'
-				+'<img src="" alt="">'
+				+'<img class="land" src="landslot" alt="">'//土地图片
+				+'<img class="crop" src="" alt="">'//作物图片
+				+'<img class="insect" src="<%=basePath%>images/user.png" alt="">'//虫图片
 				+'</div>';
 
 	let offsetX=0;
@@ -114,12 +122,14 @@ body {
 	function drawLand(data) {
 		let rs = ""
 		for (let i = 0, total = cols * rows; i < total; i++) {
-			rs += temlate.replace('idslot', i);
+			rs += temlate.replace('idslot', i).replace('landslot','<%=basePath%>images/lands/land'+(i%rows+1)+'.png');
 		}
 		let farm = document.querySelector('.farm');
 		farm.innerHTML = rs;
 		farm.style.height = rows * hei + 300 + 'px';
 		farm.style.width = cols * wid + 200 + 'px';
+		
+		//画土地
 		for (let row = 0; row < rows; row++) {
 			for (let index = 1; index <= cols; index++) {
 				let elmS = '.farm>div:nth-child(' + (cols * row + index) + ')';
@@ -133,6 +143,34 @@ body {
 				elm.style.left = offsetX + 'px';
 				elm.style.top = offsetY + 'px';
 			}
+		}
+		//画作物
+		if(data==undefined){
+	       	$.messager.show({
+                title: "消息",
+                msg: "初始化失败，请刷新页面"
+            });
+		}
+		console.log(data);
+		for(let index=0,len=data.length;index<len;index++){
+			let elmS = '.farm>div:nth-child(' +data[index].landId+ ')';
+			let elm =$(elmS);
+			
+			//作物
+			let crop=elm.find('.crop');
+			crop.attr('src','imgUrl');
+			crop.css({
+				"left":data[index].offsetX,
+				"top":data[index].offsetY
+			})
+			let title='名称:'+data[index].caption
+					+'状态:'+data[index].growCaption
+					+'产量:'+data[index].curHarvestNum
+					+'时间:'+data[index].plantTime;
+			crop.attr('title',title);
+		}
+		if(data[index].worm!=0){
+			let crop=elm.find('.insect').css('display','block');
 		}
 	}
 	
@@ -152,23 +190,20 @@ body {
 	
 	//获取种植信息
 	function getLandData() {
-		let url = '';
+		let url = '<%=basePath%>land/gridViewData';
 		getRemoteData(url, function(data) {
 			drawLand(data);
 		});
 	}
 	
+	const farmSocketUrl='<%=basePath%>farm/action';
 	
-	var websocket = null; 
-	const plantActionUrl='<%=basePath%>plant/action';
-	const actionKillWormUrl='<%=basePath%>killWorm/action';
-	const actionHarvestUrl='<%=basePath%>harvest/action';
-	const actionCleanLandUrl='<%=basePath%>cleanLand/action';
+	const actionPlantUrl='<%=basePath%>actionkillWorm';
+	const actionKillWormUrl='<%=basePath%>actionkillWorm';
+	const actionHarvestUrl='<%=basePath%>actionharvest';
+	const actionCleanLandUrl='<%=basePath%>action/cleanLand';
 	
-	let plantSocket=initWebSocket(plantActionUrl,onOpen,onMessage,onError,onClose);
-	let killWormSocket=initWebSocket(actionKillWormUrl,onOpen,onMessage,onError,onClose);
-	let harvestSocket=initWebSocket(actionHarvestUrl,onOpen,onMessage,onError,onClose);
-	let cleanLandSocket=initWebSocket(actionCleanLandUrl,onOpen,onMessage,onError,onClose);
+	let socket=initWebSocket(farmSocketUrl,onOpen,onMessage,onError,onClose);
 	
 	function initWebSocket(url,onOpen,onMessage,onError,onClose){
 		let websocket;
@@ -214,26 +249,49 @@ body {
 		});
 	}
 	
+	function onMessage(eve){
+		if(eve==undefined)return;
+		let elmS = '.farm>div:nth-child(' +eve.landId+ ')';
+		let elm =$(elmS);
+		
+		//作物
+		let crop=elm.find('.crop');
+		crop.attr('src','imgUrl');
+		crop.css({
+			"left":data[index].offsetX,
+			"top":data[index].offsetY
+		})
+		let title='名称:'+data[index].caption
+				+'状态:'+data[index].growCaption
+				+'产量:'+data[index].curHarvestNum
+				+'时间:'+data[index].plantTime;
+		crop.attr('title',title);
+		
+		//虫
+		if(data[index].worm!=0){
+			let crop=elm.find('.insect').css('display','block');
+		}
+	}
     
-    function plantMessage(evt){
-    	//更新作物状态
-    }
-    function killWormMessage(evt){
-    	//更新生虫状态
-    }
-    function harvestMessage(evt){
-    	//更新生长过程状态
-    }
     function plantAction(){
     	let obj={};
-    	doSend(plantSocket,obj,'POST',plantActionUrl,callBack);
+    	doSend(socket,obj,'POST',actionPlantUrl,plantUpdate);
+    }
+    function killWormAction(){
+    	let obj={};
+    	doSend(socket,obj,'POST',actionKillWormUrl,killWormUpdate);
+    }
+    function harvestAction(){
+    	let obj={};
+    	doSend(socket,obj,'POST',actionHarvestUrl,harvestUpdate);
+    }
+    function cleanLandAction(){
+    	let obj={};
+    	doSend(socket,obj,'POST',actionCleanLandUrl,cleanLandUpdate);
     }
 	
-    window.close = function () {  
-    	plantSocket.onclose();
-    	killWormSocket.onclose();
-    	harvestSocket.onclose();
-    	cleanLandSocket.onclose();
+    window.close = function () { 
+    	socket.close();
     } 
 </script>
 </html>

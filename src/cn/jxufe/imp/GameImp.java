@@ -14,19 +14,20 @@ public class GameImp implements GameService {
 	@Autowired
 	FarmActionHandler farmActionHandler;
 	
-	Timer timer = new Timer();
+	Timer timer = new Timer();  
 	@Override
-	public void ActionStart() {
-		timer.schedule(
-				new TimerTask() {
-						@Override
-						 public void run() {
-								talkToAll();
-							}
-						}, 0,60000);
+	public void gameStart() {
+	    timer.schedule(
+	            new TimerTask() {
+	                    @Override
+	                     public void run() {
+	                            //System.out.println("状态轮询[" + new Date()+"]");
+	                            checkCropStatus();
+	                        }
+	                    }, 0,2000);
 	}
 	
-	private void talkToAll(){
+	private void checkCropStatus(){
 		farmActionHandler.sendMessageToUsers(new TextMessage("现在服务器时间是："+ new Date()));
 	}
 

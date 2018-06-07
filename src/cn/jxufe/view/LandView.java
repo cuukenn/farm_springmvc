@@ -12,7 +12,7 @@ import cn.jxufe.bean.EntityID;
 @Table(name = "V_LandView")
 public class LandView extends EntityID {
 	private int growTime;// 阶段生长时间
-	private int insect;// 长冲概率
+	private int insect;// 长虫概率
 
 	private String caption;// 种子名称
 	private int width;// 宽度
@@ -38,6 +38,7 @@ public class LandView extends EntityID {
 
 	private String growCaption;// 生长阶段代号
 	private int growStep;// 生长阶段
+	
 	private String cropsCaptipn;// 生长阶段名称
 
 	// 图片地址 不序列化
@@ -180,7 +181,7 @@ public class LandView extends EntityID {
 		this.cId = cId;
 	}
 
-	public int isWorm() {
+	public int getWorm() {
 		return worm;
 	}
 

@@ -37,4 +37,10 @@ public class LandViewImp implements LandViewService {
 		return landViewDAO.findByCId(id);
 	}
 
+	@Override
+	public Iterable<LandView> findByUId(long id) {
+		// TODO Auto-generated method stub
+		return landViewDAO.findByUId(id);
+	}
+
 }

@@ -27,6 +27,6 @@ public class LandController {
 	public Iterable<?> gridData(HttpSession session) {
 		User user=(User)session.getAttribute("user");
 		if(user==null)return null;
-		return landViewService.findByCId(user.getId());
+		return landViewService.findByUId(user.getId());
 	}
 }

@@ -177,13 +177,14 @@ body {
 		for(let index=0,len=data.length;index<len;index++){
 			let elmS = '.farm>div:nth-child(' +data[index].landId+ ')';
 			let elm =$(elmS);
-			
 			//作物
 			let crop=elm.find('.crop');
-			crop.attr('src','imgUrl');
+			crop.attr('src','<%=basePath%>images/crops/'+data[index].imgUrl);
 			crop.css({
 				"left":data[index].offsetX,
-				"top":data[index].offsetY
+				"top":(data[index].offsetY-200),
+				"width":data[index].width,
+				"height":data[index].height
 			})
 			let title='名称:'+data[index].caption
 					+'状态:'+data[index].growCaption
@@ -216,7 +217,6 @@ body {
 	
 	//获取种植信息
 	function getLandData() {
-		console.log("ds");
 		let url = '<%=basePath%>land/gridViewData';
 		getRemoteData(url, function(data) {
 			drawLand(data);

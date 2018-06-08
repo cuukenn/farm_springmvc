@@ -44,14 +44,16 @@ public class LandView extends EntityID {
 	private String growCaption;// 生长阶段代号
 	private int growStep;// 生长阶段
 
-	private String cropsCaptipn;// 生长阶段名称
+	private String cropsCaption;// 生长阶段名称
+	
+	private String landRequireCaption;//土地类型
 
 	// 图片地址 不序列化
 	@Transient
 	private String imgUrl;
 
 	public String getImgUrl() {
-		switch (cropsCaptipn) {
+		switch (cropsCaption) {
 		case "种子阶段":
 			imgUrl = "basic/0.png";
 			break;
@@ -241,12 +243,22 @@ public class LandView extends EntityID {
 		this.growStep = growStep;
 	}
 
-	public String getCropsCaptipn() {
-		return cropsCaptipn;
+	
+
+	public String getCropsCaption() {
+		return cropsCaption;
 	}
 
-	public void setCropsCaptipn(String cropsCaptipn) {
-		this.cropsCaptipn = cropsCaptipn;
+	public void setCropsCaption(String cropsCaption) {
+		this.cropsCaption = cropsCaption;
+	}
+
+	public String getLandRequireCaption() {
+		return landRequireCaption;
+	}
+
+	public void setLandRequireCaption(String landRequireCaption) {
+		this.landRequireCaption = landRequireCaption;
 	}
 
 	public int getStatus() {

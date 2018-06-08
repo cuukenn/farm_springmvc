@@ -4,6 +4,7 @@
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+String wsBasePath = "ws://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 <!DOCTYPE html>
 <html>
@@ -17,7 +18,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script type="text/javascript" src="<%=basePath%>ext/easyui/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="<%=basePath%>ext/easyui/plugins/jquery.edatagrid.js"></script>
     <script type="text/javascript" src="<%=basePath%>ext/easyui/locale/easyui-lang-zh_CN.js"></script>
-    <script type="text/javascript" src="<%=basePath%>ext/farm/helper.js?346t"></script> 
+    <script type="text/javascript" src="<%=basePath%>ext/farm/helper.js"></script>
+    <script type="text/javascript" src="<%=basePath%>ext/farm/sockjs.js"></script> 
 </head>
 <style>
 *{
@@ -82,19 +84,19 @@ body {
 }
 
 .bozhong{
-	cursor:url(<%=basePath%>images/cursors/bozhong.cur) default                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ;
+	cursor:url('<%=basePath%>images/cursors/bozhong.cur'),default                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ;
 }
 .chuchong{
-	cursor:url(<%=basePath%>images/cursors/chuchong.cur) default;
+	cursor:url('<%=basePath%>images/cursors/chuchong.cur'),default;
 }
 .chukucao{
-	cursor:url(<%=basePath%>images/cursors/chukucao.cur) default;
+	cursor:url('<%=basePath%>images/cursors/chukucao.cur'),default;
 }
 .dengdai{
-	cursor:url(<%=basePath%>images/cursors/dengdai.cur) default;
+	cursor:url('<%=basePath%>images/cursors/dengdai.cur'),default;
 }
 .shouhuo{
-	cursor:url(<%=basePath%>images/cursors/shouhuo.cur) default;
+	cursor:url('<%=basePath%>images/cursors/shouhuo.cur'),default;
 }
 
 </style>
@@ -104,14 +106,14 @@ body {
 			<div class="farm"></div>
 		</div>
 	</div>
-	<div id="seedBag"></div>
 </body>
 <script>
 	let cIdGlobal=-1;
 	const cur=new Array("bozhong","chuchong","chukucao","dengdai","shouhuo");
-	
+	const landImg=new Array("land1.png","land2.png","land3.png","land4.png")
 	$(function(){
 		resizeFrame();
+		getLandData();
 		initWebSocket();
 	})
 	
@@ -122,8 +124,8 @@ body {
 	const cols=6;
 	const rows=4;
 
-	let temlate='<div onclick="showSelectSeed(idslot)" class="tools-imagePositioner-display">'
-				+'<img class="land" src="landslot" alt="">'//土地图片
+	let temlate='<div onclick="showSelectSeed(idslot)" class="tools-imagePositioner-display bozhong">'
+				+'<img class="land" src="landslot" type="typeid" alt="">'//土地图片
 				+'<img class="crop" src="" alt="">'//作物图片
 				+'<img class="insect" src="<%=basePath%>images/user.png" alt="">'//虫图片
 				+'</div>';
@@ -131,7 +133,7 @@ body {
 	let offsetX=0;
 	let offsetY=0;
 
-	const wid=180;
+	const widF=180;
 	const hei=60;
 	const rowsHei=80;
 
@@ -142,19 +144,20 @@ body {
 	function drawLand(data) {
 		let rs = ""
 		for (let i = 0, total = cols * rows; i < total; i++) {
-			rs += temlate.replace('idslot', i).replace('landslot','<%=basePath%>images/lands/land'+(i%rows+1)+'.png');
+			let tmp=~~(i/cols);
+			rs += temlate.replace('idslot', i).replace('landslot','<%=basePath%>images/lands/'+landImg[tmp]).replace('typeid',tmp);
 		}
 		let farm = document.querySelector('.farm');
 		farm.innerHTML = rs;
 		farm.style.height = rows * hei + 300 + 'px';
-		farm.style.width = cols * wid + 200 + 'px';
+		farm.style.width = cols * widF + 200 + 'px';
 		
 		//画土地
 		for (let row = 0; row < rows; row++) {
 			for (let index = 1; index <= cols; index++) {
 				let elmS = '.farm>div:nth-child(' + (cols * row + index) + ')';
 				let elm = document.querySelector(elmS);
-				offsetX = (index - 1) * wid + offTmp - row * offTmpDe;
+				offsetX = (index - 1) * widF + offTmp - row * offTmpDe;
 				offsetY = (index - 1) * hei + row * rowsHei;
 				if (index === 1) {
 					offsetX = 0 + offTmp - row * offTmpDe;
@@ -171,7 +174,6 @@ body {
                 msg: "初始化失败，请刷新页面"
             });
 		}
-		console.log(data);
 		for(let index=0,len=data.length;index<len;index++){
 			let elmS = '.farm>div:nth-child(' +data[index].landId+ ')';
 			let elm =$(elmS);
@@ -188,35 +190,40 @@ body {
 					+'产量:'+data[index].curHarvestNum
 					+'时间:'+data[index].plantTime;
 			crop.attr('title',title);
-		}
-		if(data[index].worm!=0){
-			let crop=elm.find('.insect').css('display','block');
+			if(data[index].worm!=0){
+				let crop=elm.find('.insect').css('display','block');
+			}
 		}
 	}
 	
 	//显示种子袋
 	function showSelectSeed(id) {
 		cIdGlobal=-1;
-    	$("#seedBag").window({
-    		width:'800',
-    		height:'420',
-    		title:'种子收纳袋',
-    		href:'<%=basePath%>seedBag/grid',
-    		closed:false,
-    		modal:true,
-    		cache:false
-    	})
+        var content = '<iframe src="' + '<%=basePath%>seedBag/grid' + '" width="100%" height="99%" frameborder="0" scrolling="no"></iframe>';  
+        var boarddiv = '<div id="msgwindow" style="width:100%"></div>'
+        $(document.body).append(boarddiv);  
+        var win = $('#msgwindow').window({  
+            content: content,
+            height: 400, 
+            title:'种子收纳袋',
+            modal: true,  
+            onClose: function () {  
+                $(this).dialog('destroy');//后面可以关闭后的事件  
+            }  
+        });  
+        win.dialog('open');
 	}
 	
 	//获取种植信息
 	function getLandData() {
+		console.log("ds");
 		let url = '<%=basePath%>land/gridViewData';
 		getRemoteData(url, function(data) {
 			drawLand(data);
 		});
 	}
 	
-	const farmSocketUrl='<%=basePath%>farm/action';
+	const farmSocketUrl='<%=wsBasePath%>farm/action';
 	
 	const actionPlantUrl='<%=basePath%>actionkillWorm';
 	const actionKillWormUrl='<%=basePath%>actionkillWorm';

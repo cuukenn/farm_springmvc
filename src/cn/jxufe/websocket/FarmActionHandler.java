@@ -32,7 +32,7 @@ public class FarmActionHandler extends TextWebSocketHandler {
 	/* 发布webSocket会话时，在会话管理列表中注册该webSocket会话 */
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		users.add(session);
-		farmUser = (User) session.getHandshakeAttributes().get("farmUser");
+		farmUser = (User) session.getHandshakeAttributes().get("user");
 		String username = farmUser.getUsername();
 		LOGGER.info("用户 " + username + " 成功建立连接");
 	}
@@ -43,7 +43,7 @@ public class FarmActionHandler extends TextWebSocketHandler {
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status)
 
 			throws Exception {
-		farmUser = (User) session.getHandshakeAttributes().get("farmUser");
+		farmUser = (User) session.getHandshakeAttributes().get("user");
 		String username = farmUser.getUsername();
 		LOGGER.info("用户 " + username + " 连接关闭。状态: " + status);
 		users.remove(session);
@@ -55,7 +55,8 @@ public class FarmActionHandler extends TextWebSocketHandler {
 	public void handleTransportError(WebSocketSession session, Throwable exception)
 
 			throws Exception {
-		String username = (String) session.getHandshakeAttributes().get("farmUsername");
+		farmUser = (User) session.getHandshakeAttributes().get("user");
+		String username = farmUser.getUsername();
 		if (session.isOpen()) {
 			session.close();
 		}
@@ -79,7 +80,7 @@ public class FarmActionHandler extends TextWebSocketHandler {
 	/* 向单一用户发消息 */
 	public void sendMessageToUser(String userName, TextMessage message) {
 		for (WebSocketSession user : users) {
-			farmUser = (User) user.getHandshakeAttributes().get("farmUser");
+			farmUser = (User) user.getHandshakeAttributes().get("user");
 			if (farmUser == null)
 				continue;
 			if (farmUser.getUsername().equals(userName)) {

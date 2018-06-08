@@ -105,7 +105,7 @@ body {
 <script>
 	init();
 	function changeInfo(data){
-		if(data){
+		if(data.id!=0){
 			var rs=data.username+'|'
 			+'经验:'+data.exp+'|'
 			+'金币:'+data.price+'|'

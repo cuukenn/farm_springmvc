@@ -47,8 +47,9 @@ public class UserController {
 	
 	@RequestMapping(value = "getCurUser", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public User setCurUser(HttpSession session) {
+	public User getCurUser(HttpSession session) {
 		User userOld=(User)session.getAttribute("user");
+		if(userOld==null)return new User();
 		User userNew=userService.findById(userOld.getId());
 		if(userNew!=null)session.setAttribute("user",userNew);
 		return userNew;

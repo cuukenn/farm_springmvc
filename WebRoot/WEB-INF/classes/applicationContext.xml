@@ -141,7 +141,7 @@
 
 	<bean id="webSocket" class="cn.jxufe.websocket.FarmActionHandler" />
 	<websocket:handlers>
-		<websocket:mapping path="/fields/action" handler="webSocket" />
+		<websocket:mapping path="/farm/action" handler="webSocket" />
 		<websocket:handshake-interceptors>
 			<bean class="cn.jxufe.websocket.FarmActionInterceptor" />
 		</websocket:handshake-interceptors>

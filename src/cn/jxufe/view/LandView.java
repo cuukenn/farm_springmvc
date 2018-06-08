@@ -11,6 +11,10 @@ import cn.jxufe.bean.EntityID;
 @Entity
 @Table(name = "V_LandView")
 public class LandView extends EntityID {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int growTime;// 阶段生长时间
 	private int insect;// 长虫概率
 	private int status;
@@ -27,7 +31,7 @@ public class LandView extends EntityID {
 	private int score;// 积分
 	private int price4UnitSale;// 售出单价
 
-	private long uid;// 用户id
+	private long uId;// 用户id
 	private int landId;// 土地编号
 	private long cId;// 种子Id
 
@@ -39,24 +43,23 @@ public class LandView extends EntityID {
 
 	private String growCaption;// 生长阶段代号
 	private int growStep;// 生长阶段
-	
+
 	private String cropsCaptipn;// 生长阶段名称
 
 	// 图片地址 不序列化
 	@Transient
 	private String imgUrl;
-	
 
 	public String getImgUrl() {
 		switch (cropsCaptipn) {
 		case "种子阶段":
-			imgUrl="basic/0.png";
+			imgUrl = "basic/0.png";
 			break;
 		case "枯草阶段":
-			imgUrl="basic/9.png";
+			imgUrl = "basic/9.png";
 			break;
 		default:
-			imgUrl=cId+"/"+growStep+".png";
+			imgUrl = cId + "/" + growStep + ".png";
 			break;
 		}
 		return imgUrl;
@@ -158,12 +161,12 @@ public class LandView extends EntityID {
 		this.price4UnitSale = price4UnitSale;
 	}
 
-	public long getUid() {
-		return uid;
+	public long getuId() {
+		return uId;
 	}
 
-	public void setUid(long uid) {
-		this.uid = uid;
+	public void setuId(long uId) {
+		this.uId = uId;
 	}
 
 	public int getLandId() {

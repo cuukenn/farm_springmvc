@@ -22,29 +22,29 @@ public class ActionController {
 	public String grid() {
 		return "action/grid";
 	}
+
 	@RequestMapping(value = "plant", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Message actionPlant(int landId, int cId, HttpSession session,Model model) {
+	public Message actionPlant(int landId, int cId, HttpSession session, Model model) {
 		return farmService.actionPlant(landId, cId, session);
 	}
-	
+
 	@RequestMapping(value = "killWorm", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Message actionKillWorm(int landId, HttpSession session,Model model) {
+	public Message actionKillWorm(int landId, HttpSession session, Model model) {
 		return farmService.actionKillWorm(landId, session);
-	} 
-	
+	}
+
 	@RequestMapping(value = "harvest", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Message actionHarvest(int landId, HttpSession session,Model model) {
+	public Message actionHarvest(int landId, HttpSession session, Model model) {
 		return farmService.actionHarvest(landId, session);
-	} 
-	
-	
+	}
+
 	@RequestMapping(value = "cleanLand", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Message actionCleanLand(int landId, HttpSession session,Model model) {
+	public Message actionCleanLand(int landId, HttpSession session, Model model) {
 		return farmService.actionCleanLand(landId, session);
-	} 
-	
+	}
+
 }

@@ -108,10 +108,7 @@ body {
 </body>
 <script>
 	let cIdGlobal=-1;
-	const cur=new Array();
-	cur.push({
-		"bozhong","chuchong","chukucao","dengdai","shouhuo"
-	});
+	const cur=new Array("bozhong","chuchong","chukucao","dengdai","shouhuo");
 	
 	$(function(){
 		resizeFrame();

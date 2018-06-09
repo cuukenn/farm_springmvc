@@ -56,5 +56,9 @@
    <session-config>
     <session-timeout>30</session-timeout>
   </session-config>
-  
+	<servlet>
+        <servlet-name>farmGame</servlet-name>
+        <servlet-class>cn.jxufe.servlet.FarmServlet</servlet-class>
+        <load-on-startup>256</load-on-startup>
+  </servlet>
 </web-app>

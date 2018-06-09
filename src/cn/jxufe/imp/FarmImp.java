@@ -1,12 +1,14 @@
 package cn.jxufe.imp;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.socket.TextMessage;
 
 import cn.jxufe.bean.Message;
@@ -24,7 +26,6 @@ import cn.jxufe.utils.JSONConfig;
 import cn.jxufe.view.LandView;
 import cn.jxufe.websocket.FarmActionHandler;
 import net.sf.json.JSONArray;
-import net.sf.json.JsonConfig;
 
 @Service
 public class FarmImp implements FarmService {
@@ -47,7 +48,10 @@ public class FarmImp implements FarmService {
 	@Autowired
 	SeedBagDAO seedBagDAO;
 
+	public static LandView landView;
+	
 	@Override
+	@Transactional
 	public Message action(long landId, HttpSession session) {
 		Message result = new Message();
 		User user = (User) session.getAttribute("user");
@@ -71,6 +75,7 @@ public class FarmImp implements FarmService {
 	}
 
 	@Override
+	@Transactional
 	public Message actionPlant(long landId, long cId, HttpSession session) {
 		Message result = new Message();
 		User user = (User) session.getAttribute("user");
@@ -106,13 +111,18 @@ public class FarmImp implements FarmService {
 		newLand.setcId(cId);
 		newLand.setLandId(landId);
 		newLand.setuId(user.getId());
+		newLand=landDAO.save(newLand);
+		
+		//初始化下季时间
+		landView = landViewDAO.findByUIdAndLandId(user.getId(), landId);
+		long endTime=landView.getPlantTime().getTime()+landView.getGrowTime();
+		newLand.setCurCropsEndTime(new Date(endTime));
 		landDAO.save(newLand);
-
+		
 		landView = landViewDAO.findByUIdAndLandId(user.getId(), landId);
 		List<LandView> arrayList = new ArrayList<LandView>();
 		arrayList.add(landView);
 		JSONArray array = JSONArray.fromObject(arrayList, JSONConfig.getJsonConfig());
-		System.out.println(array.toString());
 		try {
 			farmActionHandler.sendMessageToUser(user.getId(), new TextMessage(array.toString()));
 		} catch (Exception e) {
@@ -138,6 +148,7 @@ public class FarmImp implements FarmService {
 	}
 
 	@Override
+	@Transactional
 	public Message actionKillWorm(long landId, HttpSession session) {
 		Message result = new Message();
 		User user = (User) session.getAttribute("user");
@@ -183,6 +194,7 @@ public class FarmImp implements FarmService {
 	}
 
 	@Override
+	@Transactional
 	public Message actionHarvest(long landId, HttpSession session) {
 		Message result = new Message();
 		User user = (User) session.getAttribute("user");
@@ -228,6 +240,7 @@ public class FarmImp implements FarmService {
 	}
 
 	@Override
+	@Transactional
 	public Message actionCleanLand(long landId, HttpSession session) {
 		Message result = new Message();
 		User user = (User) session.getAttribute("user");

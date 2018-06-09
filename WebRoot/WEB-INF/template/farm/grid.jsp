@@ -78,9 +78,9 @@ body {
 }
 .insect{
 	position: absolute;	
-	width:20px;
-	height:20px;
-	left:10px;
+	width:40px;
+	height:auto;
+	left:40px;
 	top:10px;
 	display:none;
 }
@@ -125,7 +125,7 @@ body {
 	let temlate = '<div onclick="showSelectSeed(idslot)" class="tools-imagePositioner-display" style="cursor:url(<%=basePath%>images/cursors/bozhong.cur),default;">'
 				+'<img class="land" src="landslot" type="typeid" alt="">'//土地图片
 				+'<img class="crop" src="" alt="">'//作物图片
-				+'<img class="insect" src="<%=basePath%>images/user.png" alt="">'//虫图片
+				+'<img class="insect" src="<%=basePath%>images/insect.png" alt="">'//虫图片
 				+'</div>';
 
 	let offsetX=0;
@@ -190,14 +190,16 @@ body {
 			let title='\n\n\n名称:'+data[index].caption
 					+'\n状态:'+data[index].growCaption
 					+'\n产量:'+data[index].curHarvestNum
-					+'\n时间:'+data[index].plantTime;
+					+'\n时间:'+data[index].curCropsEndTime;
 			crop.attr('title',title);
+			
 			if(data[index].worm!=0){
 				let crop=elm.find('.insect').css('display','block');
+				elm.css("cursor",cur[2]);
 			}
-			
 			//更改光标
-			elm.css("cursor",cur[1]);
+			else if(data[index].cropsCaption=="成熟阶段")elm.css("cursor",cur[3]);
+			else elm.css("cursor",cur[1]);
 		}
 	}
 	//显示种子袋
@@ -280,6 +282,7 @@ body {
 	}
 	
 	function onMessage(eve){
+		console.log(eve);
 		let data=JSON.parse(eve.data);
 		if(data==undefined)return;
 		if(data==="NOLAND"){

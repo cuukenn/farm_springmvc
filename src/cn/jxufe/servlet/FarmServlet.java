@@ -8,7 +8,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import cn.jxufe.service.GameService;
 
-public class ChatServlet extends HttpServlet{
+public class FarmServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	@Autowired
 	GameService gameService;

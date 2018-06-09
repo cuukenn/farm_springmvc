@@ -8,14 +8,14 @@ import net.sf.json.processors.JsonValueProcessor;
 public class JSONConfig {
 	public static JsonConfig getJsonConfig() {
 		JsonConfig jsonConfig = new JsonConfig();
-		jsonConfig.registerJsonValueProcessor(java.sql.Date.class, new JsonValueProcessor() {
-			private final String format = "yyyy-MM-dd";
+		jsonConfig.registerJsonValueProcessor(java.util.Date.class, new JsonValueProcessor() {
+			private final String format = "yyyy-MM-dd HH:mm:ss";
 
 			public Object processObjectValue(String key, Object value, JsonConfig arg2) {
 				if (value == null)
 					return "";
-				if (value instanceof java.sql.Date) {
-					String str = new SimpleDateFormat(format).format((java.sql.Date) value);
+				if (value instanceof java.util.Date) {
+					String str = new SimpleDateFormat(format).format((java.util.Date) value);
 					return str;
 				}
 				return value.toString();

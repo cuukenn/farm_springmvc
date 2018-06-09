@@ -1,6 +1,6 @@
 package cn.jxufe.view;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -15,9 +15,9 @@ public class LandView extends EntityID {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int growTime;// 阶段生长时间
+	private long growTime;// 阶段生长时间
 	private int insect;// 长虫概率
-	private int status;
+	private long status;
 
 	private String caption;// 种子名称
 	private int width;// 宽度
@@ -37,7 +37,7 @@ public class LandView extends EntityID {
 
 	private int worm;// 生虫
 	private int loss;// 当前季损失
-	private Date plantTime;// 种值日期
+	private Date  plantTime;// 种值日期
 	private int curHarvestNum;// 当前季数
 	private int matureTime;// 每季成熟时间
 
@@ -47,6 +47,8 @@ public class LandView extends EntityID {
 	private String cropsCaption;// 生长阶段名称
 	
 	private String landRequireCaption;//土地类型
+	
+	private Date curCropsEndTime;
 
 	// 图片地址 不序列化
 	@Transient
@@ -67,11 +69,11 @@ public class LandView extends EntityID {
 		return imgUrl;
 	}
 
-	public int getGrowTime() {
+	public long getGrowTime() {
 		return growTime;
 	}
 
-	public void setGrowTime(int growTime) {
+	public void setGrowTime(long growTime) {
 		this.growTime = growTime;
 	}
 
@@ -81,6 +83,14 @@ public class LandView extends EntityID {
 
 	public void setInsect(int insect) {
 		this.insect = insect;
+	}
+
+	public long getStatus() {
+		return status;
+	}
+
+	public void setStatus(long status) {
+		this.status = status;
 	}
 
 	public String getCaption() {
@@ -175,7 +185,7 @@ public class LandView extends EntityID {
 		return landId;
 	}
 
-	public void setLandId(int landId) {
+	public void setLandId(long landId) {
 		this.landId = landId;
 	}
 
@@ -243,8 +253,6 @@ public class LandView extends EntityID {
 		this.growStep = growStep;
 	}
 
-	
-
 	public String getCropsCaption() {
 		return cropsCaption;
 	}
@@ -261,11 +269,13 @@ public class LandView extends EntityID {
 		this.landRequireCaption = landRequireCaption;
 	}
 
-	public int getStatus() {
-		return status;
+	public Date getCurCropsEndTime() {
+		return curCropsEndTime;
 	}
 
-	public void setStatus(int status) {
-		this.status = status;
+	public void setCurCropsEndTime(Date curCropsEndTime) {
+		this.curCropsEndTime = curCropsEndTime;
 	}
+	
+	
 }

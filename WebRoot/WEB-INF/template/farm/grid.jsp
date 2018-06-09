@@ -60,6 +60,13 @@ body {
 	width: 200px;
 	height: 101px;
 }
+.tools-imagePositioner-display:hover{
+	-ms-transform:scale(1.2); /* IE 9 */
+	-moz-transform:scale(1.2); /* Firefox */
+	-webkit-transform:scale(1.2); /* Safari and Chrome */
+	-o-transform:scale(1.2); /* Opera */
+	transform:scale(1.2);
+}
 
 .tools-imagePositioner-display>img:nth-child(1){
 	position: absolute;
@@ -83,22 +90,6 @@ body {
     transform: perspective(8000px) rotateX(50deg) rotateZ(-5deg);
 }
 
-.bozhong{
-	cursor:url('<%=basePath%>images/cursors/bozhong.cur'),default                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ;
-}
-.chuchong{
-	cursor:url('<%=basePath%>images/cursors/chuchong.cur'),default;
-}
-.chukucao{
-	cursor:url('<%=basePath%>images/cursors/chukucao.cur'),default;
-}
-.dengdai{
-	cursor:url('<%=basePath%>images/cursors/dengdai.cur'),default;
-}
-.shouhuo{
-	cursor:url('<%=basePath%>images/cursors/shouhuo.cur'),default;
-}
-
 </style>
 <body>
 	<div class="content">
@@ -109,22 +100,29 @@ body {
 </body>
 <script>
 	let cIdGlobal=-1;
-	const cur=new Array("bozhong","chuchong","chukucao","dengdai","shouhuo");
-	const landImg=new Array("land1.png","land2.png","land3.png","land4.png")
-	$(function(){
+	let landGlobal;
+	const cur=new Array( "url(<%=basePath%>images/cursors/bozhong.cur),default ",
+			"url(<%=basePath%>images/cursors/dengdai.cur),default",
+			"url(<%=basePath%>images/cursors/chuchong.cur),default",
+			"url(<%=basePath%>images/cursors/shouhuo.cur),default",
+			"url(<%=basePath%>images/cursors/chukucao.cur),default");
+
+	const landImg = new Array("land1.png", "land2.png", "land3.png",
+			"land4.png")
+	$(function() {
 		resizeFrame();
 		getLandData();
 		initWebSocket();
 	})
-	
+
 	function resizeFrame() {
 		window.parent.document.getElementById("tools").src = "tools.jsp";
 		window.parent.document.getElementById("framesets").rows = '60,*,50';
 	}
-	const cols=6;
-	const rows=4;
+	const cols = 6;
+	const rows = 4;
 
-	let temlate='<div onclick="showSelectSeed(idslot)" class="tools-imagePositioner-display bozhong">'
+	let temlate = '<div onclick="showSelectSeed(idslot)" class="tools-imagePositioner-display" style="cursor:url(<%=basePath%>images/cursors/bozhong.cur),default;">'
 				+'<img class="land" src="landslot" type="typeid" alt="">'//土地图片
 				+'<img class="crop" src="" alt="">'//作物图片
 				+'<img class="insect" src="<%=basePath%>images/user.png" alt="">'//虫图片
@@ -145,7 +143,7 @@ body {
 		let rs = ""
 		for (let i = 0, total = cols * rows; i < total; i++) {
 			let tmp=~~(i/cols);
-			rs += temlate.replace('idslot', i).replace('landslot','<%=basePath%>images/lands/'+landImg[tmp]).replace('typeid',tmp);
+			rs += temlate.replace('idslot', i+1).replace('landslot','<%=basePath%>images/lands/'+landImg[tmp]).replace('typeid',tmp);
 		}
 		let farm = document.querySelector('.farm');
 		farm.innerHTML = rs;
@@ -174,6 +172,9 @@ body {
                 msg: "初始化失败，请刷新页面"
             });
 		}
+		drawSeed(data);
+	}
+	function drawSeed(data){
 		for(let index=0,len=data.length;index<len;index++){
 			let elmS = '.farm>div:nth-child(' +data[index].landId+ ')';
 			let elm =$(elmS);
@@ -186,24 +187,26 @@ body {
 				"width":data[index].width,
 				"height":data[index].height
 			})
-			let title='名称:'+data[index].caption
-					+'状态:'+data[index].growCaption
-					+'产量:'+data[index].curHarvestNum
-					+'时间:'+data[index].plantTime;
+			let title='\n\n\n名称:'+data[index].caption
+					+'\n状态:'+data[index].growCaption
+					+'\n产量:'+data[index].curHarvestNum
+					+'\n时间:'+data[index].plantTime;
 			crop.attr('title',title);
 			if(data[index].worm!=0){
 				let crop=elm.find('.insect').css('display','block');
 			}
+			
+			//更改光标
+			elm.css("cursor",cur[1]);
 		}
 	}
-	
 	//显示种子袋
 	function showSelectSeed(id) {
-		cIdGlobal=-1;
+		landGlobal=id;
         var content = '<iframe src="' + '<%=basePath%>seedBag/grid' + '" width="100%" height="99%" frameborder="0" scrolling="no"></iframe>';  
         var boarddiv = '<div id="msgwindow" style="width:100%"></div>'
         $(document.body).append(boarddiv);  
-        var win = $('#msgwindow').window({  
+        win = $('#msgwindow').window({  
             content: content,
             height: 400, 
             title:'种子收纳袋',
@@ -225,9 +228,9 @@ body {
 	
 	const farmSocketUrl='<%=wsBasePath%>farm/action';
 	
-	const actionPlantUrl='<%=basePath%>actionkillWorm';
-	const actionKillWormUrl='<%=basePath%>actionkillWorm';
-	const actionHarvestUrl='<%=basePath%>actionharvest';
+	const actionPlantUrl='<%=basePath%>action/plant';
+	const actionKillWormUrl='<%=basePath%>action/killWorm';
+	const actionHarvestUrl='<%=basePath%>action/harvest';
 	const actionCleanLandUrl='<%=basePath%>action/cleanLand';
 	
 	let socket=initWebSocket(farmSocketUrl,onOpen,onMessage,onError,onClose);
@@ -277,49 +280,31 @@ body {
 	}
 	
 	function onMessage(eve){
-		if(eve==undefined)return;
-		let elmS = '.farm>div:nth-child(' +eve.landId+ ')';
-		let elm =$(elmS);
-		
-		
-		if(eve==="NOLAND"){
+		let data=JSON.parse(eve.data);
+		if(data==undefined)return;
+		if(data==="NOLAND"){
 			elm.find('.crop').css('display','none');
 			elm.find('.insect').css('display','none');
 		}
-		//作物
-		let crop=elm.find('.crop');
-		crop.attr('src','imgUrl');
-		crop.css({
-			"left":data[index].offsetX,
-			"top":data[index].offsetY
-		})
-		let title='名称:'+data[index].caption
-				+'状态:'+data[index].growCaption
-				+'产量:'+data[index].curHarvestNum
-				+'时间:'+data[index].plantTime;
-		crop.attr('title',title);
-		
-		//虫
-		if(data[index].worm!=0){
-			let crop=elm.find('.insect').css('display','block');
-		}
+		drawSeed(data);
 	}
     
-    function plantAction(landId,cId){                                                                                                                                                                                                                                
-    	let obj={landId:landId,cId:cId};
-    	doSend(socket,obj,'POST',actionPlantUrl,plantUpdate);
+    function plantAction(cId){  
+    	let obj={landId:landGlobal,cId:cId};
+    	console.log(obj)
+    	doSend(socket,obj,'POST',actionPlantUrl,callBack);
     }
     function killWormAction(landId){
     	let obj={landId:landId};
-    	doSend(socket,obj,'POST',actionKillWormUrl,killWormUpdate);
+    	doSend(socket,obj,'POST',actionKillWormUrl,callBack);
     }
     function harvestAction(landId){
     	let obj={landId:landId};
-    	doSend(socket,obj,'POST',actionHarvestUrl,harvestUpdate);
+    	doSend(socket,obj,'POST',actionHarvestUrl,callBack);
     }
     function cleanLandAction(landId){
     	let obj={landId:landId};
-    	doSend(socket,obj,'POST',actionCleanLandUrl,cleanLandUpdate);
+    	doSend(socket,obj,'POST',actionCleanLandUrl,callBack);
     }
 	
     window.close = function () { 

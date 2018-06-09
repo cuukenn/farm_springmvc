@@ -5,9 +5,9 @@ import cn.jxufe.bean.FarmAction;
 import cn.jxufe.bean.Message;
 
 public interface FarmService {
-	public Message action(int landId, HttpSession session);
-	public Message actionPlant(int landId, int cId, HttpSession session);
-	public Message actionKillWorm(int landId, HttpSession session);
-	public Message actionHarvest(int landId, HttpSession session);
-	public Message actionCleanLand(int landId, HttpSession session);
+	public Message action(long landId, HttpSession session);
+	public Message actionPlant(long landId, long cId, HttpSession session);
+	public Message actionKillWorm(long landId, HttpSession session);
+	public Message actionHarvest(long landId, HttpSession session);
+	public Message actionCleanLand(long landId, HttpSession session);
 }

@@ -10,5 +10,5 @@ public interface SeedDAO extends PagingAndSortingRepository<Seed, Long> {
 	public Page<Seed> findByType(int type,Pageable pageable); 
 	public Page<Seed> findByLandRequirement(int landRequirement,Pageable pageable);
 	public Page<Seed> findByCaptionLike(String caption, Pageable pageable);
-	public Seed findByCId(int cId);
+	public Seed findByCId(long cId);
 }

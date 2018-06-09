@@ -12,7 +12,7 @@ public class Seed  extends EntityID{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-    private int cId;
+    private long cId;
     private String caption;
     private int harvestNum;
     private int cropLevel;
@@ -25,7 +25,7 @@ public class Seed  extends EntityID{
     private int landRequirement;
     private int score;
     private String tip;
-	public int getcId() {
+	public long getcId() {
 		return cId;
 	}
 	public void setcId(int cId) {

@@ -32,7 +32,7 @@ public class LandView extends EntityID {
 	private int price4UnitSale;// 售出单价
 
 	private long uId;// 用户id
-	private int landId;// 土地编号
+	private long landId;// 土地编号
 	private long cId;// 种子Id
 
 	private int worm;// 生虫
@@ -171,7 +171,7 @@ public class LandView extends EntityID {
 		this.uId = uId;
 	}
 
-	public int getLandId() {
+	public long getLandId() {
 		return landId;
 	}
 

@@ -192,7 +192,8 @@ function buy(id,caption){
 	})
 }
 function selectSeed(cId){
-	cIdGlobal=cId;
+	parent.plantAction(cId);
+	parent.window.win.dialog('close');
 }
 </script>
 </html>

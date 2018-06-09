@@ -78,12 +78,12 @@ public class FarmActionHandler extends TextWebSocketHandler {
 	}
 
 	/* 向单一用户发消息 */
-	public void sendMessageToUser(String userName, TextMessage message) {
+	public void sendMessageToUser(Long uId, TextMessage message) {
 		for (WebSocketSession user : users) {
 			farmUser = (User) user.getHandshakeAttributes().get("user");
 			if (farmUser == null)
 				continue;
-			if (farmUser.getUsername().equals(userName)) {
+			if (farmUser.getId()==uId) {
 				try {
 					if (user.isOpen()) {
 						user.sendMessage(message);

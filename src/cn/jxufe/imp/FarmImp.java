@@ -1,6 +1,7 @@
 package cn.jxufe.imp;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -19,9 +20,11 @@ import cn.jxufe.entity.Seed;
 import cn.jxufe.entity.SeedBag;
 import cn.jxufe.entity.User;
 import cn.jxufe.service.FarmService;
+import cn.jxufe.utils.JSONConfig;
 import cn.jxufe.view.LandView;
 import cn.jxufe.websocket.FarmActionHandler;
 import net.sf.json.JSONArray;
+import net.sf.json.JsonConfig;
 
 @Service
 public class FarmImp implements FarmService {
@@ -45,7 +48,7 @@ public class FarmImp implements FarmService {
 	SeedBagDAO seedBagDAO;
 
 	@Override
-	public Message action(int landId, HttpSession session) {
+	public Message action(long landId, HttpSession session) {
 		Message result = new Message();
 		User user = (User) session.getAttribute("user");
 		if (user == null) {
@@ -56,7 +59,7 @@ public class FarmImp implements FarmService {
 		Iterable<LandView> landView = landViewDAO.findByUId(user.getId());
 		JSONArray array = JSONArray.fromObject(landView);
 		try {
-			farmActionHandler.sendMessageToUser(user.toString(), new TextMessage(array.toString()));
+			farmActionHandler.sendMessageToUser(user.getId(), new TextMessage(array.toString()));
 		} catch (Exception e) {
 			result.setCode(-1);
 			result.setMsg("消息发送失败！");
@@ -68,7 +71,7 @@ public class FarmImp implements FarmService {
 	}
 
 	@Override
-	public Message actionPlant(int landId, int cId, HttpSession session) {
+	public Message actionPlant(long landId, long cId, HttpSession session) {
 		Message result = new Message();
 		User user = (User) session.getAttribute("user");
 		if (user == null) {
@@ -102,23 +105,27 @@ public class FarmImp implements FarmService {
 		newLand.setId(0);
 		newLand.setcId(cId);
 		newLand.setLandId(landId);
+		newLand.setuId(user.getId());
 		landDAO.save(newLand);
 
 		landView = landViewDAO.findByUIdAndLandId(user.getId(), landId);
-		ArrayList<LandView> arrayList = new ArrayList<>();
+		List<LandView> arrayList = new ArrayList<LandView>();
 		arrayList.add(landView);
-		JSONArray array = JSONArray.fromObject(arrayList.iterator());
-
+		JSONArray array = JSONArray.fromObject(arrayList, JSONConfig.getJsonConfig());
+		System.out.println(array.toString());
 		try {
-			farmActionHandler.sendMessageToUser(user.toString(), new TextMessage(array.toString()));
+			farmActionHandler.sendMessageToUser(user.getId(), new TextMessage(array.toString()));
 		} catch (Exception e) {
 			result.setCode(-1);
 			result.setMsg("种植失败！");
 			return result;
 		}
-
-		seedBag.setcNumber(seedBag.getcNumber() - 1);
-		seedBagDAO.save(seedBag);
+		if ((seedBag.getcNumber() - 1) >= 2) {
+			seedBag.setcNumber(seedBag.getcNumber() - 1);
+			seedBagDAO.save(seedBag);
+		} else {
+			seedBagDAO.delete(seedBag);
+		}
 
 		user.setExp(user.getExp() + 2);
 		user.setPrice(user.getPrice() + 1);
@@ -131,7 +138,7 @@ public class FarmImp implements FarmService {
 	}
 
 	@Override
-	public Message actionKillWorm(int landId, HttpSession session) {
+	public Message actionKillWorm(long landId, HttpSession session) {
 		Message result = new Message();
 		User user = (User) session.getAttribute("user");
 		if (user == null) {
@@ -156,9 +163,9 @@ public class FarmImp implements FarmService {
 		LandView landView = landViewDAO.findByUIdAndLandId(user.getId(), landId);
 		ArrayList<LandView> arrayList = new ArrayList<>();
 		arrayList.add(landView);
-		JSONArray array = JSONArray.fromObject(arrayList.iterator());
+		JSONArray array = JSONArray.fromObject(arrayList, JSONConfig.getJsonConfig());
 		try {
-			farmActionHandler.sendMessageToUser(user.toString(), new TextMessage(array.toString()));
+			farmActionHandler.sendMessageToUser(user.getId(), new TextMessage(array.toString()));
 		} catch (Exception e) {
 			result.setCode(-1);
 			result.setMsg("种植失败！");
@@ -176,7 +183,7 @@ public class FarmImp implements FarmService {
 	}
 
 	@Override
-	public Message actionHarvest(int landId, HttpSession session) {
+	public Message actionHarvest(long landId, HttpSession session) {
 		Message result = new Message();
 		User user = (User) session.getAttribute("user");
 		if (user == null) {
@@ -199,10 +206,10 @@ public class FarmImp implements FarmService {
 
 		ArrayList<LandView> arrayList = new ArrayList<>();
 		arrayList.add(landView);
-		JSONArray array = JSONArray.fromObject(arrayList.iterator());
+		JSONArray array = JSONArray.fromObject(arrayList, JSONConfig.getJsonConfig());
 
 		try {
-			farmActionHandler.sendMessageToUser(user.toString(), new TextMessage(array.toString()));
+			farmActionHandler.sendMessageToUser(user.getId(), new TextMessage(array.toString()));
 
 		} catch (Exception e) {
 			result.setCode(-1);
@@ -221,7 +228,7 @@ public class FarmImp implements FarmService {
 	}
 
 	@Override
-	public Message actionCleanLand(int landId, HttpSession session) {
+	public Message actionCleanLand(long landId, HttpSession session) {
 		Message result = new Message();
 		User user = (User) session.getAttribute("user");
 		if (user == null) {
@@ -245,7 +252,7 @@ public class FarmImp implements FarmService {
 			landDAO.save(land);
 			ArrayList<LandView> arrayList = new ArrayList<>();
 			arrayList.add(landView);
-			JSONArray array = JSONArray.fromObject(arrayList.iterator());
+			JSONArray array = JSONArray.fromObject(arrayList, JSONConfig.getJsonConfig());
 			textMessage = new TextMessage(array.toString());
 		} else {
 			landDAO.delete(land);
@@ -253,7 +260,7 @@ public class FarmImp implements FarmService {
 		}
 
 		try {
-			farmActionHandler.sendMessageToUser(user.toString(), textMessage);
+			farmActionHandler.sendMessageToUser(user.getId(), textMessage);
 		} catch (Exception e) {
 			result.setCode(-1);
 			result.setMsg("除草失败！");

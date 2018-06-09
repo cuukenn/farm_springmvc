@@ -61,5 +61,5 @@ public interface SeedService {
 	 */
 	public Message delete(Seed seed);
 	
-	public Seed findByCID(int cId);
+	public Seed findByCID(long cId);
 }

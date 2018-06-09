@@ -80,7 +80,7 @@ public class SeedImp implements SeedService{
 	}
 
 	@Override
-	public Seed findByCID(int cId) {
+	public Seed findByCID(long cId) {
         return seedDAO.findByCId(cId);
 	}
 

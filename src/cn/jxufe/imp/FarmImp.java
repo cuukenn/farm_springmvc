@@ -1,6 +1,7 @@
 package cn.jxufe.imp;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -49,7 +50,7 @@ public class FarmImp implements FarmService {
 	SeedBagDAO seedBagDAO;
 
 	public static LandView landView;
-	
+
 	@Override
 	@Transactional
 	public Message action(long landId, HttpSession session) {
@@ -78,73 +79,82 @@ public class FarmImp implements FarmService {
 	@Transactional
 	public Message actionPlant(long landId, long cId, HttpSession session) {
 		Message result = new Message();
-		User user = (User) session.getAttribute("user");
-		if (user == null) {
-			result.setCode(-1);
-			result.setMsg("用户不合法");
-			return result;
-		}
-
-		LandView landView = landViewDAO.findByUIdAndLandId(user.getId(), landId);
-		if (landView != null) {
-			result.setCode(-1);
-			result.setMsg("该土地上已经存在植物");
-			return result;
-		}
-
-		Seed seed = seedDAO.findByCId(cId);
-		if (seed == null) {
-			result.setCode(-1);
-			result.setMsg("不存在该种子！");
-			return result;
-		}
-
-		SeedBag seedBag = seedBagDAO.findByCIdAndUId(cId, user.getId());
-		if (seedBag.getcNumber() < 1) {
-			result.setCode(-1);
-			result.setMsg("该种子数量不足！");
-			return result;
-		}
-
-		Land newLand = new Land();
-		newLand.setId(0);
-		newLand.setcId(cId);
-		newLand.setLandId(landId);
-		newLand.setuId(user.getId());
-		newLand=landDAO.save(newLand);
-		
-		//初始化下季时间
-		landView = landViewDAO.findByUIdAndLandId(user.getId(), landId);
-		long endTime=landView.getPlantTime().getTime()+landView.getGrowTime();
-		newLand.setCurCropsEndTime(new Date(endTime));
-		landDAO.save(newLand);
-		
-		landView = landViewDAO.findByUIdAndLandId(user.getId(), landId);
-		List<LandView> arrayList = new ArrayList<LandView>();
-		arrayList.add(landView);
-		JSONArray array = JSONArray.fromObject(arrayList, JSONConfig.getJsonConfig());
 		try {
+			User user = (User) session.getAttribute("user");
+			if (user == null) {
+				result.setCode(-1);
+				result.setMsg("用户不合法");
+				return result;
+			}
+
+			LandView landView = landViewDAO.findByUIdAndLandId(user.getId(), landId);
+			if (landView != null) {
+				result.setCode(-1);
+				result.setMsg("该土地上已经存在植物");
+				return result;
+			}
+
+			Seed seed = seedDAO.findByCId(cId);
+			if (seed == null) {
+				result.setCode(-1);
+				result.setMsg("不存在该种子！");
+				return result;
+			}
+
+			SeedBag seedBag = seedBagDAO.findByCIdAndUId(cId, user.getId());
+			if (seedBag.getcNumber() < 1) {
+				result.setCode(-1);
+				result.setMsg("该种子数量不足！");
+				return result;
+			}
+
+			Land newLand = new Land();
+			newLand.setId(0);
+			newLand.setcId(cId);
+			newLand.setLandId(landId);
+			newLand.setuId(user.getId());
+			newLand = landDAO.save(newLand);
+
+			// 初始化下季时间
+			landView = landViewDAO.findByUIdAndLandId(user.getId(), landId);
+
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(landView.getPlantTime());
+			calendar.add(Calendar.SECOND, landView.getGrowTime());// 作为秒加入
+			newLand.setCurCropsEndTime(calendar.getTime());
+			landDAO.save(newLand);
+
+			landView = landViewDAO.findByUIdAndLandId(user.getId(), landId);
+			List<LandView> arrayList = new ArrayList<LandView>();
+			arrayList.add(landView);
+
+
+			// 格式化时间转JSON输出
+			JSONArray array = JSONArray.fromObject(arrayList, JSONConfig.getJsonConfig());
 			farmActionHandler.sendMessageToUser(user.getId(), new TextMessage(array.toString()));
+
+			if ((seedBag.getcNumber() - 1) >= 2) {
+				seedBag.setcNumber(seedBag.getcNumber() - 1);
+				seedBagDAO.save(seedBag);
+			} else {
+				seedBagDAO.delete(seedBag);
+			}
+
+			user.setExp(user.getExp() + 2);
+			user.setPrice(user.getPrice() + 1);
+			user.setScore(user.getScore() + 2);
+			userDAO.save(user);
+			
+//			GameImp.list.add(landView);// 添加新数据
+
+			result.setCode(0);
+			result.setMsg("种植成功！");
+			return result;
 		} catch (Exception e) {
 			result.setCode(-1);
 			result.setMsg("种植失败！");
 			return result;
 		}
-		if ((seedBag.getcNumber() - 1) >= 2) {
-			seedBag.setcNumber(seedBag.getcNumber() - 1);
-			seedBagDAO.save(seedBag);
-		} else {
-			seedBagDAO.delete(seedBag);
-		}
-
-		user.setExp(user.getExp() + 2);
-		user.setPrice(user.getPrice() + 1);
-		user.setScore(user.getScore() + 2);
-		userDAO.save(user);
-
-		result.setCode(0);
-		result.setMsg("种植成功！");
-		return result;
 	}
 
 	@Override

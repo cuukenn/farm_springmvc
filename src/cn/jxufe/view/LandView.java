@@ -15,7 +15,7 @@ public class LandView extends EntityID {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private long growTime;// 阶段生长时间
+	private int growTime;// 阶段生长时间
 	private int insect;// 长虫概率
 	private long status;
 
@@ -69,11 +69,11 @@ public class LandView extends EntityID {
 		return imgUrl;
 	}
 
-	public long getGrowTime() {
+	public int getGrowTime() {
 		return growTime;
 	}
 
-	public void setGrowTime(long growTime) {
+	public void setGrowTime(int growTime) {
 		this.growTime = growTime;
 	}
 

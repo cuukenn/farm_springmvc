@@ -1,7 +1,9 @@
 package cn.jxufe.imp;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -45,11 +47,23 @@ public class GameImp implements GameService {
 	LandDAO landDAO;
 
 	Timer timer = new Timer();
-	public static Iterable<LandView> iterable;
+	// public static List<LandView> list;
+	// public static Iterator<LandView> iterator;
+	public static Iterable<LandView> Iterable;
 
 	@Override
 	public void gameStart() {
-		iterable = landViewDAO.findAll();
+		// list=new ArrayList<>();
+		// 初始化
+		// Iterable<LandView> iterable = landViewDAO.findAll();
+		// if (iterable != null) {
+		// iterable.forEach(new Consumer<LandView>() {
+		// @Override
+		// public void accept(LandView landView) {
+		// list.add(landView);
+		// }
+		// });
+		// }
 		timer.schedule(new TimerTask() {
 			@Override
 			public void run() {
@@ -60,14 +74,19 @@ public class GameImp implements GameService {
 	}
 
 	private void checkCropStatus() {
-		iterable.forEach(new Consumer<LandView>() {
+		Iterable = landViewDAO.findAll();
+		if (Iterable == null)
+			return;
+		Iterable.forEach(new Consumer<LandView>() {
 			@Override
 			public void accept(LandView landView) {
 				Date date = new Date();
 				// 判断是否达到下一阶段
-				if (date.getTime() >= landView.getCurCropsEndTime().getTime()) {
-					if (!landView.getGrowCaption().equals("成熟阶段")) {
-						// 查询排好序的阶段
+				System.out.println(landView.getCurCropsEndTime());
+				if (date.compareTo(landView.getCurCropsEndTime()) > 0) {
+					if (!landView.getCropsCaption().equals("成熟阶段")) {
+
+						// 自定义排序
 						Specification specification = new Specification<CropsGrow>() {
 							@Override
 							public Predicate toPredicate(Root<CropsGrow> root, CriteriaQuery<?> criteriaQuery,
@@ -82,17 +101,24 @@ public class GameImp implements GameService {
 
 						Land land = landDAO.findByLandIdAndUId(landView.getLandId(), landView.getuId());
 
-						// 获取下个阶段
+						// 获取下个阶段,顺序排序
 						List<CropsGrow> cropsGrowList = cropsGrowDAO.findAll(specification);
 						System.out.println("size:" + cropsGrowList.size());
 						for (int index = 0, len = cropsGrowList.size(); index < len; index++) {
 							System.out.println(cropsGrowList.get(index).getGrowCaption() + " "
 									+ cropsGrowList.get(index).getStatus());
-							if (cropsGrowList.get(index).getId() == landView.getStatus()) {
+
+							// 到达当前数据，说明下一条是下一个记录
+							if (cropsGrowList.get(index).getGrowStep() == landView.getStatus()) {
 								if ((index + 1) < len) {
-									land.setStatus(cropsGrowList.get(index + 1).getId());
-									long newTime = cropsGrowList.get(index + 1).getGrowTime();
-									land.setCurCropsEndTime(new Date(land.getCurCropsEndTime().getTime() + newTime));
+									land.setStatus(cropsGrowList.get(index + 1).getGrowStep());
+									int addTime = cropsGrowList.get(index + 1).getGrowTime();
+
+									Calendar calendar = Calendar.getInstance();
+									calendar.setTime(land.getCurCropsEndTime());
+									calendar.add(Calendar.SECOND, addTime);// 原有基础上加addTime秒
+
+									land.setCurCropsEndTime(calendar.getTime());
 									break;
 								}
 							}

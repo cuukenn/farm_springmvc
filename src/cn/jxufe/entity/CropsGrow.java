@@ -13,7 +13,7 @@ public class CropsGrow  extends EntityID{
 	 */
 	private static final long serialVersionUID = 1L;
     private int cId;
-    private long growTime;
+    private int growTime;
     private int growStep;
     private String growCaption;
     private float insect;
@@ -28,10 +28,10 @@ public class CropsGrow  extends EntityID{
 	public void setcId(int cId) {
 		this.cId = cId;
 	}
-	public long getGrowTime() {
+	public int getGrowTime() {
 		return growTime;
 	}
-	public void setGrowTime(long growTime) {
+	public void setGrowTime(int growTime) {
 		this.growTime = growTime;
 	}
 	public int getGrowStep() {

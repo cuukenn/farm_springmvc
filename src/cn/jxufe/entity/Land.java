@@ -12,7 +12,7 @@ import cn.jxufe.bean.EntityID;
 public class Land extends EntityID {
 	private long uId;
 	private long landId;
-	private long status = 1;
+	private int status = 1;
 	private long cId;
 	private int worm;
 	private int loss;
@@ -36,11 +36,11 @@ public class Land extends EntityID {
 		this.landId = landId;
 	}
 
-	public long getStatus() {
+	public int getStatus() {
 		return status;
 	}
 
-	public void setStatus(long status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 

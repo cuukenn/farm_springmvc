@@ -49,7 +49,7 @@ public class GameImp implements GameService {
 	Timer timer = new Timer();
 	// public static List<LandView> list;
 	// public static Iterator<LandView> iterator;
-	public static Iterable<LandView> Iterable;
+	
 
 	@Override
 	public void gameStart() {
@@ -74,15 +74,15 @@ public class GameImp implements GameService {
 	}
 
 	private void checkCropStatus() {
-		Iterable = landViewDAO.findAll();
+		Iterable<LandView> Iterable= landViewDAO.findAll();
 		if (Iterable == null)
 			return;
 		Iterable.forEach(new Consumer<LandView>() {
 			@Override
 			public void accept(LandView landView) {
+				final long cId=landView.getcId();
 				Date date = new Date();
 				// 判断是否达到下一阶段
-				System.out.println(landView.getCurCropsEndTime());
 				if (date.compareTo(landView.getCurCropsEndTime()) > 0) {
 					if (!landView.getCropsCaption().equals("成熟阶段")) {
 
@@ -91,10 +91,16 @@ public class GameImp implements GameService {
 							@Override
 							public Predicate toPredicate(Root<CropsGrow> root, CriteriaQuery<?> criteriaQuery,
 									CriteriaBuilder criteriaBuilder) {
+								
+								List<Predicate> predicates = new ArrayList<>();
+								predicates.add(criteriaBuilder.equal(root.get("cId"),cId));
+								
 								List<Order> list = new ArrayList<>();
 								list.add(new OrderImpl(root.get("status"), true));
 								list.add(new OrderImpl(root.get("growStep"), true));
 								criteriaQuery.orderBy(list);
+								
+								criteriaQuery.where(predicates.toArray(new Predicate[predicates.size()]));
 								return criteriaQuery.getGroupRestriction();
 							}
 						};
@@ -103,17 +109,15 @@ public class GameImp implements GameService {
 
 						// 获取下个阶段,顺序排序
 						List<CropsGrow> cropsGrowList = cropsGrowDAO.findAll(specification);
-						System.out.println("size:" + cropsGrowList.size());
 						for (int index = 0, len = cropsGrowList.size(); index < len; index++) {
-							System.out.println(cropsGrowList.get(index).getGrowCaption() + " "
-									+ cropsGrowList.get(index).getStatus());
-
 							// 到达当前数据，说明下一条是下一个记录
-							if (cropsGrowList.get(index).getGrowStep() == landView.getStatus()) {
+							if (cropsGrowList.get(index).getGrowStep() == land.getStatus()) {
 								if ((index + 1) < len) {
+									
 									land.setStatus(cropsGrowList.get(index + 1).getGrowStep());
 									int addTime = cropsGrowList.get(index + 1).getGrowTime();
-
+									
+									
 									Calendar calendar = Calendar.getInstance();
 									calendar.setTime(land.getCurCropsEndTime());
 									calendar.add(Calendar.SECOND, addTime);// 原有基础上加addTime秒
@@ -126,6 +130,7 @@ public class GameImp implements GameService {
 							landDAO.save(land);
 							LandView landViewN = landViewDAO.findByUIdAndLandId(landView.getuId(),
 									landView.getLandId());
+							System.out.println(JSONArray.fromObject(landViewN, JSONConfig.getJsonConfig()).toString());
 							farmActionHandler.sendMessageToUser(landViewN.getuId(), new TextMessage(
 									JSONArray.fromObject(landViewN, JSONConfig.getJsonConfig()).toString()));
 						}

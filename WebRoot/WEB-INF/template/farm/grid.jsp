@@ -196,9 +196,13 @@ body {
 			if(data[index].worm!=0){
 				let crop=elm.find('.insect').css('display','block');
 				elm.css("cursor",cur[2]);
+				elm.attr('onclick','killWormAction('+data[index].landId+')');
 			}
 			//更改光标
-			else if(data[index].cropsCaption=="成熟阶段")elm.css("cursor",cur[3]);
+			else if(data[index].cropsCaption=="成熟阶段"){
+				elm.css("cursor",cur[3]);
+				elm.attr('onclick','plantAction('+data[index].cId+')');
+			}
 			else elm.css("cursor",cur[1]);
 		}
 	}

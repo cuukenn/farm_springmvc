@@ -59,11 +59,12 @@ public class GameImp implements GameService {
 		timer.schedule(new TimerTask() {
 			@Override
 			public void run() {
-				// checkCropStatus();
+				 checkCropStatus();
 			}
 		}, 0, 2000);
 	}
 
+	//此处有未知BUG，没找到
 	private void checkCropStatus() {
 		Iterable<LandView> Iterable = landViewDAO.findAll();
 		if (Iterable == null)
@@ -98,7 +99,6 @@ public class GameImp implements GameService {
 						
 						
 						LandView landViewN = landViewDAO.findByUIdAndLandId(landView.getuId(), landView.getLandId());
-						System.out.println(JSONArray.fromObject(landViewN, JSONConfig.getJsonConfig()).toString());
 						farmActionHandler.sendMessageToUser(landViewN.getuId(), new TextMessage(
 								JSONArray.fromObject(landViewN, JSONConfig.getJsonConfig()).toString()));
 					}

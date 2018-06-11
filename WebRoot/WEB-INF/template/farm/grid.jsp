@@ -92,6 +92,7 @@ body {
 
 </style>
 <body>
+	<audio id="audio" src="" style="visibility:hidden;"></audio>
 	<div class="content">
 		<div class="tran">
 			<div class="farm"></div>
@@ -109,6 +110,7 @@ body {
 
 	const landImg = new Array("land1.png", "land2.png", "land3.png",
 			"land4.png")
+	const landAudio=new Array();//种植 收获 除虫 铲土
 	$(function() {
 		resizeFrame();
 		getLandData();
@@ -295,7 +297,9 @@ body {
     function onClose(evt) {  
     	console.log("连接关闭：",evt);
     }  
-    function doSend(websocket,object,method,methodURL,successFunction) {  
+    let action =-1;
+    function doSend(websocket,object,method,methodURL,successFunction,action) {  
+    	action=action;
         if (websocket.readyState == websocket.OPEN) {  
             request(object,method,methodURL,successFunction);
             console.log("发送成功!");  
@@ -308,6 +312,13 @@ body {
 			title : "消息",
 			msg : "<center>" + result.msg + "</center>"
 		});
+		if(result.code==0){
+			let audio=$('#audio');
+			audio.attr('src',landAudio[action]);
+			audio.oncanplay=function(){
+				audio.play();
+			}
+		}
 	}
 	
 	function onMessage(eve){
@@ -320,25 +331,25 @@ body {
     	let obj={landId:landGlobal,cId:cId};
     	console.log(obj)
     	console.log("plant")
-    	doSend(socket,obj,'POST',actionPlantUrl,callBack);
+    	doSend(socket,obj,'POST',actionPlantUrl,callBack,0);
     }
     function killWormAction(landId){
     	let obj={landId:landId};
     	console.log(obj)
     	console.log("killWorm")
-    	doSend(socket,obj,'POST',actionKillWormUrl,callBack);
+    	doSend(socket,obj,'POST',actionKillWormUrl,callBack,1);
     }
     function harvestAction(landId){
     	let obj={landId:landId};
     	console.log(obj)
     	console.log("harvest")
-    	doSend(socket,obj,'POST',actionHarvestUrl,callBack);
+    	doSend(socket,obj,'POST',actionHarvestUrl,callBack,2);
     }
     function cleanLandAction(landId){
     	let obj={landId:landId};
     	console.log(obj)
     	console.log(" cleanLand")
-    	doSend(socket,obj,'POST',actionCleanLandUrl,callBack);
+    	doSend(socket,obj,'POST',actionCleanLandUrl,callBack,3);
     }
 	
     window.close = function () { 

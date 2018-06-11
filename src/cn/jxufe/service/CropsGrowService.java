@@ -38,4 +38,8 @@ public interface CropsGrowService {
 	  * @return 运行结果消息状态
 	  */
 	 public Message delete(CropsGrow cropsGrow); 
+	 
+	 public CropsGrow findNextCrops(long cId,int growStep); 
+	 
+	 public CropsGrow findFirstCrops(long cId); 
 }

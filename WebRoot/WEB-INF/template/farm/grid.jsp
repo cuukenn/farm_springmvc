@@ -165,19 +165,30 @@ body {
 				elm.style.top = offsetY + 'px';
 			}
 		}
-		//画作物
-		if(data==undefined){
-	       	$.messager.show({
-                title: "消息",
-                msg: "初始化失败，请刷新页面"
-            });
-		}
 		drawSeed(data);
 	}
 	function drawSeed(data){
+		//画作物
+		if(data===undefined){
+	       	$.messager.show({
+                title: "消息",
+                msg: "读取信息错误"
+            });
+	       	return
+		}
 		for(let index=0,len=data.length;index<len;index++){
 			let elmS = '.farm>div:nth-child(' +data[index].landId+ ')';
+		
 			let elm =$(elmS);
+			console.log(data[index].id==0)
+			if(data[index].id==0){
+				elm.find('.crop').attr('src',"");
+				elm.find('.insect').css('display','none');
+				elm.css("cursor",cur[0]);
+				elm.attr('onclick','showSelectSeed('+data[index].landId+')');
+			}
+			
+
 			//作物
 			let crop=elm.find('.crop');
 			crop.attr('src','<%=basePath%>images/crops/'+data[index].imgUrl);
@@ -193,17 +204,31 @@ body {
 					+'\n时间:'+data[index].curCropsEndTime;
 			crop.attr('title',title);
 			
+			if(data[index].worm==0) {
+				elm.find('.insect').css('display','none');
+			}
+			
 			if(data[index].worm!=0){
-				let crop=elm.find('.insect').css('display','block');
+				elm.find('.insect').css('display','block');
 				elm.css("cursor",cur[2]);
 				elm.attr('onclick','killWormAction('+data[index].landId+')');
 			}
+
 			//更改光标
 			else if(data[index].cropsCaption=="成熟阶段"){
 				elm.css("cursor",cur[3]);
-				elm.attr('onclick','plantAction('+data[index].cId+')');
+				elm.attr('onclick','harvestAction('+data[index].landId+')');
 			}
-			else elm.css("cursor",cur[1]);
+			else if(data[index].cropsCaption=="枯草阶段"){
+				elm.css("cursor",cur[4]);
+				elm.attr('onclick','cleanLandAction('+data[index].landId+')');
+			}
+			else {
+				elm.css("cursor",cur[1]);
+				elm.attr('onclick','javascript:void()');
+			}
+			
+
 		}
 	}
 	//显示种子袋
@@ -286,31 +311,33 @@ body {
 	}
 	
 	function onMessage(eve){
-		console.log(eve);
 		let data=JSON.parse(eve.data);
-		if(data==undefined)return;
-		if(data==="NOLAND"){
-			elm.find('.crop').css('display','none');
-			elm.find('.insect').css('display','none');
-		}
+		console.log(data);
 		drawSeed(data);
 	}
     
     function plantAction(cId){  
     	let obj={landId:landGlobal,cId:cId};
     	console.log(obj)
+    	console.log("plant")
     	doSend(socket,obj,'POST',actionPlantUrl,callBack);
     }
     function killWormAction(landId){
     	let obj={landId:landId};
+    	console.log(obj)
+    	console.log("killWorm")
     	doSend(socket,obj,'POST',actionKillWormUrl,callBack);
     }
     function harvestAction(landId){
     	let obj={landId:landId};
+    	console.log(obj)
+    	console.log("harvest")
     	doSend(socket,obj,'POST',actionHarvestUrl,callBack);
     }
     function cleanLandAction(landId){
     	let obj={landId:landId};
+    	console.log(obj)
+    	console.log(" cleanLand")
     	doSend(socket,obj,'POST',actionCleanLandUrl,callBack);
     }
 	

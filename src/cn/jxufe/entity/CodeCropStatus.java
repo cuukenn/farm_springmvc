@@ -3,6 +3,8 @@ package cn.jxufe.entity;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.SQLUpdate;
+
 import cn.jxufe.bean.EntityID;
 
 @Entity

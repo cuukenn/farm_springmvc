@@ -12,13 +12,18 @@ import cn.jxufe.bean.EntityID;
 public class Land extends EntityID {
 	private long uId;
 	private long landId;
-	private int status = 1;
+	private int status;
 	private long cId;
 	private int worm;
 	private int loss;
 	private int curHarvestNum = 1;
 	private Date plantTime = new Date(new java.util.Date().getTime());
 	private Date curCropsEndTime = this.plantTime;
+
+	
+	public void setPlantTime(Date plantTime) {
+		this.plantTime = plantTime;
+	}
 
 	public long getuId() {
 		return uId;

@@ -430,10 +430,10 @@ public class FarmImp implements FarmService {
 			result.setCode(0);
 			result.setMsg("除枯草收获<br/>经验：+5<br/>积分：+5<br/>");
 
-			landView = new LandView();
-			landView.setLandId(landId);
-			ArrayList<LandView> arrayList = new ArrayList<>();
-			arrayList.add(landView);
+			land = new Land();
+			land.setLandId(landId);
+			ArrayList<Land> arrayList = new ArrayList<>();
+			arrayList.add(land);
 			JSONArray array = JSONArray.fromObject(arrayList, JSONConfig.getJsonConfig());
 			textMessage = new TextMessage(array.toString());
 			farmActionHandler.sendMessageToUser(user.getId(), textMessage);

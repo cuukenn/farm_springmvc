@@ -21,7 +21,13 @@ public class JSONConfig {
 				return value.toString();
 			}
 			public Object processArrayValue(Object value, JsonConfig arg1) {
-				return null;
+				if (value == null)
+					return "";
+				if (value instanceof java.util.Date) {
+					String str = new SimpleDateFormat(format).format((java.util.Date) value);
+					return str;
+				}
+				return value.toString();
 			}
 
 		});

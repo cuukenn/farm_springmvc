@@ -113,7 +113,9 @@ public class GameImp implements GameService {
 				}
 
 				// 概率生虫
-				if (landView.getWorm() == 0) {
+				if (landView.getWorm() == 0 
+						&& !landView.getGrowCaption().equals("种子阶段")
+						&& !landView.getGrowCaption().equals("成熟阶段")) {
 					double num = Math.random() * MAX;
 					if ((num / MAX) < (landView.getInsect() / land.getWorm())) {
 						// 生虫

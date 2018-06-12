@@ -115,9 +115,9 @@ public class GameImp implements GameService {
 				// 概率生虫
 				if (landView.getWorm() == 0) {
 					double num = Math.random() * MAX;
-					if ((num / MAX) < landView.getInsect()) {
+					if ((num / MAX) < (landView.getInsect() / land.getWorm())) {
 						// 生虫
-						land.setWorm(1);
+						land.setWorm(land.getWorm() + 1);
 						land = landDAO.save(land);
 						// 加入到更新序列
 						updateSet.add(land);

@@ -41,7 +41,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		 					<label>生长阶段:</label>
    		 				</td>
    		 				<td>
-   		 					<input type="text"  name='growStep'  class="easyui-numberbox" required="required"/>
+   		 					<input type="number"  name='growStep'  class="easyui-numberbox" required="required"/>
    		 				</td>
    		 				<td>
    		 					生长阶段标题:

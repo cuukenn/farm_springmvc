@@ -110,7 +110,12 @@ body {
 
 	const landImg = new Array("land1.png", "land2.png", "land3.png",
 			"land4.png")
-	const landAudio=new Array();//种植 收获 除虫 铲土
+	const landAudio=new Array(
+			"<%=basePath%>audios/收获.mp3",
+			"<%=basePath%>audios/虫子吃菜.mp3",
+			"<%=basePath%>audios/收获.mp3",
+			"<%=basePath%>audios/除枯草.mp3"
+			);//种植 收获 除虫 铲土
 	$(function() {
 		resizeFrame();
 		getLandData();

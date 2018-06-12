@@ -63,12 +63,14 @@ body {
 	position: relative;
 	left: 0px;
 	top: 0px;
+	transform: scale(0.8);
 }
 
 .tools-imagePositioner-display {
 	position: absolute;
 	width: 200px;
 	height: 101px;
+	
 }
 
 .tools-imagePositioner-display:hover {
@@ -101,13 +103,11 @@ body {
 .tran {
 	transform-style: preserve-3d;
 	transform-origin: 50% 50%;
-	transform: perspective(8000px) rotateX(33deg) rotateZ(-30deg)
-		rotateY(10deg);
+	transform: perspective(8000px) rotateX(30deg) rotateZ(0deg) rotateY(0deg) translateY(40px) translateX(100px)  translateY(40px);
 }
 
-.insect, .crop {
-	transform: perspective(8000px) rotateX(-33deg) rotateZ(30deg)
-		rotateY(-10deg);
+.insect,.crop {
+	transform:perspective(8000px) rotateX(-30deg) rotateZ(0deg) rotateY(0deg);
 }
 </style>
 <body>
@@ -123,6 +123,7 @@ body {
 		<iframe id="seedBagIframe" src="<%=basePath%>seedBag/grid"
 			width="100%" height="99%" frameborder="0" scrolling="no"></iframe>
 	</div>
+	<div id="msgBox"></div> 
 </body>
 <script>
 	let cIdGlobal=-1;
@@ -163,8 +164,8 @@ body {
 	let offsetX=0;
 	let offsetY=0;
 
-	const widF=160;
-	const hei=60;
+	const widF=220;
+	const hei=120;
 	const rowsHei=80;
 
 	const offTmp=360;
@@ -179,20 +180,16 @@ body {
 		}
 		let farm = document.querySelector('.farm');
 		farm.innerHTML = rs;
-		farm.style.height = rows * hei + 300 + 'px';
-		farm.style.width = cols * widF + 200 + 'px';
+		farm.style.height = rows * hei + 'px';
+		farm.style.width = cols * widF +'px';
 		
 		//画土地
 		for (let row = 0; row < rows; row++) {
 			for (let index = 1; index <= cols; index++) {
 				let elmS = '.farm>div:nth-child(' + (cols * row + index) + ')';
 				let elm = document.querySelector(elmS);
-				offsetX = (index - 1) * widF + offTmp - row * offTmpDe;
-				offsetY = (index - 1) * hei + row * rowsHei;
-				if (index === 1) {
-					offsetX = 0 + offTmp - row * offTmpDe;
-					offsetY = 0 + row * rowsHei;
-				}
+				offsetX = ~~(index%6)* widF-60*row;
+				offsetY = (row)*hei;
 				elm.style.left = offsetX + 'px';
 				elm.style.top = offsetY + 'px';
 			}
@@ -233,7 +230,8 @@ body {
 			})
 			let title='\n\n\n名称:'+data[index].caption
 					+'\n状态:'+data[index].growCaption
-					+'\n产量:'+data[index].curHarvestNum
+					+'\n第'+data[index].curHarvestNum+'季'
+					+'\n产量:'+(data[index].output-data[index].loss)
 					+'\n时间:'+data[index].curCropsEndTime;
 			crop.attr('title',title);
 			
@@ -335,8 +333,7 @@ body {
 		$.messager.show({
 			title : "消息",
 			msg : "<center>" + result.msg + "</center>"
-		});
-		console.log(result.code==0);
+     	});
 		parent[0].init();
 		if(result.code==0){
 			audioElm.src=landAudio[actionGlobal];

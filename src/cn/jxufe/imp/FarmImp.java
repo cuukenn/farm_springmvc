@@ -345,6 +345,7 @@ public class FarmImp implements FarmService {
 			}
 
 			user.setExp(user.getExp() + landView.getExp());
+			if(landView.getLoss()>=landView.getOutput())landView.setLoss(landView.getOutput()>>1);
 			user.setPrice(user.getPrice() + landView.getPrice4UnitSale() * (landView.getOutput() - landView.getLoss()));
 			user.setScore(user.getScore() + landView.getScore());
 			userDAO.save(user);

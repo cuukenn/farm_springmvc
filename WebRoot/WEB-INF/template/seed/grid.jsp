@@ -35,117 +35,78 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         	<a href="javascript:void(0)" class="easyui-linkbutton c5" iconCls="icon-cancel" onclick="javascript:deleteRecord()">删除</a>
         </div>
          <div id="formContainer" class="easyui-dialog" style="width:800px;height:420px;padding:10px 10px" closed="true" buttons="#formContainerButtons">
-   		 	<form id="formEditor">
-   		 		<table>
-   		 			<tr>
-   		 				<td>
-   		 					ID:
-   		 				</td>
-   		 				<td>
-   		 					<inpu type="text"  name='id'   value='0'   class="easyui-numberbox" required="required"/>
-   		 				</td>
-   		 				<td>
-   		 					种子ID:
-   		 				</td>
-   		 				<td>
-   		 					<input type="text"  name='cId'   class="easyui-numberbox " data-options="precision:0,min:1"  required="required"></td>
-          			  </tr>
-   		 			<tr>
-   		 				<td>
-   		 					<label>种子名称</label>
-   		 				</td>
-   		 				<td>
-   		 					<input type="text"  name='caption'     class="easyui-textbox" required="required"/>
-   		 				</td>
-   		 				<td>
-   		 					X季作物:
-   		 				</td>
-   		 				<td>
-   		 					<input type="text"  name='harvestNum'    class="easyui-numberbox" required="required"/>
-   		 				</td>
-   		 			</tr>
-   		 			<tr>
-   		 				<td>
-   		 					种子等级:
-   		 				</td>
-   		 				<td>
-   		 					<input type="text"  name='cropLevel'    class="easyui-numberbox" required="required"/>
-   		 				</td>
-   		 				<td>
-   		 					种子类型:
-   		 				</td>
-   		 				<td>
-	   		 				<input type="text"  name='type' class="easyui-combobox" panelHeight="auto"
-						        data-options=" editable:false,
+		<form id="formEditor">
+			<table>
+				<tr>
+					<td>ID:</td>
+					<td><input name='id' value='0' class="easyui-numberbox"
+						required="required" /></td>
+					<td>种子ID:</td>
+					<td><input name='cId' type="number"
+						required="required" /></td>
+				</tr>
+				<tr>
+					<td><label>种子名称</label></td>
+					<td><input name='caption' class="easyui-textbox"
+						required="required" /></td>
+					<td>X季作物:</td>
+					<td><input name='harvestNum' class="easyui-numberbox"
+						required="required" /></td>
+				</tr>
+				<tr>
+					<td>种子等级:</td>
+					<td><input name='cropLevel' class="easyui-numberbox"
+						required="required" /></td>
+					<td>种子类型:</td>
+					<td><input name='type' class="easyui-combobox"
+						panelHeight="auto"
+						data-options=" editable:false,
 						        valueField:'code',
 						        textField:'caption',
-						        url:'<%=basePath%>codeSeedType/data'"  required="required"/>
-   		 				</td>
-   		 			</tr>
-   		 			<tr>
-   		 				<td>
-   		 					可获经验:
-   		 				</td>
-   		 				<td>
-   		 					<input type="text"  name='exp'    class="easyui-numberbox" required="required"/>
-   		 				</td>
-   		 				<td>
-   		 					每季成熟所需时间:
-   		 				</td>
-   		 				<td>
-   		 					<input type="text"  name='matureTime'    class="easyui-numberbox" required="required"/>
-   		 				</td>
-   		 			</tr>
-   		 			<tr>
-   		 				<td>
-   		 					每季成熟可获收:
-   		 				</td>
-   		 				<td>
-   		 					<input type="text"  name='output'    class="easyui-numberbox" required="required"/>
-   		 				</td>
-   		 				<td>
-   		 					种子采购价:
-   		 				</td>
-   		 				<td>
-   		 					<input type="text"  name='price'    class="easyui-numberbox" required="required"/>
-   		 				</td>
-   		 			</tr>
-   		 			<tr>
-   		 				<td>
-   		 					每个收获的果实:
-   		 				</td>
-   		 				<td>
-   		 					<input type="text"  name='price4UnitSale'  class="easyui-numberbox" required="required"/>
-   		 				</td>
-   		 				<td>
-   		 					土地需求:
-   		 				</td>
-   		 				<td>
-   		 					<input type="text"  name='landRequirement' class="easyui-combobox" panelHeight="auto"
-						        data-options=" editable:false,
+						        url:'<%=basePath%>codeSeedType/data'"
+						required="required" /></td>
+				</tr>
+				<tr>
+					<td>可获经验:</td>
+					<td><input name='exp' class="easyui-numberbox"
+						required="required" /></td>
+					<td>每季成熟所需时间:</td>
+					<td><input name='matureTime' class="easyui-numberbox"
+						required="required" /></td>
+				</tr>
+				<tr>
+					<td>每季成熟可获收:</td>
+					<td><input name='output' class="easyui-numberbox"
+						required="required" /></td>
+					<td>种子采购价:</td>
+					<td><input name='price' class="easyui-numberbox"
+						required="required" /></td>
+				</tr>
+				<tr>
+					<td>每个收获的果实:</td>
+					<td><input name='price4UnitSale' class="easyui-numberbox"
+						required="required" /></td>
+					<td>土地需求:</td>
+					<td><input name='landRequirement' class="easyui-combobox"
+						panelHeight="auto"
+						data-options=" editable:false,
 						        valueField:'code',
 						        textField:'caption',
-						        url:'<%=basePath%>codeLandRequire/data'"  class="easyui-textbox" required="required"/>
-   		 				</td>
-   		 				</td>
-   		 			</tr>
-   		 			<tr>
-   		 				<td>
-   		 					每季成熟可获积分:
-   		 				</td>
-   		 				<td>
-   		 					<input type="text"  name='score'    class="easyui-numberbox" required="required"/>
-   		 				</td>
-   		 				<td>
-   		 					提示信息:
-   		 				</td>
-   		 				<td>
-   		 					<input type="text"  name='tip'    class="easyui-textbox" required="required"/>
-   		 				</td>
-   		 			</tr>
-   		 		</table>
-    		</form>
-    	</div>
+						        url:'<%=basePath%>codeLandRequire/data'"
+						class="easyui-textbox" required="required" /></td>
+					</td>
+				</tr>
+				<tr>
+					<td>每季成熟可获积分:</td>
+					<td><input name='score' class="easyui-numberbox"
+						required="required" /></td>
+					<td>提示信息:</td>
+					<td><input name='tip' class="easyui-textbox"
+						required="required" /></td>
+				</tr>
+			</table>
+		</form>
+	</div>
     	<div id="formContainerButtons">
     		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveRecord()">确定</a>
     		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#formContainer').dialog('close')">取消</a>
@@ -167,7 +128,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         method:'post',
         url: '<%=basePath%>seed/gridData',
         saveUrl: '<%=basePath%>seed/save',
-        updateUrl: '<%=basePath%>seed/save',
+		updateUrl : '<%=basePath%>seed/save',
         destroyUrl: '<%=basePath%>seed/delete',
         border: false,
         rownumbers: true,

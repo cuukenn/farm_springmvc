@@ -50,6 +50,7 @@ public class GameImp implements GameService {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see cn.jxufe.service.GameService#gameStart()
 	 */
 	@Override
@@ -63,7 +64,6 @@ public class GameImp implements GameService {
 		}, 0, 2000);
 	}
 
-	
 	// 此处有未知BUG
 	/**
 	 * 核对土地状态
@@ -75,6 +75,8 @@ public class GameImp implements GameService {
 			@Override
 			public void accept(Land land) {
 				LandView landViewN = landViewDAO.findByUIdAndLandId(land.getuId(), land.getLandId());
+				if (landViewN.getLoss() >= landViewN.getOutput())
+					landViewN.setLoss(landViewN.getOutput() >> 1);
 				farmActionHandler.sendMessageToUser(landViewN.getuId(),
 						new TextMessage(JSONArray.fromObject(landViewN, JSONConfig.getJsonConfig()).toString()));
 			}
@@ -98,6 +100,19 @@ public class GameImp implements GameService {
 				Date date = new Date();
 				Land land = landDAO.findByLandIdAndUId(landView.getLandId(), landView.getuId());
 
+				// 概率生虫
+				if (landView.getWorm() == 0 && !landView.getGrowCaption().equals("种子阶段")
+						&& !landView.getGrowCaption().equals("枯草阶段")) {
+					double num = Math.random() * MAX;
+					if ((num / MAX) < (landView.getInsect() / Math.pow(Math.random() * 1.4, 2))) {
+						// 生虫
+						land.setWorm(1);
+						land = landDAO.save(land);
+						// 加入到更新序列
+						updateSet.add(land);
+					}
+				}
+
 				// 判断是否达到下一阶段
 				if (date.compareTo(landView.getCurCropsEndTime()) > 0) {
 					if (!landView.getCropsCaption().equals("成熟阶段")) {
@@ -115,23 +130,13 @@ public class GameImp implements GameService {
 
 						land.setCurCropsEndTime(calendar.getTime());
 
+						if (land.getWorm() != 0) {
+							land.setLoss(land.getLoss() + (int) Math.floor(1 + Math.random() * 2));
+						}
+
 						// 更新下阶段时间
 						land = landDAO.save(land);
 
-						// 加入到更新序列
-						updateSet.add(land);
-					}
-				}
-
-				// 概率生虫
-				if (landView.getWorm() == 0 
-						&& !landView.getGrowCaption().equals("种子阶段")
-						&& !landView.getGrowCaption().equals("成熟阶段")) {
-					double num = Math.random() * MAX;
-					if ((num / MAX) < (landView.getInsect() / Math.pow(land.getWorm(), 2))) {
-						// 生虫
-						land.setWorm(land.getWorm() + 1);
-						land = landDAO.save(land);
 						// 加入到更新序列
 						updateSet.add(land);
 					}

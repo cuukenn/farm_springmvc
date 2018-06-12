@@ -67,7 +67,7 @@ public class SeedController {
 	 */
 	@RequestMapping(value = "save", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Message save(Seed seed, Model model) {
+	public Message save(Seed seed) {
 		return seedService.save(seed);
 	}
 	/**
@@ -79,7 +79,7 @@ public class SeedController {
 	 */
 	@RequestMapping(value = "delete", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Message delete(Seed seed, Model model) {
+	public Message delete(Seed seed) {
 		return seedService.delete(seed);
 	}
 }

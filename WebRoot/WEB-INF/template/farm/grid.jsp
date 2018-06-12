@@ -36,7 +36,7 @@ html, body {
 
 body {
 	margin: 0px;
-	ackground-image: url(<%=basePath%>images/welcome.png);
+	background-image: url(<%=basePath%>images/lands/landBG.jpg);
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
 	background-color: transparent;
@@ -317,6 +317,7 @@ body {
 			title : "消息",
 			msg : "<center>" + result.msg + "</center>"
 		});
+		parent[0].init();
 		if(result.code==0){
 			let audio=$('#audio');
 			audio.attr('src',landAudio[action]);

@@ -61,7 +61,7 @@ body {
 }
 .username{
 	position:absolute;
-	width:200px;
+	width:400px;
 	font-size: 4em;
 	left:20px;
 	top:-20px;
@@ -69,7 +69,7 @@ body {
 }
 .userDetail{
 	position:absolute;
-	width:180px;
+	width:350px;
 	left:20px;
 	top:25px;
 	font-size: 2em;

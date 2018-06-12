@@ -163,7 +163,7 @@ transform: perspective(8000px) rotateX(-33deg) rotateZ(30deg) rotateY(-10deg);
 	const hei=60;
 	const rowsHei=80;
 
-	const offTmp=440;
+	const offTmp=360;
 	const offTmpDe=140;
 
 	//初始化地
@@ -208,12 +208,13 @@ transform: perspective(8000px) rotateX(-33deg) rotateZ(30deg) rotateY(-10deg);
 			let elmS = '.farm>div:nth-child(' +data[index].landId+ ')';
 		
 			let elm =$(elmS);
-			console.log(data[index].id==0)
 			if(data[index].id==0){
 				elm.find('.crop').attr('src',"");
+				elm.find('.crop').attr('title',"");
 				elm.find('.insect').css('display','none');
 				elm.css("cursor",cur[0]);
 				elm.attr('onclick','showSelectSeed('+data[index].landId+')');
+				continue;
 			}
 			
 
@@ -341,32 +342,23 @@ transform: perspective(8000px) rotateX(-33deg) rotateZ(30deg) rotateY(-10deg);
 	
 	function onMessage(eve){
 		let data=JSON.parse(eve.data);
-		console.log(data);
 		drawSeed(data);
 	}
     
     function plantAction(cId){  
     	let obj={landId:landGlobal,cId:cId};
-    	console.log(obj)
-    	console.log("plant")
     	doSend(socket,obj,'POST',actionPlantUrl,callBack,0);
     }
     function killWormAction(landId){
     	let obj={landId:landId};
-    	console.log(obj)
-    	console.log("killWorm")
     	doSend(socket,obj,'POST',actionKillWormUrl,callBack,1);
     }
     function harvestAction(landId){
     	let obj={landId:landId};
-    	console.log(obj)
-    	console.log("harvest")
     	doSend(socket,obj,'POST',actionHarvestUrl,callBack,2);
     }
     function cleanLandAction(landId){
     	let obj={landId:landId};
-    	console.log(obj)
-    	console.log(" cleanLand")
     	doSend(socket,obj,'POST',actionCleanLandUrl,callBack,3);
     }
 	

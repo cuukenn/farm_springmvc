@@ -101,23 +101,25 @@ body {
 .tran {
 	transform-style: preserve-3d;
 	transform-origin: 50% 50%;
-	transform: perspective(8000px) rotateX(33deg) rotateZ(-30deg) rotateY(10deg);
+	transform: perspective(8000px) rotateX(33deg) rotateZ(-30deg)
+		rotateY(10deg);
 }
 
-.insect,.crop{
-transform: perspective(8000px) rotateX(-33deg) rotateZ(30deg) rotateY(-10deg);
+.insect, .crop {
+	transform: perspective(8000px) rotateX(-33deg) rotateZ(30deg)
+		rotateY(-10deg);
 }
 </style>
 <body>
 	<audio id="audio" src="" style="visibility: hidden;">
-		<source src="" type="audio/mpeg" />
 	</audio>
 	<div class="content">
 		<div class="tran">
 			<div class="farm"></div>
 		</div>
 	</div>
-	<div id="seedBagContainer" class="easyui-dialog" style="width: 100%;height:400px;" closed="true">
+	<div id="seedBagContainer" class="easyui-dialog"
+		style="width: 100%; height: 400px;" closed="true">
 		<iframe id="seedBagIframe" src="<%=basePath%>seedBag/grid"
 			width="100%" height="99%" frameborder="0" scrolling="no"></iframe>
 	</div>
@@ -268,7 +270,7 @@ transform: perspective(8000px) rotateX(-33deg) rotateZ(30deg) rotateY(-10deg);
         document.getElementById('seedBagIframe').contentWindow.landIdGloble=landGlobal;
         document.getElementById('seedBagIframe').contentWindow.init();
         $('#seedBagContainer').window('open').window('center').window('setTitle','种子收纳袋');
-        ocument.getElementById('seedBagIframe').contentWindow.landIdGloble=0;
+        document.getElementById('seedBagIframe').contentWindow.landIdGloble=0;
 	}
 	
 	//获取种植信息
@@ -317,9 +319,9 @@ transform: perspective(8000px) rotateX(-33deg) rotateZ(30deg) rotateY(-10deg);
     function onClose(evt) {  
     	console.log("连接关闭：",evt);
     }  
-    let action =-1;
+    let actionGlobal =-1;
     function doSend(websocket,object,method,methodURL,successFunction,action) {  
-    	action=action;
+    	actionGlobal=action;
         if (websocket.readyState == websocket.OPEN) {  
             request(object,method,methodURL,successFunction);
             console.log("发送成功!");  
@@ -328,19 +330,20 @@ transform: perspective(8000px) rotateX(-33deg) rotateZ(30deg) rotateY(-10deg);
         }  
     }
     
-    let audioElm=$('#audio');
-    let sourceElm=$('#audio').find('source');
+    let audioElm=document.querySelector("#audio");
 	function callBack(result) {
 		$.messager.show({
 			title : "消息",
 			msg : "<center>" + result.msg + "</center>"
 		});
+		console.log(result.code==0);
 		parent[0].init();
 		if(result.code==0){
-			sourceElm.attr('src',landAudio[action]);
-			audioElm.oncanplay=function(){
+			audioElm.src=landAudio[actionGlobal];
+			console.log(landAudio[actionGlobal]);
+			audioElm.addEventListener("canplaythrough", function(){
 				audioElm.play();
-			}
+			});
 		}
 	}
 	

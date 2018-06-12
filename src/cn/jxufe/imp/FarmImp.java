@@ -247,7 +247,7 @@ public class FarmImp implements FarmService {
 			user.setScore(user.getScore() + 2);
 			userDAO.save(user);
 
-			if ((seedBag.getcNumber() - 1) >= 2) {
+			if (seedBag.getcNumber() >= 2) {
 				seedBag.setcNumber(seedBag.getcNumber() - 1);
 				seedBagDAO.save(seedBag);
 			} else {

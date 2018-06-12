@@ -8,4 +8,6 @@ public interface CodeLandRequireService {
 	 * @return 所有的CodeLandRequire
 	 */
 	public Iterable<CodeLandRequire> findALl();
+	
+	public boolean isLandTypeSame(long landId,int landRequirementCode);
 }

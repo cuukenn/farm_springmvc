@@ -19,7 +19,6 @@ import cn.jxufe.dao.LandViewDAO;
 import cn.jxufe.dao.SeedBagDAO;
 import cn.jxufe.dao.SeedDAO;
 import cn.jxufe.dao.UserDAO;
-import cn.jxufe.entity.CodeLandRequire;
 import cn.jxufe.entity.CropsGrow;
 import cn.jxufe.entity.Land;
 import cn.jxufe.entity.Seed;
@@ -43,9 +42,12 @@ public class FarmImp implements FarmService {
 
 	@Autowired
 	UserDAO userDAO;
-	
+
 	@Autowired
 	CodeLandRequireDAO codeLandRequireDAO;
+
+	@Autowired
+	CodeLandRequireImp codeLandRequireImp;
 
 	@Autowired
 	LandDAO landDAO;
@@ -61,7 +63,9 @@ public class FarmImp implements FarmService {
 
 	/*
 	 * (non-Javadoc)
-	 * @see cn.jxufe.service.FarmService#action(long, javax.servlet.http.HttpSession)
+	 * 
+	 * @see cn.jxufe.service.FarmService#action(long,
+	 * javax.servlet.http.HttpSession)
 	 */
 	@Override
 	public Message action(long landId, HttpSession session) {
@@ -88,7 +92,9 @@ public class FarmImp implements FarmService {
 
 	/*
 	 * (non-Javadoc)
-	 * @see cn.jxufe.service.FarmService#actionPlant(long, long, javax.servlet.http.HttpSession)
+	 * 
+	 * @see cn.jxufe.service.FarmService#actionPlant(long, long,
+	 * javax.servlet.http.HttpSession)
 	 */
 	@Override
 	// 事务原因，视图在内无法查询到最新值，所以分开写
@@ -110,7 +116,9 @@ public class FarmImp implements FarmService {
 
 	/*
 	 * (non-Javadoc)
-	 * @see cn.jxufe.service.FarmService#actionKillWorm(long, javax.servlet.http.HttpSession)
+	 * 
+	 * @see cn.jxufe.service.FarmService#actionKillWorm(long,
+	 * javax.servlet.http.HttpSession)
 	 */
 	@Override
 	// 事务原因，视图在内无法查询到最新值，所以分开写
@@ -129,7 +137,9 @@ public class FarmImp implements FarmService {
 
 	/*
 	 * (non-Javadoc)
-	 * @see cn.jxufe.service.FarmService#actionHarvest(long, javax.servlet.http.HttpSession)
+	 * 
+	 * @see cn.jxufe.service.FarmService#actionHarvest(long,
+	 * javax.servlet.http.HttpSession)
 	 */
 	@Override
 	public Message actionHarvest(long landId, HttpSession session) {
@@ -152,7 +162,9 @@ public class FarmImp implements FarmService {
 
 	/*
 	 * (non-Javadoc)
-	 * @see cn.jxufe.service.FarmService#actionCleanLand(long, javax.servlet.http.HttpSession)
+	 * 
+	 * @see cn.jxufe.service.FarmService#actionCleanLand(long,
+	 * javax.servlet.http.HttpSession)
 	 */
 	@Override
 	@Transactional
@@ -162,7 +174,9 @@ public class FarmImp implements FarmService {
 
 	/*
 	 * (non-Javadoc)
-	 * @see cn.jxufe.service.FarmService#plantTansition(long, long, javax.servlet.http.HttpSession)
+	 * 
+	 * @see cn.jxufe.service.FarmService#plantTansition(long, long,
+	 * javax.servlet.http.HttpSession)
 	 */
 	@Override
 	public Message plantTansition(long landId, long cId, HttpSession session) {
@@ -175,30 +189,20 @@ public class FarmImp implements FarmService {
 				return result;
 			}
 
-
 			Seed seed = seedDAO.findByCId(cId);
 			if (seed == null) {
 				result.setCode(-1);
 				result.setMsg("不存在该种子！");
 				return result;
 			}
-			
-			int landRequirement=seed.getLandRequirement();
-			CodeLandRequire codeLandRequire=codeLandRequireDAO.findByCode(landRequirement);
-			String codeLandCaption=codeLandRequire.getCaption();
-			int ldCode=(int)(landId-1)/6;
-			
-			String landRQ="";
-			switch(ldCode) {
-			 case 0:
-				 landRQ="";
-			 break; 
-			 case 1: landRQ="";break; 
-			 case 2: landRQ="";break; 
-			 case 3: landRQ="";break; 
-			 case 4: landRQ="";break;
+
+			int landRequirementCode = seed.getLandRequirement();
+			boolean flag = codeLandRequireImp.isLandTypeSame(landId, landRequirementCode);
+			if (!flag) {
+				result.setCode(-1);
+				result.setMsg("该种子与该土地类型不匹配！");
+				return result;
 			}
-			
 
 			SeedBag seedBag = seedBagDAO.findByCIdAndUId(cId, user.getId());
 			if (seedBag.getcNumber() < 1) {
@@ -206,17 +210,13 @@ public class FarmImp implements FarmService {
 				result.setMsg("该种子数量不足！");
 				return result;
 			}
-			
-			
-			
-			
+
 			LandView landView = landViewDAO.findByUIdAndLandId(user.getId(), landId);
 			if (landView != null) {
 				result.setCode(-1);
 				result.setMsg("该土地上已经存在植物");
 				return result;
 			}
-			
 
 			Land newLand = new Land();
 			newLand.setId(0);
@@ -265,7 +265,9 @@ public class FarmImp implements FarmService {
 
 	/*
 	 * (non-Javadoc)
-	 * @see cn.jxufe.service.FarmService#killWormTansition(long, javax.servlet.http.HttpSession)
+	 * 
+	 * @see cn.jxufe.service.FarmService#killWormTansition(long,
+	 * javax.servlet.http.HttpSession)
 	 */
 	@Override
 	@Transactional
@@ -311,7 +313,9 @@ public class FarmImp implements FarmService {
 
 	/*
 	 * (non-Javadoc)
-	 * @see cn.jxufe.service.FarmService#harvestTansition(long, javax.servlet.http.HttpSession)
+	 * 
+	 * @see cn.jxufe.service.FarmService#harvestTansition(long,
+	 * javax.servlet.http.HttpSession)
 	 */
 	@Override
 	@Transactional
@@ -389,7 +393,9 @@ public class FarmImp implements FarmService {
 
 	/*
 	 * (non-Javadoc)
-	 * @see cn.jxufe.service.FarmService#cleanLandTansition(long, javax.servlet.http.HttpSession)
+	 * 
+	 * @see cn.jxufe.service.FarmService#cleanLandTansition(long,
+	 * javax.servlet.http.HttpSession)
 	 */
 	@Override
 	@Transactional
@@ -412,19 +418,8 @@ public class FarmImp implements FarmService {
 
 			LandView landView = landViewDAO.findByUIdAndLandId(user.getId(), landId);
 			TextMessage textMessage;
-			// if (landView.getCurHarvestNum() < landView.getHarvestNum()) {
-			// land.setCurHarvestNum(landView.getCurHarvestNum() + 1);
-			// land.setStatus(1);
-			// landDAO.save(land);
-			// ArrayList<LandView> arrayList = new ArrayList<>();
-			// arrayList.add(landView);
-			// JSONArray array = JSONArray.fromObject(arrayList,
-			// JSONConfig.getJsonConfig());
-			// textMessage = new TextMessage(array.toString());
 
-			// } else {
 			landDAO.delete(land);
-			// }
 
 			user.setExp(user.getExp() + 2);
 			user.setPrice(user.getPrice() + 1);
@@ -433,7 +428,8 @@ public class FarmImp implements FarmService {
 			result.setCode(0);
 			result.setMsg("除草成功！");
 
-			landView=new LandView();
+			landView = new LandView();
+			landView.setLandId(landId);
 			ArrayList<LandView> arrayList = new ArrayList<>();
 			arrayList.add(landView);
 			JSONArray array = JSONArray.fromObject(arrayList, JSONConfig.getJsonConfig());

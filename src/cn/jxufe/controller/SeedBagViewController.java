@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -18,11 +19,16 @@ import cn.jxufe.service.SeedBagViewService;
 public class SeedBagViewController {
 	@Autowired
 	private SeedBagViewService seedBagViewService;
-	@RequestMapping(value = "gridData", produces = MediaType.APPLICATION_JSON_VALUE)
+
+	@RequestMapping(value = "gridData/{landId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Iterable<?> gridData(EasyUIDataPageRequest pageRequest, Model model,HttpSession session) {
-		User user=(User)session.getAttribute("user");
-		if(user==null)return null;
-		return seedBagViewService.findByUId(user.getId());
+	public Iterable<?> gridData(@PathVariable long landId, Model model, HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		if (user == null)
+			return null;
+		if (landId == 0)
+			return seedBagViewService.findByUId(user.getId());
+		else
+			return seedBagViewService.findByUIdAndLandRequireCaption(user.getId(), landId);
 	}
 }

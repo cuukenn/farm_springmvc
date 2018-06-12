@@ -11,4 +11,6 @@ public interface SeedBagViewService {
 	 * @return 对应用户的EasyUIData分页列表
 	 */
 	public Iterable<SeedBagView> findByUId(long uId);
+	
+	public Iterable<SeedBagView> findByUIdAndLandRequireCaption(long uId,long landId);
 }

@@ -1,6 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -9,24 +10,33 @@ String wsBasePath = "ws://"+request.getServerName()+":"+request.getServerPort()+
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" type="text/css" href="<%=basePath%>ext/easyui/themes/green/easyui.css?t=34355">
-    <link rel="stylesheet" type="text/css" href="<%=basePath%>ext/easyui/themes/icon.css">
-    <link rel="stylesheet" type="text/css" href="<%=basePath%>ext/easyui/themes/color.css">
-    <link rel="stylesheet" type="text/css" href="<%=basePath%>ext/farm/farm.css">
-    <script type="text/javascript" src="<%=basePath%>ext/easyui/jquery.min.js"></script>
-    <script type="text/javascript" src="<%=basePath%>ext/easyui/jquery.easyui.min.js"></script>
-    <script type="text/javascript" src="<%=basePath%>ext/easyui/plugins/jquery.edatagrid.js"></script>
-    <script type="text/javascript" src="<%=basePath%>ext/easyui/locale/easyui-lang-zh_CN.js"></script>
-    <script type="text/javascript" src="<%=basePath%>ext/farm/helper.js"></script>
-    <script type="text/javascript" src="<%=basePath%>ext/farm/sockjs.js"></script> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css"
+	href="<%=basePath%>ext/easyui/themes/green/easyui.css?t=34355">
+<link rel="stylesheet" type="text/css"
+	href="<%=basePath%>ext/easyui/themes/icon.css">
+<link rel="stylesheet" type="text/css"
+	href="<%=basePath%>ext/easyui/themes/color.css">
+<link rel="stylesheet" type="text/css"
+	href="<%=basePath%>ext/farm/farm.css">
+<script type="text/javascript"
+	src="<%=basePath%>ext/easyui/jquery.min.js"></script>
+<script type="text/javascript"
+	src="<%=basePath%>ext/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript"
+	src="<%=basePath%>ext/easyui/plugins/jquery.edatagrid.js"></script>
+<script type="text/javascript"
+	src="<%=basePath%>ext/easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="<%=basePath%>ext/farm/helper.js"></script>
+<script type="text/javascript" src="<%=basePath%>ext/farm/sockjs.js"></script>
 </head>
 <style>
-*{
-	padding:0px;
-	margin:0px;
-	border:none;
+* {
+	padding: 0px;
+	margin: 0px;
+	border: none;
 }
+
 html, body {
 	margin: 0px;
 	border: none;
@@ -43,10 +53,10 @@ body {
 	border: none
 }
 
-.content{
-	width:100%;
-	height:100%;
-	overflow:scroll;
+.content {
+	width: 100%;
+	height: 100%;
+	overflow: scroll;
 }
 
 .farm {
@@ -60,44 +70,51 @@ body {
 	width: 200px;
 	height: 101px;
 }
-.tools-imagePositioner-display:hover{
-	-ms-transform:scale(1.2); /* IE 9 */
-	-moz-transform:scale(1.2); /* Firefox */
-	-webkit-transform:scale(1.2); /* Safari and Chrome */
-	-o-transform:scale(1.2); /* Opera */
-	transform:scale(1.2);
+
+.tools-imagePositioner-display:hover {
+	-ms-transform: scale(1.2); /* IE 9 */
+	-moz-transform: scale(1.2); /* Firefox */
+	-webkit-transform: scale(1.2); /* Safari and Chrome */
+	-o-transform: scale(1.2); /* Opera */
+	transform: scale(1.2);
 }
 
-.tools-imagePositioner-display>img:nth-child(1){
+.tools-imagePositioner-display>img:nth-child(1) {
 	position: absolute;
 	width: 200px;
 	height: 101px;
 }
-.tools-imagePositioner-display>img:nth-child(2){
-	position: absolute;	
+
+.tools-imagePositioner-display>img:nth-child(2) {
+	position: absolute;
 }
-.insect{
-	position: absolute;	
-	width:40px;
-	height:auto;
-	left:40px;
-	top:10px;
-	display:none;
+
+.insect {
+	position: absolute;
+	width: 40px;
+	height: auto;
+	left: 40px;
+	top: 10px;
+	display: none;
 }
-.tran{
+
+.tran {
 	transform-style: preserve-3d;
-    transform-origin:50% 50%;
-    transform: perspective(8000px) rotateX(33deg) rotateZ(-30deg) rotateY(10deg);
+	transform-origin: 50% 50%;
+	transform: perspective(8000px) rotateX(33deg) rotateZ(-30deg)
+		rotateY(10deg);
 }
-
-
 </style>
 <body>
-	<audio id="audio" src="" style="visibility:hidden;"></audio>
+	<audio id="audio" src="" style="visibility: hidden;"></audio>
 	<div class="content">
 		<div class="tran">
 			<div class="farm"></div>
 		</div>
+	</div>
+	<div id="seedBagContainer" class="easyui-dialog" style="width: 100%;height:400px;" closed="true">
+		<iframe id="seedBagIframe" src="<%=basePath%>seedBag/grid"
+			width="100%" height="99%" frameborder="0" scrolling="no"></iframe>
 	</div>
 </body>
 <script>
@@ -242,19 +259,9 @@ body {
 	//显示种子袋
 	function showSelectSeed(id) {
 		landGlobal=id;
-        var content = '<iframe src="' + '<%=basePath%>seedBag/grid' + '" width="100%" height="99%" frameborder="0" scrolling="no"></iframe>';  
-        var boarddiv = '<div id="msgwindow" style="width:100%"></div>'
-        $(document.body).append(boarddiv);  
-        win = $('#msgwindow').window({  
-            content: content,
-            height: 400, 
-            title:'种子收纳袋',
-            modal: true,  
-            onClose: function () {  
-                $(this).dialog('destroy');//后面可以关闭后的事件  
-            }  
-        });  
-        win.dialog('open');
+        document.getElementById('seedBagIframe').contentWindow.landIdGloble=landGlobal;
+        document.getElementById('seedBagIframe').contentWindow.init();
+        $('#seedBagContainer').window('open').window('center').window('setTitle','种子收纳袋');
 	}
 	
 	//获取种植信息

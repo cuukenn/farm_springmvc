@@ -135,10 +135,11 @@ body {
 </body>
 <script>
 var listGloble;
+var landIdGloble=0;
 var wid=210;
 init();
 function init(){
-	$.post('<%=basePath%>seedBagView/gridData',function(data){
+	$.post('<%=basePath%>seedBagView/gridData/'+landIdGloble,function(data){
 		listGloble=data;
 		 draw();
 	})

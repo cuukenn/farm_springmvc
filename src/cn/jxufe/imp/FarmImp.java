@@ -340,9 +340,16 @@ public class FarmImp implements FarmService {
 
 				land = landDAO.save(land);
 			}
-			// 不存在下一季，直接删除
+			// 不存在下一季，进入枯草阶段
 			else {
-				landDAO.delete(land);
+				CropsGrow cropsGrow = cropsGrowService.findNextCrops(land.getcId(), landView.getGrowStep());
+				if (cropsGrow == null) {
+					result.setCode(-4);
+					result.setMsg("该植物无生长阶段信息不全");
+					return result;
+				}
+				land.setStatus(cropsGrow.getGrowStep());
+				land = landDAO.save(land);
 			}
 			result.setCode(0);
 			result.setMsg("收获成功！");

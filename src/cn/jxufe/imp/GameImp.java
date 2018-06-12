@@ -46,7 +46,7 @@ public class GameImp implements GameService {
 	private Set<Land> updateSet;
 	// public static Iterator<LandView> iterator;
 
-	private static final int MAX = 100;
+	private static final int MAX = 1000;
 
 	/*
 	 * (non-Javadoc)
@@ -128,7 +128,7 @@ public class GameImp implements GameService {
 						&& !landView.getGrowCaption().equals("种子阶段")
 						&& !landView.getGrowCaption().equals("成熟阶段")) {
 					double num = Math.random() * MAX;
-					if ((num / MAX) < (landView.getInsect() / land.getWorm())) {
+					if ((num / MAX) < (landView.getInsect() / Math.pow(land.getWorm(), 2))) {
 						// 生虫
 						land.setWorm(land.getWorm() + 1);
 						land = landDAO.save(land);

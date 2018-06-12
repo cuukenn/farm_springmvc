@@ -16,7 +16,7 @@ public class LandView extends EntityID {
 	 */
 	private static final long serialVersionUID = 1L;
 	private int growTime;// 阶段生长时间
-	private int insect;// 长虫概率
+	private float insect;// 长虫概率
 	private long status;
 
 	private String caption;// 种子名称
@@ -77,11 +77,11 @@ public class LandView extends EntityID {
 		this.growTime = growTime;
 	}
 
-	public int getInsect() {
+	public float getInsect() {
 		return insect;
 	}
 
-	public void setInsect(int insect) {
+	public void setInsect(float insect) {
 		this.insect = insect;
 	}
 

@@ -301,7 +301,7 @@ public class FarmImp implements FarmService {
 			userDAO.save(user);
 
 			result.setCode(0);
-			result.setMsg("除虫成功！");
+			result.setMsg("杀虫收获<br/>经验：+2<br/>金币：+1<br/>积分：+2<br/>");
 
 			return result;
 		} catch (Exception e) {
@@ -346,7 +346,7 @@ public class FarmImp implements FarmService {
 
 			user.setExp(user.getExp() + landView.getExp());
 			user.setPrice(user.getPrice() + landView.getPrice4UnitSale() * (landView.getOutput() - landView.getLoss()));
-			user.setScore(user.getScore() + 2);
+			user.setScore(user.getScore() + landView.getScore());
 			userDAO.save(user);
 
 			// 存在下一季
@@ -383,7 +383,10 @@ public class FarmImp implements FarmService {
 				land = landDAO.save(land);
 			}
 			result.setCode(0);
-			result.setMsg("收获成功！");
+			result.setMsg(
+					"收获成功！经验：+"+landView.getExp()+"<br/>" + landView.getPrice4UnitSale() + "个金币×" + (landView.getOutput() - landView.getLoss())
+							+ "个果实=" + landView.getPrice4UnitSale() * (landView.getOutput() - landView.getLoss())
+							+ "个金币<br/>积分：+" + landView.getScore());
 		} catch (Exception e) {
 			result.setCode(-1);
 			result.setMsg("收获失败！");
@@ -421,12 +424,11 @@ public class FarmImp implements FarmService {
 
 			landDAO.delete(land);
 
-			user.setExp(user.getExp() + 2);
-			user.setPrice(user.getPrice() + 1);
-			user.setScore(user.getScore() + 2);
+			user.setExp(user.getExp() + 5);
+			user.setScore(user.getScore() + 5);
 			userDAO.save(user);
 			result.setCode(0);
-			result.setMsg("除草成功！");
+			result.setMsg("除枯草收获<br/>经验：+5<br/>积分：+5<br/>");
 
 			landView = new LandView();
 			landView.setLandId(landId);

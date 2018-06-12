@@ -262,6 +262,7 @@ body {
         document.getElementById('seedBagIframe').contentWindow.landIdGloble=landGlobal;
         document.getElementById('seedBagIframe').contentWindow.init();
         $('#seedBagContainer').window('open').window('center').window('setTitle','种子收纳袋');
+        ocument.getElementById('seedBagIframe').contentWindow.landIdGloble=0;
 	}
 	
 	//获取种植信息

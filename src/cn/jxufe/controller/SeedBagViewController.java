@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.jxufe.bean.EasyUIDataPageRequest;
 import cn.jxufe.entity.User;
 import cn.jxufe.service.SeedBagViewService;
 
@@ -19,7 +18,13 @@ import cn.jxufe.service.SeedBagViewService;
 public class SeedBagViewController {
 	@Autowired
 	private SeedBagViewService seedBagViewService;
-
+/**
+ * 
+ * @param landId 接收土地id
+ * @param model 接收传到springMVC框架model层数据
+ * @param session 接收HttpSession对象数据
+ * @return 将查询的结果以JSON格式返回
+ */
 	@RequestMapping(value = "gridData/{landId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public Iterable<?> gridData(@PathVariable long landId, Model model, HttpSession session) {

@@ -21,7 +21,6 @@ import cn.jxufe.service.SeedService;
 public class ShopController {
 	/**
 	 * SeedBagService接口对象
-	 * 
 	 * @see cn.jxufe.service.SeedBagService
 	 */
 	@Autowired

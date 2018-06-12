@@ -45,8 +45,6 @@ public interface UserService {
 	
 	/**
 	 * 
-	 * @param pageable
-	 *            分页
 	 * @return 所有的EasyUIData分页列表
 	 */
 	public  Iterable<User> findALL();

@@ -23,6 +23,13 @@ import cn.jxufe.service.SeedStorageService;
 public class SeedStorageController {
 	@Autowired
 	private SeedStorageService seedStorageService;
+	/**
+	 * 
+	 * @param pageRequest 接收EasyUIDataPageRequest对象数据
+	 * @see cn.jxufe.bean.EasyUIDataPageRequest
+	 * @param model 接收传到springMVC框架model层数据
+	 * @return 将查询的结果EasyUIData对象以JSON格式返回
+	 */
 	@RequestMapping(value = "gridData", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public EasyUIData<?> gridData(EasyUIDataPageRequest pageRequest, Model model) {

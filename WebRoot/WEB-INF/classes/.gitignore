@@ -1,2 +1,5 @@
 /jdbc.properties
+/.gitignore
+/applicationContext.xml
 /cn/
+/ehcache/

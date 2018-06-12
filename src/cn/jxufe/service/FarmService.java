@@ -49,6 +49,7 @@ public interface FarmService {
 	/**
 	 * 
 	 * @param landId 土地id
+	 * @param cId 种子id
 	 * @param session 会话
 	 * @return 是否成功除草的消息
 	 */

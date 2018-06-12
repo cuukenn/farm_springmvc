@@ -11,7 +11,6 @@ public interface SeedBagDAO extends PagingAndSortingRepository<SeedBag, Long> {
 	 * 
 	 * 通过用户id模糊查询
 	 * @param uId 用户id
-	 * @param pageable 分页
 	 * @return 所有的结果
 	 */
 	public Iterable<SeedBag> findByUId(long uId); 

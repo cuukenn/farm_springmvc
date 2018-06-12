@@ -24,10 +24,22 @@ import cn.jxufe.service.SeedService;
 public class SeedController {
 	@Autowired
 	private SeedService seedService;
+	/**
+	 * 
+	 * @return 返回结果放入到RequestMapping中
+	 */
 	@RequestMapping(value = "grid")
 	public String grid() {
 		return "seed/grid";
 	}
+	/**
+	 * 
+	 * @param pageRequest 接收EasyUIDataPageRequest对象数据
+	 * @see cn.jxufe.bean.EasyUIDataPageRequest
+	 * @param caption 接收种子标题查询数据
+	 * @param model 接收传到springMVC框架model层数据
+	 * @return 将查询的结果EasyUIData对象以JSON格式返回
+	 */
 	@RequestMapping(value = "gridData", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public EasyUIData<?> gridData(EasyUIDataPageRequest pageRequest, @RequestParam(defaultValue = "") String caption,
@@ -46,11 +58,25 @@ public class SeedController {
 			return seedService.findByCaption(caption, pageable);
 		}
 	}
+	/**
+	 * 
+	 * @param seed 接收Seed对象数据
+	 * @see cn.jxufe.entity.Seed
+	 * @param model 接收传到springMVC框架model层数据
+	 * @return 将保存处理结果Message对象以JSON格式返回
+	 */
 	@RequestMapping(value = "save", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public Message save(Seed seed, Model model) {
 		return seedService.save(seed);
 	}
+	/**
+	 * 
+	 * @param seed 接收Seed对象数据
+	 * @see cn.jxufe.entity.Seed
+	 * @param model 接收传到springMVC框架model层数据
+	 * @return 将删除处理结果Message对象以JSON格式返回
+	 */
 	@RequestMapping(value = "delete", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public Message delete(Seed seed, Model model) {

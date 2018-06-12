@@ -25,26 +25,28 @@ public interface UserLandService {
 
 	/**
 	 * 
-	 * @param user
-	 *            用户
+	 * @param userLand 用户土地对象
+	 *           
 	 * @return 保存运行结果消息状态
 	 */
 	public Message save(UserLand userLand);
 
 	/**
 	 * 
-	 * @param user 用户
+	 * @param userLand 用户土地对象
 	 * @return 删除运行结果消息状态
 	 */
 	public Message delete(UserLand userLand);
 	
 	/**
 	 * 
-	 * @param pageable
-	 *            分页
 	 * @return 所有的UserLand结果
 	 */
 	public  Iterable<UserLand> findALL();
-	
+	/**
+	 * 
+	 * @param id 用户土地id
+	 * @return 查询结果UserLand对象返回
+	 */ 
 	public  UserLand  findById(long id);
 }

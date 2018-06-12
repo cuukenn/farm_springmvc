@@ -101,8 +101,11 @@ body {
 .tran {
 	transform-style: preserve-3d;
 	transform-origin: 50% 50%;
-	transform: perspective(8000px) rotateX(33deg) rotateZ(-30deg)
-		rotateY(10deg);
+	transform: perspective(8000px) rotateX(33deg) rotateZ(-30deg) rotateY(10deg);
+}
+
+.insect,.crop{
+transform: perspective(8000px) rotateX(-33deg) rotateZ(30deg) rotateY(-10deg);
 }
 </style>
 <body>

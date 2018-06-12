@@ -194,7 +194,7 @@ function buy(id,caption){
 }
 function selectSeed(cId){
 	parent.plantAction(cId);
-	parent.window.win.dialog('close');
+	parent.window.$('#seedBagContainer').window('close');
 }
 </script>
 </html>

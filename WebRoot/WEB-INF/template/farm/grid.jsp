@@ -87,7 +87,7 @@ body {
 .tran{
 	transform-style: preserve-3d;
     transform-origin:50% 50%;
-    transform: perspective(8000px) rotateX(50deg) rotateZ(-5deg);
+    transform: perspective(8000px) rotateX(50deg) rotateZ(-5deg) rotateY(-10deg);
 }
 
 </style>
@@ -140,7 +140,7 @@ body {
 
 	const widF=180;
 	const hei=60;
-	const rowsHei=80;
+	const rowsHei=120;
 
 	const offTmp=440;
 	const offTmpDe=140;

@@ -13,11 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.socket.TextMessage;
 
 import cn.jxufe.bean.Message;
+import cn.jxufe.dao.CodeLandRequireDAO;
 import cn.jxufe.dao.LandDAO;
 import cn.jxufe.dao.LandViewDAO;
 import cn.jxufe.dao.SeedBagDAO;
 import cn.jxufe.dao.SeedDAO;
 import cn.jxufe.dao.UserDAO;
+import cn.jxufe.entity.CodeLandRequire;
 import cn.jxufe.entity.CropsGrow;
 import cn.jxufe.entity.Land;
 import cn.jxufe.entity.Seed;
@@ -41,6 +43,9 @@ public class FarmImp implements FarmService {
 
 	@Autowired
 	UserDAO userDAO;
+	
+	@Autowired
+	CodeLandRequireDAO codeLandRequireDAO;
 
 	@Autowired
 	LandDAO landDAO;
@@ -170,12 +175,6 @@ public class FarmImp implements FarmService {
 				return result;
 			}
 
-			LandView landView = landViewDAO.findByUIdAndLandId(user.getId(), landId);
-			if (landView != null) {
-				result.setCode(-1);
-				result.setMsg("该土地上已经存在植物");
-				return result;
-			}
 
 			Seed seed = seedDAO.findByCId(cId);
 			if (seed == null) {
@@ -183,6 +182,23 @@ public class FarmImp implements FarmService {
 				result.setMsg("不存在该种子！");
 				return result;
 			}
+			
+			int landRequirement=seed.getLandRequirement();
+			CodeLandRequire codeLandRequire=codeLandRequireDAO.findByCode(landRequirement);
+			String codeLandCaption=codeLandRequire.getCaption();
+			int ldCode=(int)(landId-1)/6;
+			
+			String landRQ="";
+			switch(ldCode) {
+			 case 0:
+				 landRQ="";
+			 break; 
+			 case 1: landRQ="";break; 
+			 case 2: landRQ="";break; 
+			 case 3: landRQ="";break; 
+			 case 4: landRQ="";break;
+			}
+			
 
 			SeedBag seedBag = seedBagDAO.findByCIdAndUId(cId, user.getId());
 			if (seedBag.getcNumber() < 1) {
@@ -190,6 +206,17 @@ public class FarmImp implements FarmService {
 				result.setMsg("该种子数量不足！");
 				return result;
 			}
+			
+			
+			
+			
+			LandView landView = landViewDAO.findByUIdAndLandId(user.getId(), landId);
+			if (landView != null) {
+				result.setCode(-1);
+				result.setMsg("该土地上已经存在植物");
+				return result;
+			}
+			
 
 			Land newLand = new Land();
 			newLand.setId(0);

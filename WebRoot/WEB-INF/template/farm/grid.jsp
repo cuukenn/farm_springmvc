@@ -109,7 +109,9 @@ transform: perspective(8000px) rotateX(-33deg) rotateZ(30deg) rotateY(-10deg);
 }
 </style>
 <body>
-	<audio id="audio" src="" style="visibility: hidden;"></audio>
+	<audio id="audio" src="" style="visibility: hidden;">
+		<source src="" type="audio/mpeg" />
+	</audio>
 	<div class="content">
 		<div class="tran">
 			<div class="farm"></div>
@@ -325,6 +327,9 @@ transform: perspective(8000px) rotateX(-33deg) rotateZ(30deg) rotateY(-10deg);
         	console.log("连接失败!");  
         }  
     }
+    
+    let audioElm=$('#audio');
+    let sourceElm=$('#audio').find('source');
 	function callBack(result) {
 		$.messager.show({
 			title : "消息",
@@ -332,10 +337,9 @@ transform: perspective(8000px) rotateX(-33deg) rotateZ(30deg) rotateY(-10deg);
 		});
 		parent[0].init();
 		if(result.code==0){
-			let audio=$('#audio');
-			audio.attr('src',landAudio[action]);
-			audio.oncanplay=function(){
-				audio.play();
+			sourceElm.attr('src',landAudio[action]);
+			audioElm.oncanplay=function(){
+				audioElm.play();
 			}
 		}
 	}

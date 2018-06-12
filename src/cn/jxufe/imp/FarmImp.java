@@ -399,7 +399,7 @@ public class FarmImp implements FarmService {
 			result.setCode(0);
 			result.setMsg("除草成功！");
 
-			land = new Land();
+			landView=new LandView();
 			ArrayList<LandView> arrayList = new ArrayList<>();
 			arrayList.add(landView);
 			JSONArray array = JSONArray.fromObject(arrayList, JSONConfig.getJsonConfig());

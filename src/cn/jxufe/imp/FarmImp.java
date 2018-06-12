@@ -54,6 +54,10 @@ public class FarmImp implements FarmService {
 	@Autowired
 	CropsGrowService cropsGrowService;
 
+	/*
+	 * (non-Javadoc)
+	 * @see cn.jxufe.service.FarmService#action(long, javax.servlet.http.HttpSession)
+	 */
 	@Override
 	public Message action(long landId, HttpSession session) {
 		Message result = new Message();
@@ -77,6 +81,10 @@ public class FarmImp implements FarmService {
 		return result;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see cn.jxufe.service.FarmService#actionPlant(long, long, javax.servlet.http.HttpSession)
+	 */
 	@Override
 	// 事务原因，视图在内无法查询到最新值，所以分开写
 	public Message actionPlant(long landId, long cId, HttpSession session) {
@@ -95,6 +103,10 @@ public class FarmImp implements FarmService {
 		return message;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see cn.jxufe.service.FarmService#actionKillWorm(long, javax.servlet.http.HttpSession)
+	 */
 	@Override
 	// 事务原因，视图在内无法查询到最新值，所以分开写
 	public Message actionKillWorm(long landId, HttpSession session) {
@@ -110,6 +122,10 @@ public class FarmImp implements FarmService {
 		return message;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see cn.jxufe.service.FarmService#actionHarvest(long, javax.servlet.http.HttpSession)
+	 */
 	@Override
 	public Message actionHarvest(long landId, HttpSession session) {
 		Message message = this.harvestTansition(landId, session);
@@ -129,12 +145,20 @@ public class FarmImp implements FarmService {
 		return message;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see cn.jxufe.service.FarmService#actionCleanLand(long, javax.servlet.http.HttpSession)
+	 */
 	@Override
 	@Transactional
 	public Message actionCleanLand(long landId, HttpSession session) {
 		return this.cleanLandTansition(landId, session);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see cn.jxufe.service.FarmService#plantTansition(long, long, javax.servlet.http.HttpSession)
+	 */
 	@Override
 	public Message plantTansition(long landId, long cId, HttpSession session) {
 		Message result = new Message();
@@ -212,6 +236,10 @@ public class FarmImp implements FarmService {
 		return result;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see cn.jxufe.service.FarmService#killWormTansition(long, javax.servlet.http.HttpSession)
+	 */
 	@Override
 	@Transactional
 	public Message killWormTansition(long landId, HttpSession session) {
@@ -254,6 +282,10 @@ public class FarmImp implements FarmService {
 		return result;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see cn.jxufe.service.FarmService#harvestTansition(long, javax.servlet.http.HttpSession)
+	 */
 	@Override
 	@Transactional
 	public Message harvestTansition(long landId, HttpSession session) {
@@ -321,6 +353,10 @@ public class FarmImp implements FarmService {
 		return result;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see cn.jxufe.service.FarmService#cleanLandTansition(long, javax.servlet.http.HttpSession)
+	 */
 	@Override
 	@Transactional
 	public Message cleanLandTansition(long landId, HttpSession session) {

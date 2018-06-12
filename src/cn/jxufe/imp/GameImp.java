@@ -48,6 +48,10 @@ public class GameImp implements GameService {
 
 	private static final int MAX = 100;
 
+	/*
+	 * (non-Javadoc)
+	 * @see cn.jxufe.service.GameService#gameStart()
+	 */
 	@Override
 	public void gameStart() {
 		updateSet = new HashSet<Land>();
@@ -59,7 +63,11 @@ public class GameImp implements GameService {
 		}, 0, 2000);
 	}
 
+	
 	// 此处有未知BUG
+	/**
+	 * 核对土地状态
+	 */
 	private void checkCropStatus() {
 		this.findShouldUpdate();
 		updateSet.forEach(new Consumer<Land>() {
@@ -75,6 +83,9 @@ public class GameImp implements GameService {
 	}
 
 	// 事务提交，更新视图
+	/**
+	 * 找到应该更新的土地
+	 */
 	@Transactional
 	private void findShouldUpdate() {
 		Iterable<LandView> Iterable = landViewDAO.findAll();

@@ -13,6 +13,10 @@ public class LandViewImp implements LandViewService {
 	@Autowired
 	LandViewDAO landViewDAO;
 
+	/*
+	 * (non-Javadoc)
+	 * @see cn.jxufe.service.LandViewService#save(cn.jxufe.view.LandView)
+	 */
 	@Override
 	public Message save(LandView landView) {
 		Message message = new Message();
@@ -27,16 +31,28 @@ public class LandViewImp implements LandViewService {
 		return message;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see cn.jxufe.service.LandViewService#findALL()
+	 */
 	@Override
 	public Iterable<LandView> findALL() {
 		return landViewDAO.findAll();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see cn.jxufe.service.LandViewService#findByCId(long)
+	 */
 	@Override
 	public Iterable<LandView> findByCId(long id) {
 		return landViewDAO.findByCId(id);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see cn.jxufe.service.LandViewService#findByUId(long)
+	 */
 	@Override
 	public Iterable<LandView> findByUId(long id) {
 		// TODO Auto-generated method stub

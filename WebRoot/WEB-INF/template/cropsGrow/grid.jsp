@@ -142,7 +142,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    updateUrl: '<%=basePath%>cropsGrow/save',
 	    border: false,
 	    rownumbers: true,
-	    remoteSort: true,
+	    remoteSort: false,
 	    nowrap: false,
 	    singleSelect: true,
 	    fitColumns: true,

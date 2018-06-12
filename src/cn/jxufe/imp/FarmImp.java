@@ -167,7 +167,6 @@ public class FarmImp implements FarmService {
 	 * javax.servlet.http.HttpSession)
 	 */
 	@Override
-	@Transactional
 	public Message actionCleanLand(long landId, HttpSession session) {
 		return this.cleanLandTansition(landId, session);
 	}
@@ -179,6 +178,7 @@ public class FarmImp implements FarmService {
 	 * javax.servlet.http.HttpSession)
 	 */
 	@Override
+	@Transactional
 	public Message plantTansition(long landId, long cId, HttpSession session) {
 		Message result = new Message();
 		try {

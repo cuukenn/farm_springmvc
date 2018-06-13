@@ -62,7 +62,7 @@ public class SeedImp implements SeedService{
 
 	@Override
 	public EasyUIData<?> findByCaption(String caption, Pageable pageable) {
-		Page<Seed> page = seedDAO.findByCaptionLike(caption,pageable);
+		Page<Seed> page = seedDAO.findByCaptionLike("%"+caption+"%",pageable);
         EasyUIData<Seed> easyUIData = new EasyUIData<Seed>();
         easyUIData.setTotal(page.getTotalElements());
         easyUIData.setRows(page.getContent());

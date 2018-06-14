@@ -69,14 +69,19 @@ body {
 	height: 100%;
 	background-color: white;
 	background: url(/farm/images/boder.png) no-repeat center center;
-	background-size: cover;
+	background-size:100% 110%;
 	position: relative;
-	margin-left: 10px;
+	margin-left:10px;
 	float: left;
 }
+.seedBagImg {
+	width: 100%;
+	margin-left:5%;
+}
+
 
 .seedBagImg>img {
-	width: 100%;
+	width: 80%;
 }
 
 .seedBagCount {
@@ -102,21 +107,32 @@ body {
 	position: absolute;
 	width: 60%;
 	height: 20%;
-	background: url(/farm/images/pre.jpg) no-repeat;
+	background: url(/farm/images/pre.png) no-repeat;
 	background-size: contain;
+	background-position:center;
 	top: 30%;
 	left:20%;
+	border:none;
 }
 
 .seedBagNextButton>button {
 	position: absolute;
 	width: 60%;
 	height: 20%;
-	background: url(/farm/images/next.jpg) no-repeat;
+	background: url(/farm/images/next.png) no-repeat;
 	background-size: contain;
+	background-position:center;
 	top: 30%;
 	left:20%;
+	border:none;
 }
+.seedBagPreButton>button:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}
+.seedBagNextButton>button:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
 </style>
 <body>
 	<div class="seedBagContainer">

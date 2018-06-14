@@ -4,8 +4,8 @@
 软件工程综合实训小组项目
 
 #### 参与人
-组长cgg
-组员lxl,dx
+组长cgg(love390)
+组员lxl(luoluoluoll),ds(su_123)
 
 #### 数据库
 sql2008r2

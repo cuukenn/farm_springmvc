@@ -168,7 +168,27 @@ public class FarmImp implements FarmService {
 	 */
 	@Override
 	public Message actionCleanLand(long landId, HttpSession session) {
-		return this.cleanLandTansition(landId, session);
+		Message message = this.cleanLandTansition(landId, session);
+		if (message.getCode() != 0)
+			return message;
+		User user = (User) session.getAttribute("user");
+		LandView landView = landViewDAO.findByUIdAndLandId(user.getId(), landId);
+		if (landView == null) {// 解决无下季时无法伤=删除BUG，表现在JSONARAY转换失败
+			Land land = new Land();
+			land.setLandId(landId);
+			ArrayList<Land> arrayList = new ArrayList<>();
+			arrayList.add(land);
+			JSONArray array = JSONArray.fromObject(arrayList, JSONConfig.getJsonConfig());
+			TextMessage textMessage = new TextMessage(array.toString());
+			farmActionHandler.sendMessageToUser(user.getId(), textMessage);
+		} else {
+			ArrayList<LandView> arrayList = new ArrayList<>();
+			arrayList.add(landView);
+			JSONArray array = JSONArray.fromObject(arrayList, JSONConfig.getJsonConfig());
+			farmActionHandler.sendMessageToUser(user.getId(), new TextMessage(array.toString()));
+		}
+
+		return message;
 	}
 
 	/*
@@ -345,49 +365,26 @@ public class FarmImp implements FarmService {
 			}
 
 			user.setExp(user.getExp() + landView.getExp());
-			if(landView.getLoss()>=landView.getOutput())landView.setLoss(landView.getOutput()>>1);
+			if (landView.getLoss() >= landView.getOutput())
+				landView.setLoss(landView.getOutput() >> 1);
 			user.setPrice(user.getPrice() + landView.getPrice4UnitSale() * (landView.getOutput() - landView.getLoss()));
 			user.setScore(user.getScore() + landView.getScore());
 			userDAO.save(user);
 
-			// 存在下一季
-			if (landView.getCurHarvestNum() < landView.getHarvestNum()) {
-				CropsGrow cropsGrow = cropsGrowService.findFirstCrops(landView.getcId());
-				if (cropsGrow == null) {
-					result.setCode(-4);
-					result.setMsg("该植物无生长阶段信息不全");
-					return result;
-				}
-				land.setStatus(cropsGrow.getStatus());
-				land.setCurHarvestNum(land.getCurHarvestNum() + 1);
-				land.setLoss(0);
-				land.setWorm(0);
-				land.setPlantTime(new Date());
-
-				// 更新下阶段结束时间
-				Calendar calendar = Calendar.getInstance();
-				calendar.setTime(land.getPlantTime());
-				calendar.add(Calendar.SECOND, cropsGrow.getGrowTime());// 作为秒加入
-				land.setCurCropsEndTime(calendar.getTime());
-
-				land = landDAO.save(land);
+			CropsGrow cropsGrow = cropsGrowService.findNextCrops(land.getcId(), landView.getGrowStep());
+			if (cropsGrow == null) {
+				result.setCode(-4);
+				result.setMsg("该植物无生长阶段信息不全");
+				return result;
 			}
-			// 不存在下一季，进入枯草阶段
-			else {
-				CropsGrow cropsGrow = cropsGrowService.findNextCrops(land.getcId(), landView.getGrowStep());
-				if (cropsGrow == null) {
-					result.setCode(-4);
-					result.setMsg("该植物无生长阶段信息不全");
-					return result;
-				}
-				land.setStatus(cropsGrow.getGrowStep());
-				land = landDAO.save(land);
-			}
+			land.setStatus(cropsGrow.getGrowStep());
+			land = landDAO.save(land);
+
 			result.setCode(0);
-			result.setMsg(
-					"收获成功！经验：+"+landView.getExp()+"<br/>" + landView.getPrice4UnitSale() + "个金币×" + (landView.getOutput() - landView.getLoss())
-							+ "个果实=" + landView.getPrice4UnitSale() * (landView.getOutput() - landView.getLoss())
-							+ "个金币<br/>积分：+" + landView.getScore());
+			result.setMsg("收获成功！经验：+" + landView.getExp() + "<br/>" + landView.getPrice4UnitSale() + "个金币×"
+					+ (landView.getOutput() - landView.getLoss()) + "个果实="
+					+ landView.getPrice4UnitSale() * (landView.getOutput() - landView.getLoss()) + "个金币<br/>积分：+"
+					+ landView.getScore());
 		} catch (Exception e) {
 			result.setCode(-1);
 			result.setMsg("收获失败！");
@@ -421,23 +418,39 @@ public class FarmImp implements FarmService {
 			}
 
 			LandView landView = landViewDAO.findByUIdAndLandId(user.getId(), landId);
-			TextMessage textMessage;
 
-			landDAO.delete(land);
+			// 存在下一季
+			if (landView.getCurHarvestNum() < landView.getHarvestNum()) {
+				CropsGrow cropsGrow = cropsGrowService.findFirstCrops(landView.getcId());
+				if (cropsGrow == null) {
+					result.setCode(-4);
+					result.setMsg("该植物无生长阶段信息不全");
+					return result;
+				}
+				land.setStatus(cropsGrow.getGrowStep());
+				land.setCurHarvestNum(land.getCurHarvestNum() + 1);
+				land.setLoss(0);
+				land.setWorm(0);
+				land.setPlantTime(new Date());
+
+				// 更新下阶段结束时间
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTime(land.getPlantTime());
+				calendar.add(Calendar.SECOND, cropsGrow.getGrowTime());// 作为秒加入
+				land.setCurCropsEndTime(calendar.getTime());
+
+				land = landDAO.save(land);
+			}
+			// 不存在下一季，铲除
+			else {
+				landDAO.delete(land);
+			}
 
 			user.setExp(user.getExp() + 5);
 			user.setScore(user.getScore() + 5);
 			userDAO.save(user);
 			result.setCode(0);
 			result.setMsg("除枯草收获<br/>经验：+5<br/>积分：+5<br/>");
-
-			land = new Land();
-			land.setLandId(landId);
-			ArrayList<Land> arrayList = new ArrayList<>();
-			arrayList.add(land);
-			JSONArray array = JSONArray.fromObject(arrayList, JSONConfig.getJsonConfig());
-			textMessage = new TextMessage(array.toString());
-			farmActionHandler.sendMessageToUser(user.getId(), textMessage);
 
 		} catch (Exception e) {
 			result.setCode(-1);

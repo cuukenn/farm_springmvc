@@ -161,15 +161,11 @@ body {
 				+'<img class="insect" src="<%=basePath%>images/insect.png" alt="">'//虫图片
 				+'</div>';
 
-	let offsetX=0;
-	let offsetY=0;
+	let offsetX=0;//全局x偏移
+	let offsetY=0;//全局y偏移
 
-	const widF=220;
-	const hei=120;
-	const rowsHei=80;
-
-	const offTmp=360;
-	const offTmpDe=140;
+	const wid=220;//默认每块土地宽加x偏移量
+	const hei=120;//默认每块土地高加y偏移量
 
 	//初始化地
 	function drawLand(data) {
@@ -181,14 +177,14 @@ body {
 		let farm = document.querySelector('.farm');
 		farm.innerHTML = rs;
 		farm.style.height = rows * hei + 'px';
-		farm.style.width = cols * widF +'px';
+		farm.style.width = cols * wid +'px';
 		
 		//画土地
 		for (let row = 0; row < rows; row++) {
 			for (let index = 1; index <= cols; index++) {
 				let elmS = '.farm>div:nth-child(' + (cols * row + index) + ')';
 				let elm = document.querySelector(elmS);
-				offsetX = ~~(index%6)* widF-60*row;
+				offsetX = ~~(index%6)* wid-60*row;//每开始新的一行向前偏移
 				offsetY = (row)*hei;
 				elm.style.left = offsetX + 'px';
 				elm.style.top = offsetY + 'px';

@@ -202,6 +202,12 @@ public class FarmImp implements FarmService {
 	public Message plantTansition(long landId, long cId, HttpSession session) {
 		Message result = new Message();
 		try {
+			if((int)landId>24 ||(int)landId<1) {
+				result.setCode(-1);
+				result.setMsg("土地范围为1~24");
+				return result;
+			}
+			
 			User user = (User) session.getAttribute("user");
 			if (user == null) {
 				result.setCode(-1);

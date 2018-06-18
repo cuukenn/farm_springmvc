@@ -51,7 +51,7 @@ body {
 
 .seedBagContent {
 	box-sizing:border-box;
-	width: 80%;
+	width: 79%;
 	height: 100%;
 	float: left;
 	border:1px solid white;
@@ -71,6 +71,7 @@ body {
 	background: url(/farm/images/boder.png) no-repeat center center;
 	background-size:100% 110%;
 	position: relative;
+	box-shadow: 0 3px 0 3px rgba(1,72,0,0.19);
 	margin-left:10px;
 	float: left;
 }

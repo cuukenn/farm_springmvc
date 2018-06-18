@@ -34,7 +34,9 @@ body {
 .menu {
 	margin: 3px 5px 5px 5px;
 }
-
+.menu:hover{
+	transform:scale(1.05);
+}
 .userBox {
 	width: 300px;
 	height: 60px;
@@ -44,15 +46,14 @@ body {
 }
 
 .userBoxHeads {
-	width: 20%;
-	height: 40%;
+	width: 60px;
+	height:60px;
 	float:left;
 }
 
 .userBoxHeads>img {
-	width: 60px;
-	height:60px;
-	height: auto;
+	width: 100%;
+	height:100%;
 }
 
 .userBoxContent {
@@ -63,19 +64,24 @@ body {
 	position:absolute;
 	width:400px;
 	font-size: 4em;
+	letter-spacing:5px;
+	text-stroke: 0.7px #8B8B7A;
+	-webkit-text-stroke: 0.7px #8B8B7A;
+	font-weight:900;
 	left:20px;
 	top:-20px;
-	color:yellow;
+	color:#EEB422;
 }
 .userDetail{
 	position:absolute;
-	width:350px;
+	width:270px;
 	left:20px;
 	top:25px;
 	font-size: 2em;
 	border-radius:10px;
+	font-weight:900;
 	border:1px solid black;
-	background-color:#3EC6FC;
+	background-color:rgba(122,197,205,0.8);
 	color:white;
 	padding-left:5px;
 }
@@ -86,7 +92,7 @@ body {
 	<div align="left">
 		<div class="userBox">
 			<div class="userBoxHeads">
-				<img class="menu shadow"  src="images/unknow.png" />
+				<img src="images/unknow.png" />
 			</div>
 			<div class="userBoxContent">
 				<p class='username'>姓名</p>
@@ -96,7 +102,7 @@ body {
 	</div>
 	<div align="right" width="60%">
 		<a href="farm/grid" target="workspace"><img class="menu shadow" src="images/landHead.png" width="50px" height="50px"></a>
-		<a href="user/userSelect" target="workspace"><img class="menu shadow" src="images/user.png" width="45px" height="50px"></a>
+		<a href="user/userSelect" target="workspace"><img class="menu shadow" src="images/user.png" width="50px" height="50px"></a>
 		<a href="shop/grid" target="workspace"><img class="menu shadow" src="images/shop.png" width="50px" height="50px"></a>
 		<a href="user/grid" target="workspace"><img class="menu shadow" src="images/menu-1.png" width="50px" height="50px"></a>
 		<a href="seed/grid" target="workspace"><img class="menu shadow" src="images/seedManager.png" width="50px" height="50px"></a>

@@ -90,7 +90,8 @@ function changeUser(){
                 msg: ms
             });
 		}
-	})
+	});
+	$('#windowContainer').dialog('close');
 }
 function resizeFrame(){
 	window.parent.document.getElementById("tools").src="tools.jsp";

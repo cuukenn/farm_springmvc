@@ -51,7 +51,7 @@ body {
 
 .seedBagContent {
 	box-sizing:border-box;
-	width: 79%;
+	width: 78.5%;
 	height: 100%;
 	float: left;
 	border:1px solid white;

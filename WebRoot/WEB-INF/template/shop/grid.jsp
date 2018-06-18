@@ -41,7 +41,7 @@ body {
 	height: 300px;
 	background-color: green;
 	float: left;
-	margin-left: 10px;
+	margin-left:8px;
 	margin-bottom: 10px;
 }
 
@@ -70,13 +70,16 @@ body {
 	position: absolute;
 	z-index: 1;
 	width: 100%;
-	height: 80%;
+	height:100%;
 	bottom: 0px;
+	
 }
 
 .cardViewBottomImg>img {
 	width: 76%;
+	height:80%;
 	margin-left: 12%;
+	margin-top:20%;
 }
 
 .cardViewBottom {
@@ -98,13 +101,13 @@ body {
 	position: absolute;
 	width: 100%;
 	height: 570px;
-	left: 20%;
+	left: 17%;
 	top: 0%;
 }
 </style>
 <body>
 	<div id="tableBox">
-		<table id="tt" style="width: 63%; height: 70%;">
+		<table id="tt" style="width: 910px; height: 70%;">
 			<thead>
 				<tr>
 					<th field="caption" width="80" sortable="true">种子名称</th>
@@ -154,6 +157,7 @@ var cardview = $.extend({}, $.fn.datagrid.defaults.view, {
 });
 $('#tt').datagrid({
 	title:"种子仓库",
+	height: $(document).height()*0.7-30 , 
 	url: '<%=basePath%>seedStorage/gridData',
 	method:'post',
 	border: false,
@@ -167,6 +171,14 @@ $('#tt').datagrid({
 	autoSave:true,
 	view: cardview
 });
+var p = $('#tt').datagrid('getPager'); 
+p.pagination({
+    pageSize: 4,
+    pageList: [4,8,12,16],
+    beforePageText: '第', 
+    afterPageText: '页    共 {pages} 页', 
+    displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录', 
+});
 function buy(id,caption){
 	var template="确认购买NULL的种子么?";
 	template=template.replace("NULL",caption);
@@ -178,7 +190,7 @@ function buy(id,caption){
 }
 function resizeFrame(){
 	window.parent.document.getElementById("tools").src="seedBag/grid";
-	window.parent.document.getElementById("framesets").rows='60,*,260';
+	window.parent.document.getElementById("framesets").rows='60,*,240';
 }
 </script>
 </html>

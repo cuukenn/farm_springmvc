@@ -77,12 +77,15 @@ body {
 }
 .seedBagImg {
 	width: 100%;
-	margin-left:5%;
+	height:100%;
+	margin-top:5%;
+	margin-left:10%;
 }
 
 
 .seedBagImg>img {
 	width: 80%;
+	height:83%;
 }
 
 .seedBagCount {
@@ -94,6 +97,7 @@ body {
 	background-color: red;
 	border-radius: 10px;
 	color:yellow;
+	margin-top:10px;
 }
 
 .seedBagPreButton {

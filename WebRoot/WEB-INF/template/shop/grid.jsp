@@ -157,7 +157,7 @@ var cardview = $.extend({}, $.fn.datagrid.defaults.view, {
 });
 $('#tt').datagrid({
 	title:"种子仓库",
-	height: $(document).height()*0.7-30 , 
+	height: $(document).height()-235, 
 	url: '<%=basePath%>seedStorage/gridData',
 	method:'post',
 	border: false,

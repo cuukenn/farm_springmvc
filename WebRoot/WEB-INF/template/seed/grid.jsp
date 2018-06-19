@@ -194,7 +194,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         }},
 
         {title: '种子采购价', field: 'price', width: 50, sortable: true,align:'center',editor:{
-        type:'validatebox',
+        type:'numberbox',
         options: {
         required:true
         }
@@ -208,6 +208,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         options: {
         required:true
         }
+        },
+        formatter:function(value,row){
+            if(value==undefined)return "";
+            return value+'金币';
         }},
         {title: '土地需求', field: 'landRequirement', width: 50, sortable: true,align:'center',editor:{
         type:'numberbox',
@@ -217,7 +221,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         },formatter:function(value,row){
 	    	return getCodeLandRequireFromCode(value);
 		}},
-
         {title: '每季成熟可获积分', field: 'score', width: 50, sortable: true,align:'center',
         editor:{
         type:'numberbox',
